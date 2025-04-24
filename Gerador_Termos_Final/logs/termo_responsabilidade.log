@@ -1,0 +1,6 @@
+2025-04-24 11:51:32,348 - ERROR - Erro ao processar termo: [Errno 2] No such file or directory: '../Termos de Responsabilidade/Termo - Diogo Velozo Xavier.docx'
+2025-04-24 12:50:42,436 - ERROR - Erro ao processar termo: [Errno 2] No such file or directory: '../Termos de Responsabilidade/Termo - Diogo Velozo Xavier.docx'
+2025-04-24 13:02:33,694 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 13:37:52,848 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 13:41:24,706 - ERROR - Erro ao processar termo: 'str' object has no attribute 'employee_number'
+2025-04-24 13:41:39,636 - INFO - Termo de responsabilidade do usuário Romulo Pereira criado!

@@ -1,0 +1,17 @@
+2025-04-24 08:53:26,463 - ERROR - Erro ao processar termo: 'str' object has no attribute 'employee_number'
+2025-04-24 08:53:48,839 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 08:54:32,663 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 08:59:00,100 - ERROR - Erro ao processar termo: User.__init__() missing 2 required positional arguments: 'name' and 'employee_number'
+2025-04-24 08:59:38,271 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 09:01:14,561 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 09:01:28,650 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 09:03:26,174 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 10:19:26,900 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 11:02:22,774 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 11:04:02,700 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 11:04:15,219 - INFO - Termo de responsabilidade do usuário Jaqueline Cardoso da Silva criado!
+2025-04-24 13:32:36,291 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 13:35:52,343 - ERROR - Erro ao processar termo: unsupported operand type(s) for +: 'WindowsPath' and 'str'
+2025-04-24 13:36:17,916 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 13:36:48,032 - ERROR - Erro ao processar termo: bad operand type for unary +: 'str'
+2025-04-24 13:37:05,266 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
