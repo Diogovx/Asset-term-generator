@@ -15,3 +15,85 @@
 2025-04-24 13:36:17,916 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
 2025-04-24 13:36:48,032 - ERROR - Erro ao processar termo: bad operand type for unary +: 'str'
 2025-04-24 13:37:05,266 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 14:04:35,409 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 14:08:01,438 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-25 09:47:39,960 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-25 14:23:27,114 - INFO - Termo de responsabilidade do usuário Ricardo Ribeiro criado!
+2025-04-25 14:48:47,469 - INFO - Termo de responsabilidade do usuário Ricardo Ribeiro criado!
+2025-04-28 11:51:30,838 - INFO - Termo de responsabilidade do usuário Adriano Ouverney Machado criado!
+2025-04-28 13:44:29,791 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:44:42,478 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:45:35,771 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:45:46,087 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:46:01,582 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-28 13:46:34,059 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:47:07,112 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:47:48,564 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:48:03,388 - ERROR - Erro ao processar termo: 'module' object is not callable
+2025-04-28 13:48:17,368 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-28 13:49:22,172 - ERROR - Erro ao processar termo: 'AccessoriesClient' object has no attribute 'get'
+2025-04-28 13:50:44,515 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-28 13:51:41,978 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-28 13:52:09,354 - ERROR - Erro ao processar termo: unsupported operand type(s) for +: 'dict' and 'str'
+2025-04-28 13:52:44,418 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 10:08:10,284 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 10:16:47,457 - INFO - Termo de responsabilidade do usuário Adriano Ouverney Machado criado!
+2025-04-29 11:42:38,846 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 11:46:15,537 - ERROR - Erro ao processar termo: unsupported operand type(s) for /: 'str' and 'int'
+2025-04-29 11:46:35,679 - ERROR - Erro ao processar termo: unsupported operand type(s) for /: 'str' and 'int'
+2025-04-29 11:46:48,622 - ERROR - Erro ao processar termo: unsupported operand type(s) for /: 'str' and 'str'
+2025-04-29 11:47:02,938 - ERROR - Erro ao processar termo: unsupported operand type(s) for /: 'str' and 'str'
+2025-04-29 11:47:12,684 - ERROR - Erro ao processar termo: unsupported operand type(s) for /: 'str' and 'str'
+2025-04-29 11:47:38,645 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:21:03,649 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:21:38,321 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:22:08,388 - ERROR - Erro ao processar termo: 0
+2025-04-29 13:22:20,648 - ERROR - Erro ao processar termo: 'NoneType' object has no attribute 'get'
+2025-04-29 13:22:46,579 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:26:32,507 - ERROR - Erro ao processar termo: 'user_id'
+2025-04-29 13:27:20,215 - ERROR - Erro ao processar termo: accessoriesApiCall() missing 1 required positional argument: 'user_id'
+2025-04-29 13:27:56,407 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:30:34,721 - INFO - Termo de responsabilidade do usuário Leonardo Serra criado!
+2025-04-29 13:31:05,902 - INFO - Termo de responsabilidade do usuário Leonardo Serra criado!
+2025-04-29 13:31:30,264 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:33:10,010 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 13:33:15,583 - INFO - Termo de responsabilidade do usuário Leonardo Serra criado!
+2025-04-29 13:33:44,599 - INFO - Termo de responsabilidade do usuário Adriano Ouverney Machado criado!
+2025-04-29 13:35:16,155 - INFO - Termo de responsabilidade do usuário Adriano Ouverney Machado criado!
+2025-04-29 14:01:54,258 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:02:03,926 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:02:33,623 - ERROR - Erro ao processar termo: 'str' object has no attribute 'get'
+2025-04-29 14:03:05,084 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:03:18,060 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:04:25,118 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:04:37,812 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:05:25,189 - ERROR - Erro ao processar termo: 'NoneType' object has no attribute 'get'
+2025-04-29 14:07:03,322 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:07:27,228 - ERROR - Erro ao processar termo: 'rows'
+2025-04-29 14:07:47,032 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:08:13,147 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:10:18,622 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:11:25,490 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:23:38,627 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:24:45,002 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:25:33,581 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:26:08,924 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:27:28,659 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:28:17,438 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:29:07,511 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:32:02,642 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:32:53,301 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:34:12,300 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:35:35,548 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:39:56,705 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:40:57,995 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:43:49,767 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:44:11,812 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:44:38,153 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:46:56,045 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:48:46,111 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:49:46,259 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:50:08,160 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:50:38,521 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:51:51,382 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-29 14:52:32,769 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!

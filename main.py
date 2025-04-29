@@ -12,17 +12,17 @@ logger = logging.getLogger(__name__)
 def main():
     documentProcessor = DocumentProcessor()
     documentProcessor.load_template()
-    while True:
-        assigned_to = input("Digite a matrícula: ")
-        try:
-            assetList = api_call.hardwareApiCall(assigned_to)
-            documentProcessor.process_assets(assetList)
-            documentProcessor.save(assetList.get('user_name', ''))
+    # while True:
+    assigned_to = input("Digite a matrícula: ")
+    try:
+        assetList = api_call.hardwareApiCall(assigned_to)
+        documentProcessor.process_assets(assetList)
+        documentProcessor.save(assetList.get('user_name', ''))
         
-            logger.info(f"Termo de responsabilidade do usuário {assetList.get('user_name', '')} criado!")
-        except Exception as e:
-            logger.error(f"Erro ao processar termo: {e}")
-        os.system("PAUSE")
+        logger.info(f"Termo de responsabilidade do usuário {assetList.get('user_name', '')} criado!")
+    except Exception as e:
+        logger.error(f"Erro ao processar termo: {e}")
+    os.system("PAUSE")
         
 if __name__ == "__main__":
     main()

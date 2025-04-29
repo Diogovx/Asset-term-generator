@@ -4,3 +4,6 @@
 2025-04-24 13:37:52,848 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
 2025-04-24 13:41:24,706 - ERROR - Erro ao processar termo: 'str' object has no attribute 'employee_number'
 2025-04-24 13:41:39,636 - INFO - Termo de responsabilidade do usuário Romulo Pereira criado!
+2025-04-24 14:14:00,539 - ERROR - Erro ao processar termo: 'str' object has no attribute 'employee_number'
+2025-04-24 14:14:06,273 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-04-24 14:14:35,635 - INFO - Termo de responsabilidade do usuário Leonardo Serra criado!
