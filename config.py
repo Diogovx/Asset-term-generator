@@ -1,6 +1,10 @@
+import os
 from pathlib import Path
 import sys
-import os
+from dotenv import load_dotenv
+import logging
+
+logger = logging.getLogger(__name__)
 
 def get_base_path():
     if getattr(sys, 'frozen', False):
@@ -10,7 +14,26 @@ def get_base_path():
 
 # Path configuration
 BASE_DIR = get_base_path()
-TEMPLATE_PATH = BASE_DIR / "docx-template" / "TERMO DE RESPONSABILIDADES NOTEBOOKS.docx"
+CONFIG_DIR = BASE_DIR / "config"
+TEMPLATE_DIR = BASE_DIR / "docx-template"
+LAPTOP_TEMPLATE_PATH = TEMPLATE_DIR / "TERMO DE RESPONSABILIDADES NOTEBOOKS.docx"
+SMARTPHONE_TEMPLATE_PATH = TEMPLATE_DIR / "TERMO DE RESPONSABILIDADES CELULARES.docx"
 OUTPUT_DIR = BASE_DIR / "output"
+LOGS_DIR = BASE_DIR / "logs"
+ENV_PATH = CONFIG_DIR / ".env"
 
-OUTPUT_DIR.mkdir(exist_ok=True, parents=True)
+for directory in [TEMPLATE_DIR ,OUTPUT_DIR, LOGS_DIR, CONFIG_DIR]:
+    directory.mkdir(exist_ok=True, parents=True)
+
+if ENV_PATH.exists():
+    load_dotenv(dotenv_path=ENV_PATH)
+else:
+    logger.info(f"Arquivo .env não encontrado em {ENV_PATH}")
+
+API_KEY = os.getenv("API_KEY")
+API_HARDWARE_URL = os.getenv("API_HARDWARE_URL")
+API_ACESSORIES_URL = os.getenv("API_ACESSORIES_URL")
+API_USERS_URL = os.getenv("API_USERS_URL")
+
+if not API_KEY:
+    logger.error("API_KEY não foi definida no .env")
