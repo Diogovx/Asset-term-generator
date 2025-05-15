@@ -1,50 +1,75 @@
-import os
+import logging
 import api
 from dotenv import load_dotenv
-from models import User
+from config import API_HARDWARE_URL, API_ACESSORIES_URL, API_USERS_URL
+
 
 load_dotenv()
+logger = logging.getLogger(__name__)
 
-api_hardware_url = os.getenv("API_HARDWARE_URL")
-api_users_url = os.getenv("API_USERS_URL")
-api_acessories_url = os.getenv("API_ACESSORIES_URL")
-
-def hardwareApiCall(assignedTo):  
-    client = api.HardwareClient(base_url=api_hardware_url)
-    response = client.get_assets_by_employee()
-    jsonData = response['rows']
-    assignedTo = assignedTo
-    
-    
-    foundUser = False
-    userData = ''
-    assetData = []
-    for i, v in enumerate(jsonData):
-        u = v['assigned_to']
-        if u is not None:
-            if u['employee_number'] == assignedTo:
-                foundUser = True
-
-                assetData.append({"asset_tag": v.get('asset_tag'), "model": v.get('model').get('name'), "category": v.get('category').get('name')})
-
-                userData = User(u['id'] ,u['name'], u['employee_number'])
-        
-    data = {
-        "assets": assetData,
-        "user_id": userData.user_id,
-        "employee_number": userData.employee_number,
-        "user_name": userData.name
+def get_api_url():
+    return {
+        "hardware": API_HARDWARE_URL,
+        "users": API_USERS_URL,
+        "accessories": API_ACESSORIES_URL
     }
-    if not foundUser:
-        print("Usuário não encontrado")
-    return data
 
-# TODO Fazer api de acessórios
+def hardware_api_call(assigned_to):  
+    try:
+        client = api.HardwareClient(base_url=get_api_url().get('hardware', ''))
+        response = client.get_assets_by_employee()
+        assets_response = response['rows']
+    
+        found_user = False
+        user_data = None
+        asset_data = []
+        for i, asset_item in enumerate(assets_response):
+            assigned_user = asset_item.get('assigned_to', '')
+            if assigned_user is not None:
+                if assigned_user.get('employee_number', '') == assigned_to:
+                    found_user = True
 
-def accessoriesApiCall(user_id):
+                    asset_data.append({"asset_tag": asset_item.get('asset_tag', ''), "model": asset_item.get('model', '').get('name', ''), "category": asset_item.get('category', '').get('name', '')})
+
+                    user_data = {
+                            "user_id": assigned_user.get('id', ''),
+                            "user_name": assigned_user.get('name', ''),
+                            "employee_number": assigned_user.get('employee_number', '')
+                        }
+        
+        if not found_user:
+            logger.info(f"Usuário com matrícula {assigned_to} não encontrado")
+            return {
+                "assets": [],
+                "employee_number": assigned_to,
+                "user_name": "NÃO ENCONTRADO"
+            }
+        return {
+            "assets": asset_data,
+            "user_id": user_data.get('user_id', ''),
+            "user_name": user_data.get('user_name', ''),
+            "employee_number": user_data.get('employee_number', '')
+        }
+    except Exception as e:
+        logger.error(f"Erro na chamada da API: {e}")
+        return {
+            "assets": [],
+            "employee_number": assigned_to,
+            "user_name": "ERRO NA CONSULTA"
+        }
+
+
+def accessories_api_call(user_id):
     
-    client = api.AccessoriesClient(base_url=str(api_users_url) + f'/{user_id}/accessories')
-    response = client.get_specific_user_accessory(user_id)
-    jsonData = response['rows']
+    client = api.AccessoriesClient(base_url=str(get_api_url().get('users', '')) + f'/{user_id}/accessories')
+    response = client.get_user_accessory()
+    accessories_response = response['rows']
     
-    return jsonData
+    return accessories_response
+
+
+def has_multiple_assets(filtered_assets):
+    if len(filtered_assets) > 1:
+        return True
+    else:
+        return False

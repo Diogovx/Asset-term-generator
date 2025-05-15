@@ -10,7 +10,7 @@ a = Analysis(
         ('api_call.py', '.'),
         ('config.py', '.'),
         ('document_processor.py', '.'),
-        ('.env', '.'),
+        ('config/.env', '.'),
         ('README.md', '.'),
         ('api/hardware_client.py', 'api'),
         ('models/*.py', 'models'),

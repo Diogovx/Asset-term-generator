@@ -1,5 +1,3 @@
+# Linting
 
-# Lista de duplicados
-
-Caso o usuário tenha dois computadores, mostrar uma lista de opções para escolher qual você quer gerar o termo
-Ex: http://10.1.0.251:8081/api/v1/accessories/14/checkedout //Carregador VIVO
+# Testes unitários

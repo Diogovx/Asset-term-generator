@@ -5,3 +5,6 @@ lib
 __pycache__
 pyvenv.cfg
 .env
+todo.txt
+output
+Gerador_Termos_Final
