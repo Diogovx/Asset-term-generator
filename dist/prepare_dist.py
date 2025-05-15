@@ -21,6 +21,10 @@ def prepare_distribution():
         dist_dir / 'docx-template/TERMO DE RESPONSABILIDADES NOTEBOOKS.docx',
         final_dir / 'docx-template'
     )
+    shutil.copy(
+        dist_dir / 'docx-template/TERMO DE RESPONSABILIDADES CELULARES.docx',
+        final_dir / 'docx-template'
+    )
     logger.info(f"Distribution prepared in {final_dir}")
 
 if(__name__ == "__main__"):
