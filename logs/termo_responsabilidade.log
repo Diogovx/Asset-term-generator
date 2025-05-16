@@ -63,3 +63,181 @@
 2025-05-15 14:06:13,413 - INFO - Ativo selecionado: LATITUDE 5420
 2025-05-15 14:06:13,747 - INFO - Ativo processado com sucesso
 2025-05-15 14:06:13,761 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 09:40:03,565 - INFO - Template carregado com sucesso
+2025-05-16 09:40:03,566 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 09:40:03,908 - INFO - Ativo processado com sucesso
+2025-05-16 09:40:03,930 - INFO - Termo de responsabilidade do usuário Lucas Matias Cabral criado!
+2025-05-16 09:46:04,869 - INFO - Template carregado com sucesso
+2025-05-16 09:46:04,869 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 09:46:05,294 - INFO - Ativo processado com sucesso
+2025-05-16 09:46:05,307 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 09:58:20,121 - INFO - Template carregado com sucesso
+2025-05-16 09:58:20,121 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 09:58:20,302 - INFO - Ativo processado com sucesso
+2025-05-16 09:58:20,314 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 09:58:34,435 - INFO - Template carregado com sucesso
+2025-05-16 09:58:34,435 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 09:58:34,624 - INFO - Ativo processado com sucesso
+2025-05-16 09:58:34,636 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:14:21,027 - INFO - Template carregado com sucesso
+2025-05-16 10:14:21,028 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:14:21,131 - ERROR - Erro ao processar o ativo
+2025-05-16 10:14:21,132 - ERROR - Erro ao processar termo: 'function' object has no attribute 'get'
+2025-05-16 10:14:59,676 - INFO - Template carregado com sucesso
+2025-05-16 10:14:59,676 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:14:59,882 - INFO - Ativo processado com sucesso
+2025-05-16 10:14:59,894 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:15:06,657 - INFO - Template carregado com sucesso
+2025-05-16 10:15:06,657 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:15:06,778 - ERROR - Erro ao processar o ativo: 'function' object has no attribute 'get'
+2025-05-16 10:15:06,779 - ERROR - Erro ao processar termo: 'function' object has no attribute 'get'
+2025-05-16 10:15:43,337 - INFO - Template carregado com sucesso
+2025-05-16 10:15:43,337 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:15:43,430 - ERROR - Erro ao processar o ativo: 'function' object has no attribute 'get'
+2025-05-16 10:15:43,431 - ERROR - Erro ao processar termo: 'function' object has no attribute 'get'
+2025-05-16 10:20:26,639 - INFO - Template carregado com sucesso
+2025-05-16 10:20:26,639 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:20:26,899 - INFO - Ativo processado com sucesso
+2025-05-16 10:20:26,912 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:20:35,537 - INFO - Template carregado com sucesso
+2025-05-16 10:20:35,538 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:20:35,624 - ERROR - Erro ao processar o ativo: 'function' object has no attribute 'get'
+2025-05-16 10:20:35,624 - ERROR - Erro ao processar termo: 'function' object has no attribute 'get'
+2025-05-16 10:21:13,995 - INFO - Template carregado com sucesso
+2025-05-16 10:21:13,995 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:21:14,274 - INFO - Ativo processado com sucesso
+2025-05-16 10:21:14,292 - INFO - Termo de responsabilidade do usuário Lucas Matias Cabral criado!
+2025-05-16 10:21:43,941 - INFO - Template carregado com sucesso
+2025-05-16 10:21:43,941 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:21:44,251 - INFO - Ativo processado com sucesso
+2025-05-16 10:21:44,263 - INFO - Termo de responsabilidade do usuário Lucas Matias Cabral criado!
+2025-05-16 10:22:34,619 - INFO - Template carregado com sucesso
+2025-05-16 10:22:34,619 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:22:34,883 - INFO - Ativo processado com sucesso
+2025-05-16 10:22:34,896 - INFO - Termo de responsabilidade do usuário Lucas Matias Cabral criado!
+2025-05-16 10:31:37,423 - INFO - Template carregado com sucesso
+2025-05-16 10:31:37,424 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:31:37,796 - ERROR - API error: 404 Client Error: Not Found for url: http://10.1.0.251:8081/api/v1/accessories//21/checkedout
+2025-05-16 10:31:37,797 - ERROR - Erro ao processar o ativo: 404 Client Error: Not Found for url: http://10.1.0.251:8081/api/v1/accessories//21/checkedout
+2025-05-16 10:31:37,797 - ERROR - Erro ao processar termo: 404 Client Error: Not Found for url: http://10.1.0.251:8081/api/v1/accessories//21/checkedout
+2025-05-16 10:31:55,999 - INFO - Template carregado com sucesso
+2025-05-16 10:31:55,999 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:31:58,477 - INFO - Ativo processado com sucesso
+2025-05-16 10:31:58,489 - INFO - Termo de responsabilidade do usuário Lucas Matias Cabral criado!
+2025-05-16 10:34:03,837 - INFO - Template carregado com sucesso
+2025-05-16 10:34:03,838 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:34:04,135 - INFO - Ativo processado com sucesso
+2025-05-16 10:34:04,147 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:36:34,280 - INFO - Template carregado com sucesso
+2025-05-16 10:36:34,280 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:36:36,671 - INFO - Ativo processado com sucesso
+2025-05-16 10:36:36,691 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:38:11,546 - INFO - Template carregado com sucesso
+2025-05-16 10:38:11,546 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:38:13,636 - INFO - Ativo processado com sucesso
+2025-05-16 10:38:13,648 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:40:34,020 - INFO - Template carregado com sucesso
+2025-05-16 10:40:34,021 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:40:36,335 - INFO - Ativo processado com sucesso
+2025-05-16 10:40:36,349 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:43:17,124 - INFO - Usuário com matrícula 3 não encontrado
+2025-05-16 10:43:17,125 - ERROR - Erro ao processar termo: Nenhum ativo encontrado para esta matricula
+2025-05-16 10:43:25,580 - INFO - Template carregado com sucesso
+2025-05-16 10:43:25,580 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:43:27,659 - INFO - Ativo processado com sucesso
+2025-05-16 10:43:27,672 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:44:45,454 - INFO - Template carregado com sucesso
+2025-05-16 10:44:45,454 - ERROR - Erro de seleção: Nenhum ativo do tipo Laptops encontrado
+2025-05-16 10:44:51,107 - INFO - Template carregado com sucesso
+2025-05-16 10:44:51,107 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:44:53,154 - INFO - Ativo processado com sucesso
+2025-05-16 10:44:53,167 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:46:23,500 - INFO - Template carregado com sucesso
+2025-05-16 10:46:23,500 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:46:26,135 - INFO - Ativo processado com sucesso
+2025-05-16 10:46:26,149 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:47:11,467 - INFO - Template carregado com sucesso
+2025-05-16 10:47:11,467 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:47:13,672 - INFO - Ativo processado com sucesso
+2025-05-16 10:47:13,685 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:47:55,252 - INFO - Template carregado com sucesso
+2025-05-16 10:47:55,253 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:47:57,736 - INFO - Ativo processado com sucesso
+2025-05-16 10:47:57,749 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:48:56,432 - INFO - Template carregado com sucesso
+2025-05-16 10:48:56,433 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:48:58,702 - INFO - Ativo processado com sucesso
+2025-05-16 10:48:58,715 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:49:11,777 - INFO - Template carregado com sucesso
+2025-05-16 10:49:11,778 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:49:13,937 - INFO - Ativo processado com sucesso
+2025-05-16 10:49:13,950 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:49:48,104 - INFO - Template carregado com sucesso
+2025-05-16 10:49:48,105 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:49:48,281 - INFO - Ativo processado com sucesso
+2025-05-16 10:49:48,296 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:50:07,971 - INFO - Template carregado com sucesso
+2025-05-16 10:50:07,971 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:50:10,341 - INFO - Ativo processado com sucesso
+2025-05-16 10:50:10,353 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:50:27,775 - INFO - Template carregado com sucesso
+2025-05-16 10:50:27,776 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:50:30,036 - INFO - Ativo processado com sucesso
+2025-05-16 10:50:30,049 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:51:17,185 - INFO - Template carregado com sucesso
+2025-05-16 10:51:17,185 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:51:19,440 - INFO - Ativo processado com sucesso
+2025-05-16 10:51:19,452 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 10:52:17,311 - INFO - Template carregado com sucesso
+2025-05-16 10:52:17,312 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-16 10:52:17,540 - INFO - Ativo processado com sucesso
+2025-05-16 10:52:17,555 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-16 10:52:25,784 - INFO - Template carregado com sucesso
+2025-05-16 10:52:25,785 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 10:52:27,890 - INFO - Ativo processado com sucesso
+2025-05-16 10:52:27,902 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:02:51,156 - INFO - Template carregado com sucesso
+2025-05-16 11:02:51,157 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:02:53,503 - INFO - Ativo processado com sucesso
+2025-05-16 11:02:53,517 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:06:17,840 - INFO - Template carregado com sucesso
+2025-05-16 11:06:17,840 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:06:20,769 - INFO - Ativo processado com sucesso
+2025-05-16 11:06:20,770 - ERROR - Erro salvando o documento: [Errno 13] Permission denied: 'C:\\Users\\diogo.xavier\\Documents\\python\\termos\\Gerador_de_Termos\\output\\EN093 - Termo Laptops - MARIANA BORROWES.docx'
+2025-05-16 11:06:20,770 - ERROR - Erro ao processar termo: [Errno 13] Permission denied: 'C:\\Users\\diogo.xavier\\Documents\\python\\termos\\Gerador_de_Termos\\output\\EN093 - Termo Laptops - MARIANA BORROWES.docx'
+2025-05-16 11:06:30,240 - INFO - Template carregado com sucesso
+2025-05-16 11:06:30,240 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:06:32,817 - INFO - Ativo processado com sucesso
+2025-05-16 11:06:32,829 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:06:57,989 - INFO - Template carregado com sucesso
+2025-05-16 11:06:57,989 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:07:00,418 - INFO - Ativo processado com sucesso
+2025-05-16 11:07:00,431 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:07:17,785 - INFO - Template carregado com sucesso
+2025-05-16 11:07:17,785 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:07:20,384 - INFO - Ativo processado com sucesso
+2025-05-16 11:07:20,399 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:09:52,288 - INFO - Template carregado com sucesso
+2025-05-16 11:09:52,288 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:09:54,729 - INFO - Ativo processado com sucesso
+2025-05-16 11:09:54,741 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:11:36,121 - INFO - Template carregado com sucesso
+2025-05-16 11:11:36,121 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:11:38,517 - INFO - Ativo processado com sucesso
+2025-05-16 11:11:38,531 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:17:36,511 - INFO - Template carregado com sucesso
+2025-05-16 11:17:36,512 - INFO - Ativo selecionado: LATITUDE 3440
+2025-05-16 11:17:38,779 - INFO - Ativo processado com sucesso
+2025-05-16 11:17:38,793 - INFO - Termo de responsabilidade do usuário MARIANA BORROWES criado!
+2025-05-16 11:21:02,998 - INFO - Template carregado com sucesso
+2025-05-16 11:21:02,999 - INFO - Ativo selecionado: VOSTRO 5481
+2025-05-16 11:21:05,309 - INFO - Ativo processado com sucesso
+2025-05-16 11:21:05,329 - INFO - Termo de responsabilidade do usuário André Luis da Silva Junior criado!
+2025-05-16 11:22:48,919 - INFO - Template carregado com sucesso
+2025-05-16 11:22:48,919 - INFO - Ativo selecionado: VOSTRO 5481
+2025-05-16 11:22:51,180 - INFO - Ativo processado com sucesso
+2025-05-16 11:22:51,197 - INFO - Termo de responsabilidade do usuário André Luis da Silva Junior criado!
+2025-05-16 11:24:37,686 - INFO - Template carregado com sucesso
+2025-05-16 11:24:37,686 - INFO - Ativo selecionado: VOSTRO 5481
+2025-05-16 11:24:40,143 - INFO - Ativo processado com sucesso
+2025-05-16 11:24:40,157 - INFO - Termo de responsabilidade do usuário André Luis da Silva Junior criado!
