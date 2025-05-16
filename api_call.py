@@ -29,7 +29,14 @@ def hardware_api_call(assigned_to):
                 if assigned_user.get('employee_number', '') == assigned_to:
                     found_user = True
 
-                    asset_data.append({"asset_tag": asset_item.get('asset_tag', ''), "model": asset_item.get('model', '').get('name', ''), "category": asset_item.get('category', '').get('name', '')})
+                    asset_data.append(
+                                    {
+                                        "asset_id": asset_item.get('id', ''),
+                                        "asset_tag": asset_item.get('asset_tag', ''),
+                                        "model": asset_item.get('model', '').get('name', ''),
+                                        "category": asset_item.get('category', '').get('name', '')
+                                    }
+                                )
 
                     user_data = {
                             "user_id": assigned_user.get('id', ''),
@@ -59,14 +66,24 @@ def hardware_api_call(assigned_to):
         }
 
 
-def accessories_api_call(user_id):
+def accessories_api_call(id, user_has_accessories = True):
     
-    client = api.AccessoriesClient(base_url=str(get_api_url().get('users', '')) + f'/{user_id}/accessories')
+    if not user_has_accessories:
+        client = api.AccessoriesClient(base_url=str(get_api_url().get('accessories', '')))
+        response = client.get_user_accessory()
+        accessories_response = response['rows']
+        return accessories_response
+    client = api.AccessoriesClient(base_url=str(get_api_url().get('users', '')) + f'/{id}/accessories')
     response = client.get_user_accessory()
     accessories_response = response['rows']
     
     return accessories_response
 
+def specific_api_call(accessory_id):
+    client = api.AccessoriesClient(base_url=str(get_api_url().get('accessories', '')) + f'{accessory_id}/checkedout')
+    response = client.get_user_accessory()
+    accessories_response = response['rows']
+    return accessories_response
 
 def has_multiple_assets(filtered_assets):
     if len(filtered_assets) > 1:
