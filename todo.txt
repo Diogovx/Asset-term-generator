@@ -1,3 +1,5 @@
+# Cache
+
 # Linting
 
 # Testes unitários

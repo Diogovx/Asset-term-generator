@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Union
 from config import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
 import api_call
 import logging
@@ -69,7 +69,7 @@ class DocumentProcessor:
                 run.text = ""
             paragraph.runs[0].text = text 
             
-    def _check_assets(self, assetList) -> Dict[str, bool]:
+    def _check_assets(self, assetList, accessories_list) -> Dict[str, bool]:
         assets_present = {
             'has_laptop': False,
             'has_smartphone': False,
@@ -81,7 +81,6 @@ class DocumentProcessor:
             'has_simcard': False
         }
         
-        accessories_list = api_call.accessories_api_call(assetList.get('user_id', ''))
         for asset in assetList.get('assets'):
             if asset.get('category') == 'Laptops':
                 assets_present['has_laptop'] = True
@@ -150,7 +149,7 @@ class DocumentProcessor:
             has_asset (bool): If the item is present
             marker_check (str): Attendance marker
             marker_model (str): Template marker
-            item (Optional[Union[Asset, Accessory]]): Object containing item information
+            item (Optional[Asset]): Object containing item information
         """
         if not presence_marker or not description_marker:
             return
@@ -162,9 +161,13 @@ class DocumentProcessor:
             if isinstance(item, Asset) or hasattr(item, 'get'):
                 model = item.get('model', item.get('name', ''))
                 tag = item.get('asset_tag', '')
-                model_text = f"{model} - {tag}" if model or tag else ""
-            elif isinstance(item, Asset): # Accessory
-                model_text = f"{item.name} - {item.asset_tag}"
+                if model and tag:
+                    model_text = f"{model} - {tag}"
+                elif model:
+                    model_text = model
+                elif tag:
+                    model_text = tag
+
         self._replace_in_paragraph(paragraph, description_marker, model_text)
         
     
@@ -179,13 +182,24 @@ class DocumentProcessor:
             if not self.document:
                 raise ValueError("Documento não carregado. Chame load_template() primeiro.")
         
-            assets_present = self._check_assets(asset_list)
             accessories = api_call.accessories_api_call(asset_list.get('user_id', ''))
-        
-            self._process_asset_info(assets_present, asset_list, selected_asset, accessories)
+            
+            asset_linked_accessories = []
+            if not accessories:
+                accessories = api_call.accessories_api_call(selected_asset.get('asset_id'), False)
+                for accessory in accessories:
+                    accessory_history = api_call.specific_api_call(accessory.get('id', ''))
+                    for checkout in accessory_history:
+                        if checkout.get('assigned_to', {}).get('id') == selected_asset.get('asset_id', ''):
+                            asset_linked_accessories.append(accessory)
+                accessories = asset_linked_accessories
+                
+            filtered_assets = self._check_assets(asset_list, accessories)
+            
+            self._process_asset_info(filtered_assets, asset_list, selected_asset, accessories)
             logger.info("Ativo processado com sucesso")
         except Exception as e:
-            logger.error(f"Erro ao processar o ativo")
+            logger.error(f"Erro ao processar o ativo: {e}")
             raise
     def save(self, username: str, asset_tag: str, type_of_term: str) -> Path:
         """Saves the processed document.
