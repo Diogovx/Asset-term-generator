@@ -1,9 +1,9 @@
-import requests
-import os
 import logging
-from .base_api_client import BaseAPIClient
-from typing import Dict, Any
+import os
+
 from dotenv import load_dotenv
+
+from .base_api_client import BaseAPIClient
 
 load_dotenv()
 api_key = os.getenv("API_KEY")

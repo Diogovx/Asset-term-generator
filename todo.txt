@@ -1,5 +1,6 @@
-# Cache
 
-# Linting
+# Verifica se tem na pasta
+
+# interface com ttkbootstrap
 
 # Testes unitários

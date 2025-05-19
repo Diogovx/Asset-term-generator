@@ -46,7 +46,7 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 #### .env de exemplo
 
-```
+```.env
 API_HARDWARE_URL=https://sua-api.com/api/v1/hardware
 API_USERS_URL=https://sua-api.com/api/v1/users
 API_ACESSORIES_URL=https://sua-api.com/api/v1/accessories
@@ -60,9 +60,8 @@ API_KEY=123456789abcdef
 
 ## Estrutura de pastas
 
-```
+```bash
 .
-│   .env
 │   .gitignore
 │   api_call.py
 │   build.spec
@@ -79,6 +78,10 @@ API_KEY=123456789abcdef
 │   │   hardware_client.py
 │   └─  __init__.py
 │
+│
+│
+├───config
+│    └─ .env
 │
 ├───dist
 │       prepare_dist.py

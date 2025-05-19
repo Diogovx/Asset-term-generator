@@ -1,8 +1,9 @@
-import os
-from pathlib import Path
-import sys
-from dotenv import load_dotenv
 import logging
+import os
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
