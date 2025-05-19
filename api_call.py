@@ -1,8 +1,9 @@
 import logging
-import api
-from dotenv import load_dotenv
-from config import API_HARDWARE_URL, API_ACESSORIES_URL, API_USERS_URL
 
+from dotenv import load_dotenv
+
+import api
+from config import API_ACESSORIES_URL, API_HARDWARE_URL, API_USERS_URL
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ def hardware_api_call(assigned_to):
         found_user = False
         user_data = None
         asset_data = []
-        for i, asset_item in enumerate(assets_response):
+        for _i, asset_item in enumerate(assets_response):
             assigned_user = asset_item.get('assigned_to', '')
             if assigned_user is not None:
                 if assigned_user.get('employee_number', '') == assigned_to:
@@ -73,14 +74,18 @@ def accessories_api_call(id, user_has_accessories = True):
         response = client.get_user_accessory()
         accessories_response = response['rows']
         return accessories_response
-    client = api.AccessoriesClient(base_url=str(get_api_url().get('users', '')) + f'/{id}/accessories')
+    client = api.AccessoriesClient(
+        base_url=str(get_api_url().get('users', '')) + f'/{id}/accessories'
+    )
     response = client.get_user_accessory()
     accessories_response = response['rows']
     
     return accessories_response
 
 def specific_api_call(accessory_id):
-    client = api.AccessoriesClient(base_url=str(get_api_url().get('accessories', '')) + f'{accessory_id}/checkedout')
+    client = api.AccessoriesClient(
+        base_url=str(get_api_url().get('accessories', '')) + f'{accessory_id}/checkedout'
+    )
     response = client.get_user_accessory()
     accessories_response = response['rows']
     return accessories_response

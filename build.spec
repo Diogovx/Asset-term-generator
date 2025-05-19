@@ -12,7 +12,7 @@ a = Analysis(
         ('document_processor.py', '.'),
         ('config/.env', '.'),
         ('README.md', '.'),
-        ('api/hardware_client.py', 'api'),
+        ('api/*.py', 'api'),
         ('models/*.py', 'models'),
         ('util/*.py', 'util'),
         ('logs/*.log', 'logs')

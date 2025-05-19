@@ -241,3 +241,56 @@
 2025-05-16 11:24:37,686 - INFO - Ativo selecionado: VOSTRO 5481
 2025-05-16 11:24:40,143 - INFO - Ativo processado com sucesso
 2025-05-16 11:24:40,157 - INFO - Termo de responsabilidade do usuário André Luis da Silva Junior criado!
+2025-05-19 09:29:16,468 - ERROR - API error: HTTPConnectionPool(host='10.1.0.251', port=8081): Max retries exceeded with url: /api/v1/hardware (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002133780BB60>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))
+2025-05-19 09:29:16,469 - ERROR - Erro na chamada da API: HTTPConnectionPool(host='10.1.0.251', port=8081): Max retries exceeded with url: /api/v1/hardware (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002133780BB60>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))
+2025-05-19 09:29:16,469 - ERROR - Erro ao processar termo: Nenhum ativo encontrado para esta matricula
+2025-05-19 09:29:43,565 - ERROR - API error: HTTPConnectionPool(host='10.1.0.251', port=8081): Max retries exceeded with url: /api/v1/hardware (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021337926AD0>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))
+2025-05-19 09:29:43,566 - ERROR - Erro na chamada da API: HTTPConnectionPool(host='10.1.0.251', port=8081): Max retries exceeded with url: /api/v1/hardware (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021337926AD0>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))
+2025-05-19 09:29:43,566 - ERROR - Erro ao processar termo: Nenhum ativo encontrado para esta matricula
+2025-05-19 09:29:46,984 - ERROR - Erro ao processar termo: Matrícula não pode ser vazia
+2025-05-19 11:30:04,106 - INFO - Template carregado com sucesso
+2025-05-19 11:30:04,107 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-19 11:30:04,351 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:04,363 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-19 11:30:08,975 - INFO - Template carregado com sucesso
+2025-05-19 11:30:08,975 - INFO - Ativo selecionado: LATITUDE 5420
+2025-05-19 11:30:09,059 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:09,072 - INFO - Termo de responsabilidade do usuário Diogo Velozo Xavier criado!
+2025-05-19 11:30:12,941 - INFO - Usuário com matrícula 2897 não encontrado
+2025-05-19 11:30:12,942 - ERROR - Erro ao processar termo: Nenhum ativo encontrado para esta matricula
+2025-05-19 11:30:19,328 - INFO - Template carregado com sucesso
+2025-05-19 11:30:20,344 - INFO - Ativo selecionado: LATITUDE 3540
+2025-05-19 11:30:25,814 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:25,826 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:30:30,592 - INFO - Template carregado com sucesso
+2025-05-19 11:30:31,163 - INFO - Ativo selecionado: LATITUDE 3540
+2025-05-19 11:30:31,276 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:31,288 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:30:37,456 - INFO - Template carregado com sucesso
+2025-05-19 11:30:38,113 - INFO - Ativo selecionado: INSPIRON 5480
+2025-05-19 11:30:38,226 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:38,239 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:30:42,640 - INFO - Template carregado com sucesso
+2025-05-19 11:30:43,609 - INFO - Ativo selecionado: INSPIRON 5480
+2025-05-19 11:30:43,722 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:43,741 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:30:49,456 - INFO - Template carregado com sucesso
+2025-05-19 11:30:49,725 - INFO - Ativo selecionado: LATITUDE 3540
+2025-05-19 11:30:49,837 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:49,849 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:30:54,401 - INFO - Template carregado com sucesso
+2025-05-19 11:30:54,969 - INFO - Ativo selecionado: INSPIRON 5480
+2025-05-19 11:30:55,078 - INFO - Ativo processado com sucesso
+2025-05-19 11:30:55,091 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:48:27,245 - INFO - Template carregado com sucesso
+2025-05-19 11:48:27,753 - INFO - Ativo selecionado: LATITUDE 3540
+2025-05-19 11:48:31,475 - INFO - Ativo processado com sucesso
+2025-05-19 11:48:31,488 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:48:36,116 - INFO - Template carregado com sucesso
+2025-05-19 11:48:36,916 - INFO - Ativo selecionado: INSPIRON 5480
+2025-05-19 11:48:37,030 - INFO - Ativo processado com sucesso
+2025-05-19 11:48:37,042 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!
+2025-05-19 11:48:43,344 - INFO - Template carregado com sucesso
+2025-05-19 11:48:43,941 - INFO - Ativo selecionado: LATITUDE 3540
+2025-05-19 11:48:44,054 - INFO - Ativo processado com sucesso
+2025-05-19 11:48:44,067 - INFO - Termo de responsabilidade do usuário Melissa Oliveira criado!

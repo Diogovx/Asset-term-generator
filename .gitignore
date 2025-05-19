@@ -8,3 +8,8 @@ pyvenv.cfg
 todo.txt
 output
 Gerador_Termos_Final
+build
+cache
+logs
+.ruff_cache
+assets_cache.sqlite
