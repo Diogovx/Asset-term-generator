@@ -10,6 +10,8 @@ output
 Gerador_Termos_Final
 build
 cache
-logs
+logs/
+*.log
 .ruff_cache
-assets_cache.sqlite
+*.sqlite
+*.exe
