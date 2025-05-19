@@ -1,10 +1,12 @@
-from pathlib import Path
-from typing import Dict, Any, List, Optional, Union
-from config import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
-import api_call
 import logging
+from pathlib import Path
+from typing import Any, Optional
+
 from docx import Document
-from models import Asset, AssetList, Accessory
+
+import api_call
+from config import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
+from models import Accessory, Asset, AssetList
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +71,7 @@ class DocumentProcessor:
                 run.text = ""
             paragraph.runs[0].text = text 
             
-    def _check_assets(self, assetList, accessories_list) -> Dict[str, bool]:
+    def _check_assets(self, assetList, accessories_list) -> dict[str, bool]:
         assets_present = {
             'has_laptop': False,
             'has_smartphone': False,
@@ -102,7 +104,13 @@ class DocumentProcessor:
                 assets_present['has_simcard'] = True
         return assets_present
     
-    def _process_asset_info(self, assets_present: Dict[str, bool], asset_list: AssetList, selected_asset: Asset, accessories: List[Accessory]) -> None:
+    def _process_asset_info(
+        self, 
+        assets_present: dict[str, bool], 
+        asset_list: AssetList, 
+        selected_asset: Asset, 
+        accessories: list[Accessory]
+    ) -> None:
         """Processes asset information and makes substitutions in the document.
 
         Args:
@@ -111,16 +119,55 @@ class DocumentProcessor:
             selected_asset (Asset)
             accessories (List[Accessory])
         """
-        ACCESSORY_CATEGORIES = [('has_monitor', 'Monitors', MARKERS['HAS_MONITOR'], MARKERS['MONITOR_MODEL']),
-                                    ('has_mouse', 'Mouses', MARKERS['HAS_MOUSE'], MARKERS['MOUSE_MODEL']),
-                                    ('has_keyboard', 'Keyboards', MARKERS['HAS_KEYBOARD'], MARKERS['KEYBOARD_MODEL']),
-                                    ('has_charger', 'Charger', MARKERS['HAS_CHARGER'], MARKERS['CHARGER_MODEL']),
-                                    ('has_headset', 'Headsets', MARKERS['HAS_HEADSET'], MARKERS['HEADSET_MODEL']),
-                                    ('has_simcard', 'SIM CARD', MARKERS['HAS_SIMCARD'], MARKERS['SIMCARD_MODEL']),
-                                ]
+        ACCESSORY_CATEGORIES = [
+            (
+                'has_monitor', 
+                'Monitors', 
+                MARKERS['HAS_MONITOR'], 
+                MARKERS['MONITOR_MODEL']
+            ),
+            (
+                'has_mouse',
+                'Mouses',
+                MARKERS['HAS_MOUSE'],
+                MARKERS['MOUSE_MODEL']
+            ),
+            (
+                'has_keyboard', 
+                'Keyboards', 
+                MARKERS['HAS_KEYBOARD'], 
+                MARKERS['KEYBOARD_MODEL']
+            ),
+            (
+                'has_charger', 
+                'Charger', 
+                MARKERS['HAS_CHARGER'], 
+                MARKERS['CHARGER_MODEL']
+            ),
+            (
+                'has_headset', 
+                'Headsets', 
+                MARKERS['HAS_HEADSET'], 
+                MARKERS['HEADSET_MODEL']
+            ),
+            (
+                'has_simcard', 
+                'SIM CARD', 
+                MARKERS['HAS_SIMCARD'], 
+                MARKERS['SIMCARD_MODEL']
+            ),
+        ]
         for paragraph in self.document.paragraphs:
-            self._replace_in_paragraph(paragraph, MARKERS['NAME'], asset_list.get('user_name', ''))
-            self._replace_in_paragraph(paragraph, MARKERS['EMPLOYEE_NUMBER'], asset_list.get('employee_number', ''))
+            self._replace_in_paragraph(
+                paragraph, 
+                MARKERS['NAME'], 
+                asset_list.get('user_name', '')
+            )
+            self._replace_in_paragraph(
+                paragraph, 
+                MARKERS['EMPLOYEE_NUMBER'], 
+                asset_list.get('employee_number', '')
+            )
             
             self._process_assets_type(paragraph, 
                                     assets_present.get('has_laptop'),
@@ -137,11 +184,30 @@ class DocumentProcessor:
             
             
             for key, name, presence_marker, description_marker in ACCESSORY_CATEGORIES:
-                item = next((accessory for accessory in accessories if accessory.get('category', {}).get('name') == name), None)
-                self._process_assets_type(paragraph, assets_present.get(key), presence_marker, description_marker, item)
+                item = next(
+                    (
+                        accessory for accessory in accessories 
+                        if accessory.get('category', {}).get('name') == name
+                    ),
+                    None
+                )
+                self._process_assets_type(
+                    paragraph,
+                    assets_present.get(key),
+                    presence_marker,
+                    description_marker,
+                    item
+                )
             
 
-    def _process_assets_type(self, paragraph, has_asset: bool, presence_marker: str, description_marker: str, item: Optional[Asset] = None) -> None:
+    def _process_assets_type(
+        self, 
+        paragraph, 
+        has_asset: bool, 
+        presence_marker: str, 
+        description_marker: str, 
+        item: Optional[Asset] = None
+    ) -> None:
         """ Process a specific type of asset or accessory
 
         Args:
@@ -154,7 +220,11 @@ class DocumentProcessor:
         if not presence_marker or not description_marker:
             return
         
-        self._replace_in_paragraph(paragraph, presence_marker, "X" if has_asset else " ")
+        self._replace_in_paragraph(
+            paragraph,
+            presence_marker,
+            "X" if has_asset else " "
+        )
         
         model_text = ""
         if has_asset and item:
@@ -168,10 +238,18 @@ class DocumentProcessor:
                 elif tag:
                     model_text = tag
 
-        self._replace_in_paragraph(paragraph, description_marker, model_text)
+        self._replace_in_paragraph(
+            paragraph, 
+            description_marker, 
+            model_text
+        )
         
     
-    def process_assets(self, asset_list: Dict[str, Any], selected_asset: Asset) -> None:
+    def process_assets(
+        self,
+        asset_list: dict[str, Any],
+        selected_asset: Asset
+    ) -> None:
         """Process asset list and update document
 
         Args:
@@ -190,7 +268,13 @@ class DocumentProcessor:
                 for accessory in accessories:
                     accessory_history = api_call.specific_api_call(accessory.get('id', ''))
                     for checkout in accessory_history:
-                        if checkout.get('assigned_to', {}).get('id') == selected_asset.get('asset_id', ''):
+                        if checkout.get(
+                            'assigned_to', {}
+                        ).get(
+                            'id', ''
+                        ) == selected_asset.get(
+                            'asset_id', ''
+                        ):
                             asset_linked_accessories.append(accessory)
                 accessories = asset_linked_accessories
                 

@@ -1,9 +1,11 @@
-import os
 import logging
-import api_call
-from util import configure_logging
-from document_processor import DocumentProcessor
+import os
+
 from InquirerPy import inquirer
+
+import api_call
+from document_processor import DocumentProcessor
+from util import configure_logging
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -28,7 +30,13 @@ class Menu:
             message="Foi encontrados mais de um ativo do usuário!\nEscolha um deles: ",
             choices=[
             {
-                'name': f"{asset.get('asset_tag')} - {asset.get('model')} ({asset.get('category')})",
+                'name': f"{
+                    asset.get('asset_tag')
+                } - {
+                    asset.get('model')
+                } ({
+                    asset.get('category')
+                })",
                 'value': asset
             } 
             for asset in asset_list if asset.get('category') == selected_term
@@ -41,10 +49,12 @@ class Menu:
             message="Deseja gerar outro termo?: ",
             choices=[
             {
-                'name': 'Gerar outro termo', 'value': 'Generate'
+                'name': 'Gerar outro termo',
+                'value': 'Generate'
             },
             {
-                'name': 'Encerrar programa', 'value': 'Exit'
+                'name': 'Encerrar programa',
+                'value': 'Exit'
             } 
             ],
             default=None
@@ -73,11 +83,13 @@ def main():
             selected_term = menu.menu_select_term()
             documentProcessor.load_template(selected_term)
         
-            filtered_assets = [asset for asset in assets if asset.get('category', '') == selected_term]
+            filtered_assets = [asset for asset in assets
+                if asset.get('category', '') == selected_term
+            ]
             if not filtered_assets:
                 raise ValueError(f"Nenhum ativo do tipo {selected_term} encontrado")
         
-            if api_call.has_multiple_assets(filtered_assets) == True:
+            if api_call.has_multiple_assets(filtered_assets):
                 selectedAsset = menu.menu_select_asset(assets, selected_term)
             else:
                 selectedAsset = filtered_assets[0]

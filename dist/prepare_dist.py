@@ -1,6 +1,7 @@
 import logging
 import shutil
 from pathlib import Path
+
 from util import configure_logging
 
 configure_logging()

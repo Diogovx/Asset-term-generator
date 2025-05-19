@@ -1,5 +1,5 @@
-from typing import List
 from dataclasses import dataclass
+
 
 @dataclass
 class Asset:
@@ -12,4 +12,4 @@ class AssetList:
     user_id: str
     user_name: str
     employee_number: str
-    assets: List[Asset]
+    assets: list[Asset]
