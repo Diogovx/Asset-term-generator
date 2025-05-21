@@ -3,7 +3,7 @@ import logging
 from dotenv import load_dotenv
 
 import api
-from config import API_ACESSORIES_URL, API_HARDWARE_URL, API_USERS_URL
+from core.config_manager import API_ACESSORIES_URL, API_HARDWARE_URL, API_USERS_URL
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -34,6 +34,7 @@ def hardware_api_call(assigned_to):
                                     {
                                         "asset_id": asset_item.get('id', ''),
                                         "asset_tag": asset_item.get('asset_tag', ''),
+                                        "serial": asset_item.get('serial', ''),
                                         "model": asset_item.get('model', '').get('name', ''),
                                         "category": asset_item.get('category', '').get('name', '')
                                     }

@@ -4,8 +4,8 @@ from typing import Any, Optional
 
 from docx import Document
 
-import api_call
-from config import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
+import api.snipeit_client as snipeit_client
+from core.config_manager import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
 from models import Accessory, Asset, AssetList
 
 logger = logging.getLogger(__name__)
@@ -82,7 +82,6 @@ class DocumentProcessor:
             'has_headset': False,
             'has_simcard': False
         }
-        
         for asset in assetList.get('assets'):
             if asset.get('category') == 'Laptops':
                 assets_present['has_laptop'] = True
@@ -231,8 +230,9 @@ class DocumentProcessor:
             if isinstance(item, Asset) or hasattr(item, 'get'):
                 model = item.get('model', item.get('name', ''))
                 tag = item.get('asset_tag', '')
+                serial = item.get('serial', '')
                 if model and tag:
-                    model_text = f"{model} - {tag}"
+                    model_text = f"{model} - {tag} - {serial}"
                 elif model:
                     model_text = model
                 elif tag:
@@ -260,13 +260,16 @@ class DocumentProcessor:
             if not self.document:
                 raise ValueError("Documento não carregado. Chame load_template() primeiro.")
         
-            accessories = api_call.accessories_api_call(asset_list.get('user_id', ''))
+            accessories = snipeit_client.accessories_api_call(asset_list.get('user_id', ''))
             
             asset_linked_accessories = []
             if not accessories:
-                accessories = api_call.accessories_api_call(selected_asset.get('asset_id'), False)
+                accessories = snipeit_client.accessories_api_call(
+                    selected_asset.get('asset_id'),
+                    False
+                )
                 for accessory in accessories:
-                    accessory_history = api_call.specific_api_call(accessory.get('id', ''))
+                    accessory_history = snipeit_client.specific_api_call(accessory.get('id', ''))
                     for checkout in accessory_history:
                         if checkout.get(
                             'assigned_to', {}
@@ -303,7 +306,10 @@ class DocumentProcessor:
             identifier = asset_tag.split('-')
             if len(identifier) < 2:
                 raise ValueError(f"Formato de tag inválido: {asset_tag}")
-            filename = f"{identifier[1]} - Termo {type_of_term} - {username}.docx"
+            filename = (
+                f"{identifier[1]} - Termo {type_of_term} - {username}.docx"
+            )
+
             output_path = Path(OUTPUT_DIR) / filename
             self.document.save(output_path)
             logger.info(f"Termo de responsabilidade do usuário {username} criado!")

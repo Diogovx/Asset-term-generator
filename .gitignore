@@ -15,3 +15,4 @@ logs/
 .ruff_cache
 *.sqlite
 *.exe
+docx-template
