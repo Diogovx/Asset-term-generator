@@ -15,7 +15,7 @@ def configure_logging():
     log_dir = base_dir / 'logs'
     log_dir.mkdir(exist_ok=True, parents=True)
     
-    log_file = log_dir / 'termo_responsabilidade.log'
+    log_file = log_dir / 'app.log'
     
     logging.basicConfig(
         level=logging.INFO,
