@@ -3,3 +3,4 @@ python-dotenv==1.0.0
 requests==2.31.0
 InquirerPy==0.3.4
 requests-cache==1.2.1
+ttkbootstrap==1.13.8

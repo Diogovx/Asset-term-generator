@@ -1,0 +1,16 @@
+api:
+  client: snipeit
+  url: "{{API_URL}}"
+  key: "{{API_KEY}}"
+
+
+ui:
+  theme: flatly
+  logo_path: config/logo.png
+
+document:
+  template_path: docx-template/
+  selected_template: default.docx
+  placeholders:
+    nome: full_name
+    patrimonio: asset_tag

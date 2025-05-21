@@ -5,7 +5,7 @@ import requests
 import requests_cache
 from dotenv import load_dotenv
 
-from config import API_KEY
+from core.config_manager import API_KEY
 
 session = requests_cache.install_cache('assets_cache', expire_after=300)
 load_dotenv()
