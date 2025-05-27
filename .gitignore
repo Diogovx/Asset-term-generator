@@ -16,3 +16,4 @@ logs/
 *.sqlite
 *.exe
 docx-template
+.pytest_cache
