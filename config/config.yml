@@ -1,0 +1,37 @@
+api:
+  client: snipeit
+
+ui:
+  theme: dark
+  logo_path: assets/logo.png
+
+document:
+  template_path: docx-template/
+  templates:
+    laptops:
+      file_name: TERMO DE RESPONSABILIDADES NOTEBOOKS.docx
+      placeholders:
+        - "[HASLAPTOP]"
+        - "[LAPTOPMODEL]"
+        - "[HASMONITOR]"
+        - "[MONITORMODEL]"
+        - "[HASCHARGER]"
+        - "[CHARGERMODEL]"
+        - "[HASKEYBOARD]"
+        - "[KEYBOARDMODEL]"
+        - "[HASMOUSE]"
+        - "[MOUSEMODEL]"
+        - "[HASHEADSET]"
+        - "[HEADSETMODEL]"
+
+    smartphones:
+      file_name: TERMO DE RESPONSABILIDADES CELULARES.docx
+      placeholders:
+        - "[HASSMARTPHONE]"
+        - "[SMARTPHONEMODEL]"
+        - "[HASSIMCARD]"
+        - "[SIMCARDMODEL]"
+
+  default_placeholders:
+    - "[NAME]"
+    - "[EMPLOYEE_NUMBER]"

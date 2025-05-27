@@ -31,7 +31,7 @@ def main():
             
             selected_term = menu.menu_select_term()
             documentProcessor.load_template(selected_term)
-        
+            print(documentProcessor.markers)
             filtered_assets = [asset for asset in assets
                 if asset.get('category', '') == selected_term
             ]
@@ -45,12 +45,13 @@ def main():
 
             logger.info(f"Ativo selecionado: {selectedAsset.get('model', '')}")
             documentProcessor.process_assets(asset_list, selectedAsset)
-            documentProcessor.save(
+            file_path = documentProcessor.save(
                 asset_list.get('user_name'), 
                 selectedAsset.get('asset_tag'), 
                 selected_term
             )
-        
+            documentProcessor.open_file(file_path)
+            
         except ValueError as ve:
             logger.error(f"Erro de seleção: {ve}")
         except Exception as e:

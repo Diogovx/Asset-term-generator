@@ -4,6 +4,8 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+from yaml import CLoader as Loader
+from yaml import load
 
 logger = logging.getLogger(__name__)
 
@@ -11,17 +13,31 @@ def get_base_path():
     if getattr(sys, 'frozen', False):
         return Path(sys.executable).parent
     else:
-        return Path(__file__).parent
+        return Path(__file__).parent.parent
+
+def file(file_path: str, operation: str):
+    with open(file_path, operation) as file:
+        content = file.read()
+    return content
+
+def load_config_file(config_file: str):
+    stream = file(config_file, 'r')
+    data = load(stream=stream, Loader=Loader)
+    return data
+
 
 # Path configuration
 BASE_DIR = get_base_path()
 CONFIG_DIR = BASE_DIR / "config"
+CONFIG_FILE_PATH = CONFIG_DIR / "config.yml"
 TEMPLATE_DIR = BASE_DIR / "docx-template"
 LAPTOP_TEMPLATE_PATH = TEMPLATE_DIR / "TERMO DE RESPONSABILIDADES NOTEBOOKS.docx"
 SMARTPHONE_TEMPLATE_PATH = TEMPLATE_DIR / "TERMO DE RESPONSABILIDADES CELULARES.docx"
 OUTPUT_DIR = BASE_DIR / "output"
 LOGS_DIR = BASE_DIR / "logs"
 ENV_PATH = CONFIG_DIR / ".env"
+ASSETS_PATH = BASE_DIR / "assets"
+
 
 for directory in [TEMPLATE_DIR ,OUTPUT_DIR, LOGS_DIR, CONFIG_DIR]:
     directory.mkdir(exist_ok=True, parents=True)
