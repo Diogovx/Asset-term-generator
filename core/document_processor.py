@@ -1,11 +1,20 @@
 import logging
+import os
+import platform
+import subprocess
 from pathlib import Path
 from typing import Any, Optional
 
 from docx import Document
 
 import api.snipeit_client as snipeit_client
-from core.config_manager import LAPTOP_TEMPLATE_PATH, OUTPUT_DIR, SMARTPHONE_TEMPLATE_PATH
+from core.config_manager import (
+    CONFIG_FILE_PATH,
+    LAPTOP_TEMPLATE_PATH,
+    OUTPUT_DIR,
+    SMARTPHONE_TEMPLATE_PATH,
+    load_config_file,
+)
 from models import Accessory, Asset, AssetList
 
 logger = logging.getLogger(__name__)
@@ -15,8 +24,6 @@ MARKERS = {
     'EMPLOYEE_NUMBER': '[EMPLOYEE_NUMBER]',
     'HAS_LAPTOP': '[HASLAPTOP]',
     'LAPTOP_MODEL': '[LAPTOPMODEL]',
-    'HAS_SMARTPHONE': '[HASSMARTPHONE]',
-    'SMARTPHONE_MODEL': '[SMARTPHONEMODEL]',
     'HAS_MONITOR': "[HASMONITOR]",
     'MONITOR_MODEL': "[MONITORMODEL]",
     'HAS_CHARGER': "[HASCHARGER]",
@@ -27,6 +34,8 @@ MARKERS = {
     'MOUSE_MODEL': "[MOUSEMODEL]",
     'HAS_HEADSET': "[HASHEADSET]",
     'HEADSET_MODEL': "[HEADSETMODEL]",
+    'HAS_SMARTPHONE': '[HASSMARTPHONE]',
+    'SMARTPHONE_MODEL': '[SMARTPHONEMODEL]',
     'HAS_SIMCARD': '[HASSIMCARD]',
     'SIMCARD_MODEL': '[SIMCARDMODEL]'
 }
@@ -34,6 +43,7 @@ MARKERS = {
 class DocumentProcessor:
     def __init__(self):
         self.document = None
+        self.markers = self._load_markers()
     
     def load_template(self, selected_template) -> None:
         """ Load document template
@@ -57,6 +67,18 @@ class DocumentProcessor:
         except Exception as e:
             logger.error(f"Error loading template: {e}")
             raise
+    def _load_markers(self):
+        markers: list = []
+        config_data: dict = load_config_file(CONFIG_FILE_PATH)
+        templates = config_data.get('document').get('templates')
+        default_placeholders = config_data.get('document').get('default_placeholders')
+        
+        markers.extend(default_placeholders)
+        
+        for _, template_data in templates.items():
+            placeholders = template_data.get('placeholders', [])
+            markers.extend(placeholders)
+        return markers
     def _replace_in_paragraph(self, paragraph, key: str, value: str) -> None:
         """ Replace markers while maintaining formatting
         
@@ -212,8 +234,8 @@ class DocumentProcessor:
         Args:
             paragraph:  Document paragraph
             has_asset (bool): If the item is present
-            marker_check (str): Attendance marker
-            marker_model (str): Template marker
+            presence_marker (str): Attendance marker
+            description_marker (str): Template marker
             item (Optional[Asset]): Object containing item information
         """
         if not presence_marker or not description_marker:
@@ -224,9 +246,9 @@ class DocumentProcessor:
             presence_marker,
             "X" if has_asset else " "
         )
-        
         model_text = ""
         if has_asset and item:
+            
             if isinstance(item, Asset) or hasattr(item, 'get'):
                 model = item.get('model', item.get('name', ''))
                 tag = item.get('asset_tag', '')
@@ -261,6 +283,8 @@ class DocumentProcessor:
                 raise ValueError("Documento não carregado. Chame load_template() primeiro.")
         
             accessories = snipeit_client.accessories_api_call(asset_list.get('user_id', ''))
+            
+            load_config_file(CONFIG_FILE_PATH)
             
             asset_linked_accessories = []
             if not accessories:
@@ -316,4 +340,14 @@ class DocumentProcessor:
             return output_path
         except Exception as e:
             logger.error(f"Erro salvando o documento: {e}")
-            raise        
+            raise
+    def open_file(self, file_path) -> None:
+        try:
+            if platform.system() == "Windows":
+                os.startfile(file_path)
+            elif platform.system() == "Darwin":
+                subprocess.call(["open", file_path])
+            else:
+                subprocess.call(["xdg-open", file_path])
+        except Exception as e:
+            logger.error(f"Erro ao abrir o arquivo {e}")
