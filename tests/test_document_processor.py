@@ -86,9 +86,9 @@ def test_load_template_missing(monkeypatch, processor):
 
 
 @patch("core.document_processor.snipeit_client.accessories_api_call")
-@patch("core.document_processor.snipeit_client.specific_api_call")
+@patch("core.document_processor.snipeit_client.specific_accessory_api_call")
 def test_process_assets(
-    mock_specific_api_call, 
+    mock_specific_accessory_api_call, 
     mock_accessories_api_call, 
     processor
 ):
@@ -113,7 +113,7 @@ def test_process_assets(
     mock_accessories_api_call.return_value = [
         {'category': {'name': 'Mouses'}, 'model': 'Logitech', 'asset_tag': '5678', 'serial': 'DEF'}
     ]
-    mock_specific_api_call.return_value = []
+    mock_specific_accessory_api_call.return_value = []
 
     processor.process_assets(asset_list, selected_asset)
 
