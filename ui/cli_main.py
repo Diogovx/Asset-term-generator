@@ -1,17 +1,19 @@
 from InquirerPy import inquirer
 
+from core.template_loader import get_templates
+
 
 class Menu:
     def menu_select_term(self):
+        template_config = get_templates()
+        
         choose = inquirer.select(
             message="Você deseja gerar qual termo?\nEscolha um deles: ",
             choices=[
                 {
-                    'name': 'Notebook', 'value': 'Laptops',
-                },
-                {
-                    'name': 'Celular', 'value': 'Smartphones',
+                    'name': template, 'value': template,
                 }
+                for template in template_config
             ],
             default=None
         ).execute()

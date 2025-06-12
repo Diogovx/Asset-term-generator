@@ -12,6 +12,22 @@ configure_logging()
 logger = logging.getLogger(__name__)
 
 
+"""def get_placeholders(selected_term):
+    config = load_config_file()
+    document_config = config['document']
+    template_config = document_config['templates']
+    placeholders = template_config[selected_term]['placeholders']
+
+    
+    return placeholders
+
+def get_placeholders_key(placeholders):
+    print(placeholders)
+    for placeholder in placeholders['asset']:
+        #print(f"{placeholder}\n")
+        pass
+    
+"""
 def main():
     documentProcessor = DocumentProcessor()
     menu = Menu()
@@ -20,7 +36,6 @@ def main():
             assigned_to = inquirer.text(message="Digite a matricula:").execute()
             if not assigned_to:
                 raise Exception("Matrícula não pode ser vazia")
-            
         
             asset_list = snipeit_client.hardware_api_call(assigned_to)
             if not asset_list or not isinstance(asset_list, dict):
@@ -28,13 +43,15 @@ def main():
             assets = asset_list.get('assets', '')
             if not assets:
                 raise Exception("Nenhum ativo encontrado para esta matricula")
-            
+            #print(get_placeholders("laptops"))
             selected_term = menu.menu_select_term()
+            #print(get_placeholders_key(placeholders))
             documentProcessor.load_template(selected_term)
-            print(documentProcessor.markers)
+            
             filtered_assets = [asset for asset in assets
-                if asset.get('category', '') == selected_term
+                if asset.get('category', '') == selected_term.capitalize()
             ]
+
             if not filtered_assets:
                 raise ValueError(f"Nenhum ativo do tipo {selected_term} encontrado")
         
@@ -44,7 +61,9 @@ def main():
                 selectedAsset = filtered_assets[0]
 
             logger.info(f"Ativo selecionado: {selectedAsset.get('model', '')}")
-            documentProcessor.process_assets(asset_list, selectedAsset)
+            documentProcessor.process_assets(
+                asset_list, selectedAsset, selected_template=selected_term
+            )
             file_path = documentProcessor.save(
                 asset_list.get('user_name'), 
                 selectedAsset.get('asset_tag'), 

@@ -4,8 +4,6 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from yaml import CLoader as Loader
-from yaml import load
 
 logger = logging.getLogger(__name__)
 
@@ -14,16 +12,6 @@ def get_base_path():
         return Path(sys.executable).parent
     else:
         return Path(__file__).parent.parent
-
-def file(file_path: str, operation: str):
-    with open(file_path, operation) as file:
-        content = file.read()
-    return content
-
-def load_config_file(config_file: str):
-    stream = file(config_file, 'r')
-    data = load(stream=stream, Loader=Loader)
-    return data
 
 
 # Path configuration

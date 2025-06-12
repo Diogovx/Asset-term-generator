@@ -36,7 +36,7 @@ def hardware_api_call(assigned_to):
                                         "asset_tag": asset_item.get('asset_tag', ''),
                                         "serial": asset_item.get('serial', ''),
                                         "model": asset_item.get('model', '').get('name', ''),
-                                        "category": asset_item.get('category', '').get('name', '')
+                                        "category": asset_item.get('category', '').get('name', ''),
                                     }
                                 )
 
@@ -83,12 +83,14 @@ def accessories_api_call(id, user_has_accessories = True):
     
     return accessories_response
 
-def specific_api_call(accessory_id):
+def specific_accessory_api_call(accessory_id):
     client = api.AccessoriesClient(
         base_url=str(get_api_url().get('accessories', '')) + f'{accessory_id}/checkedout'
     )
     response = client.get_user_accessory()
     accessories_response = response['rows']
+
+
     return accessories_response
 
 def has_multiple_assets(filtered_assets):
