@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 from core.config_manager import API_KEY
 
-session = requests_cache.install_cache('assets_cache', expire_after=300)
+session = requests_cache.install_cache('assets_cache', expire_after=100)
 load_dotenv()
 
 logger = logging.getLogger(__name__)

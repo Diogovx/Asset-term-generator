@@ -32,7 +32,7 @@ class Menu:
                 })",
                 'value': asset
             } 
-            for asset in asset_list if asset.get('category') == selected_term
+            for asset in asset_list if asset.get('category') == selected_term.capitalize()
             ],
             default=None
         ).execute()

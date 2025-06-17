@@ -1,6 +1,7 @@
 import logging
 import os
 import platform
+import re
 import subprocess
 from pathlib import Path
 from typing import Any, Optional
@@ -70,7 +71,12 @@ class DocumentProcessor:
                 run.text = ""
             paragraph.runs[0].text = text
 
-    def _check_assets(self, asset_list: dict, accessories_list: list) -> dict[str, bool]:
+    def _check_assets(
+        self,
+        asset_list: dict,
+        accessories_list: list,
+        components_list: list
+        ) -> dict[str, bool]:
         """_summary_
 
         Args:
@@ -80,15 +86,22 @@ class DocumentProcessor:
         Returns:
             dict[str, bool]: check presence of assets and accessories
         """
-
         assets_present = {}
         for asset in asset_list.get("assets", []):
             category = asset.get("category")
+            if isinstance(category, dict):
+                category = category.get("name", "")
             key = f"has_{category.lower()}"
             assets_present[key] = True
 
         for accessory in accessories_list:
             category = accessory.get("category", {})
+            if category:
+                key = f"has_{category.lower()}"
+                assets_present[key] = True
+        
+        for component in components_list:
+            category = component.get("category", {})
             if category:
                 key = f"has_{category.lower()}"
                 assets_present[key] = True
@@ -101,8 +114,6 @@ class DocumentProcessor:
         selected_asset: Asset,
         asset_list: AssetList,
         assets_present: dict[str, bool],
-        #accessories: list[Accessory],
-        #selected_template: str
     ) -> None:
         """Processes asset information and makes substitutions in the document.
         
@@ -115,15 +126,17 @@ class DocumentProcessor:
             selected_template (str)
         
         """
-        accessories = asset_list.get('accessories', '')
-
+        accessories = selected_asset.get('accessories', '')
+        components = selected_asset.get('components', '')
         for item in self.template_placeholders:
             placeholder = item.get('name', '')
             item_category = item.get('category', '')
+            if isinstance(item_category, dict):
+                item_category = item_category.get("name", "")
             item_type = item.get('type', '')
             data_source = item.get('source', {})
             data_path = data_source.get('path', '')
-
+            
             if not placeholder or not data_path:
                 logger.warning(f"Placeholder inválido ou incompleto: {item}")
                 continue
@@ -132,12 +145,14 @@ class DocumentProcessor:
                 key = f"has_{item_category.lower()}"
                 value = data_path if assets_present.get(key, False) else ''
             
+            
+            
             elif data_source.get('type', '') == 'accessories':
-                categoty_to_find = item.get('category', '')
+                category_to_find = item.get('category', '')
                 accessory = next(
                     (
-                        acc for acc in accessories 
-                        if acc.get('category', '').lower() == categoty_to_find.lower()
+                        acc for acc in accessories
+                        if acc.get('category', '').lower() == category_to_find.lower()
                     ), 
                     None
                 )
@@ -145,6 +160,21 @@ class DocumentProcessor:
                     value = accessory.get(data_path, '')
                 else:
                     value = ''
+                    
+            elif data_source.get('type', '') == 'components':
+                category_to_find = item.get('category', '')
+                accessory = next(
+                    (
+                        comp for comp in components
+                        if comp.get('category', '').lower() == category_to_find.lower()
+                    ), 
+                    None
+                )
+                if accessory:
+                    value = accessory.get(data_path, '')
+                else:
+                    value = ''
+
             else:
                 model = selected_asset.get(data_path, '')
                 tag = selected_asset.get("asset_tag", "")
@@ -180,46 +210,6 @@ class DocumentProcessor:
             self._replace_in_paragraph(paragraph, placeholder, value)
 
             
-    def _process_assets_type(
-        self,
-        paragraph,
-        has_asset: bool,
-        presence_marker: str,
-        description_marker: str,
-        item: Optional[Asset] = None,
-    ) -> None:
-        """Process a specific type of asset or accessory
-
-        Args:
-            paragraph:  Document paragraph
-            has_asset (bool): If the item is present
-            presence_marker (str): Attendance marker
-            description_marker (str): Template marker
-            item (Optional[Asset]): Object containing item information
-        """
-        if not presence_marker or not description_marker:
-            return
-
-        self._replace_in_paragraph(
-            paragraph, presence_marker, "X" if has_asset else " "
-        )
-        model_text = ""
-        if has_asset and item:
-            if isinstance(item, Asset) or hasattr(item, "get"):
-                model = item.get("model", item.get("name", ""))
-                tag = item.get("asset_tag", "")
-                serial = item.get("serial", "")
-                if model and tag:
-                    model_text = f"{model} - {tag} - {serial}"
-                elif model:
-                    model_text = model
-                elif tag:
-                    model_text = tag
-
-        self._replace_in_paragraph(paragraph, description_marker, model_text)
-        
-    
-            
     def process_assets(self, asset_list: dict[str, Any], selected_asset: Asset) -> None:
         """Process asset list and update document
 
@@ -233,7 +223,29 @@ class DocumentProcessor:
                 raise ValueError(
                     "Documento não carregado. Chame load_template() primeiro."
                 )
+            
+            components: list[dict[str, Any]] = snipeit_client.components_api_call()
+            asset_linked_components = []
+            if components:
+                for component in components:
+                    components_history = snipeit_client.specific_component_api_call(
+                        component.get("id", "")
+                    )
+                    for checkout in components_history:
+                        name = checkout.get('name', '')
+                        match = re.search(r'\(([^\)]+)\)', name)
+                        extracted_tag = match.group(1).strip().upper()
+                        if match: 
+                            if extracted_tag == selected_asset.get('asset_tag'):
+                                asset_linked_components.append({
+                                    "component_id": component.get('id', ''),
+                                    "name": component.get('name'),
+                                    "category": component.get('category', {}).get('name', ''),
+                                })
+                components = asset_linked_components
+            selected_asset["components"] = components
 
+            
             accessories = snipeit_client.accessories_api_call(
                 asset_list.get("user_id", "")
             )
@@ -257,9 +269,9 @@ class DocumentProcessor:
                                 "category": accessory.get('category', {}).get('name', ''),
                                 })
                 accessories = asset_linked_accessories
-            asset_list['accessories'] = accessories
-            
-            assets_present = self._check_assets(asset_list, accessories)
+            selected_asset['accessories'] = accessories
+            assets_present = self._check_assets(asset_list, accessories, components)
+
             for paragraph in self.document.paragraphs:
                 self._process_default_placeholders(paragraph, asset_list)
                 self._process_placeholder(paragraph, selected_asset, asset_list, assets_present)

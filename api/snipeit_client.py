@@ -1,9 +1,15 @@
 import logging
+from typing import Any
 
 from dotenv import load_dotenv
 
 import api
-from core.config_manager import API_ACESSORIES_URL, API_HARDWARE_URL, API_USERS_URL
+from core.config_manager import (
+    API_ACESSORIES_URL,
+    API_COMPONENTS_URL,
+    API_HARDWARE_URL,
+    API_USERS_URL,
+)
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -12,12 +18,13 @@ def get_api_url():
     return {
         "hardware": API_HARDWARE_URL,
         "users": API_USERS_URL,
-        "accessories": API_ACESSORIES_URL
+        "accessories": API_ACESSORIES_URL,
+        "components": API_COMPONENTS_URL
     }
 
 def hardware_api_call(assigned_to):  
     try:
-        client = api.HardwareClient(base_url=get_api_url().get('hardware', ''))
+        client = api.HardwareClient(base_url=get_api_url().get('hardware', {}))
         response = client.get_assets_by_employee()
         assets_response = response['rows']
     
@@ -36,7 +43,7 @@ def hardware_api_call(assigned_to):
                                         "asset_tag": asset_item.get('asset_tag', ''),
                                         "serial": asset_item.get('serial', ''),
                                         "model": asset_item.get('model', '').get('name', ''),
-                                        "category": asset_item.get('category', '').get('name', ''),
+                                        "category": asset_item.get('category', {}).get('name', ''),
                                     }
                                 )
 
@@ -98,3 +105,22 @@ def has_multiple_assets(filtered_assets):
         return True
     else:
         return False
+    
+def components_api_call():
+    client = api.ComponentsClient(
+        base_url=str(get_api_url().get('components', {}))
+    )
+    response = client.get_asset_components()
+    components_response = response['rows']
+    
+    return components_response
+
+def specific_component_api_call(component_id: int) -> list[dict[str, Any]]:
+    client = api.AccessoriesClient(
+        base_url=str(get_api_url().get('components', '')) + '/' + f'{component_id}/assets'
+    )
+    response = client.get_user_accessory()
+    accessories_response = response['rows']
+
+
+    return accessories_response
