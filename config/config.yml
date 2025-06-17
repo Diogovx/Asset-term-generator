@@ -161,7 +161,7 @@ document:
           required: true
           identifier: false
           source:
-            type: accessories
+            type: components
             path: name
         - name: "[HASSMARTPHONE]"
           type: bool
