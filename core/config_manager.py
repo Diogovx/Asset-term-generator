@@ -38,6 +38,7 @@ else:
 API_KEY = os.getenv("API_KEY")
 API_HARDWARE_URL = os.getenv("API_HARDWARE_URL")
 API_ACESSORIES_URL = os.getenv("API_ACESSORIES_URL")
+API_COMPONENTS_URL = os.getenv("API_COMPONENTS_URL")
 API_USERS_URL = os.getenv("API_USERS_URL")
 
 if not API_KEY:
