@@ -1,7 +1,7 @@
 [tool.ruff]
 line-length = 100                # Máximo de 100 caracteres por linha
 target-version = "py39"         # Compatível com Python 3.9
-exclude = ["tests", ".venv", "migrations"]  # Ignora essas pastas
+exclude = ["__pycache__", "tests", "dist"]  # Ignora essas pastas
 
 # Regras ativadas 
 lint.select = [
@@ -14,3 +14,27 @@ lint.select = [
 
 # Corrige automaticamente onde possível com `--fix`
 fix = true
+
+[tool.black]
+line-length = 88
+target-version = ['py39'] 
+include = '\.pyi?$'
+exclude = ["__pycache__", "tests", "dist"]
+
+
+[tool.mypy]
+python_version = 3.9
+exclude = ["tests", "venv", "build", "dist"]
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "yaml"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "requests"
+ignore_missing_imports = true

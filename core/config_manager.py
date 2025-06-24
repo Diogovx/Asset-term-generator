@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
-def get_base_path():
-    if getattr(sys, 'frozen', False):
+
+def get_base_path() -> Path:
+    if getattr(sys, "frozen", False):
         return Path(sys.executable).parent
     else:
         return Path(__file__).parent.parent
@@ -27,7 +28,7 @@ ENV_PATH = CONFIG_DIR / ".env"
 ASSETS_PATH = BASE_DIR / "assets"
 
 
-for directory in [TEMPLATE_DIR ,OUTPUT_DIR, LOGS_DIR, CONFIG_DIR]:
+for directory in [TEMPLATE_DIR, OUTPUT_DIR, LOGS_DIR, CONFIG_DIR]:
     directory.mkdir(exist_ok=True, parents=True)
 
 if ENV_PATH.exists():

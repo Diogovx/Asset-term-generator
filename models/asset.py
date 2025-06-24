@@ -6,7 +6,8 @@ class Asset:
     category: str
     model: str
     asset_tag: str
-    
+
+
 @dataclass
 class AssetList:
     user_id: str

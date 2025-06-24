@@ -7,4 +7,4 @@ Exports functions to:
 
 from .logging_config import configure_logging
 
-__all__ = ['configure_logging']
+__all__ = ["configure_logging"]
