@@ -2,10 +2,10 @@ import logging
 import shutil
 from pathlib import Path
 
-"""from util import configure_logging
+from util import configure_logging
 
 configure_logging()
-logger = logging.getLogger(__name__)"""
+logger = logging.getLogger(__name__)
 
 
 def prepare_distribution():
@@ -41,7 +41,7 @@ def prepare_distribution():
         "config/.env",
         final_dir / "config",
     )
-    print(f"Distribution prepared in {final_dir}")
+    logger.info(f"Distribution prepared in {final_dir}")
 
 
 prepare_distribution()
