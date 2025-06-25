@@ -28,8 +28,8 @@ class DocumentProcessor:
             selected_template (str): The name of the template to load.
 
         Raises:
+            ValueError: If model not found in config file
             FileNotFoundErro: If model file not found
-            Exception: For other error during loading
         """
 
         try:
@@ -86,7 +86,7 @@ class DocumentProcessor:
         """
         assets_present = {}
         for asset in asset_list.get("assets", []):
-            category = asset.get("category")
+            category = asset.get("category", "")
             if isinstance(category, dict):
                 category = category.get("name", "")
             key = f"has_{category.lower()}"
@@ -133,7 +133,7 @@ class DocumentProcessor:
                 item_category = item_category.get("name", "")
             item_type = item.get("type", "")
             data_source = item.get("source", {})
-            data_path = data_source.get("path", "")
+            data_path = data_source.get("path", data_source.get("value", ""))
 
             if not placeholder or not data_path:
                 logger.warning(f"Placeholder inválido ou incompleto: {item}")
@@ -283,7 +283,6 @@ class DocumentProcessor:
                 accessories = asset_linked_accessories
             selected_asset["accessories"] = accessories
             assets_present = self._check_assets(asset_list, accessories, components)
-
             for paragraph in self.document.paragraphs:
                 self._process_default_placeholders(paragraph, asset_list)
                 self._process_placeholder(

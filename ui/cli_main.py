@@ -22,7 +22,7 @@ class Menu:
         ).execute()
         return choose
 
-    def menu_select_asset(self, asset_list: list, selected_term: str) -> dict[str, Any]:
+    def menu_select_asset(self, asset_list: list) -> dict[str, Any]:
         choose = inquirer.select(
             message="Foi encontrados mais de um ativo do usuário!\nEscolha um deles: ",
             choices=[
@@ -37,7 +37,6 @@ class Menu:
                     "value": asset,
                 }
                 for asset in asset_list
-                if asset.get("category") == selected_term.capitalize()
             ],
             default=None,
         ).execute()
