@@ -46,6 +46,7 @@ def hardware_api_call(assigned_to: dict[str, Any]) -> dict[str, Any]:
                             "serial": asset_item.get("serial", ""),
                             "model": asset_item.get("model", "").get("name", ""),
                             "category": asset_item.get("category", {}).get("name", ""),
+                            "custom_fields": asset_item.get("custom_fields"),
                         }
                     )
 
