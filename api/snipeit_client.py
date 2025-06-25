@@ -125,12 +125,12 @@ def components_api_call() -> Any:
 
 @lru_cache(maxsize=100, typed=False)
 def specific_component_api_call(component_id: int) -> list[dict[str, Any]]:
-    client = api.AccessoriesClient(
+    client = api.ComponentsClient(
         base_url=str(get_api_url().get("components", ""))
         + "/"
         + f"{component_id}/assets"
     )
-    response = client.get_user_accessory()
+    response = client.get_asset_components()
     accessories_response = response["rows"]
 
     return accessories_response

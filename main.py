@@ -20,12 +20,10 @@ def main() -> None:
             assigned_to = inquirer.text(message="Digite a matricula:").execute()
             if not assigned_to:
                 raise Exception("Matrícula não pode ser vazia")
-
             asset_list = snipeit_client.hardware_api_call(assigned_to)
-
             if not asset_list or not isinstance(asset_list, dict):
                 raise Exception("Resposta inválida da API")
-            assets = asset_list.get("assets", "")
+            assets = asset_list.get("assets", [])
             if not assets:
                 raise Exception("Nenhum ativo encontrado para esta matricula")
             selected_term = menu.menu_select_term()
@@ -40,7 +38,7 @@ def main() -> None:
                 raise ValueError(f"Nenhum ativo do tipo {selected_term} encontrado")
 
             if snipeit_client.has_multiple_assets(filtered_assets):
-                selected_asset = menu.menu_select_asset(filtered_assets, selected_term)
+                selected_asset = menu.menu_select_asset(filtered_assets)
             else:
                 selected_asset = filtered_assets[0]
 

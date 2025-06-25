@@ -1,0 +1,59 @@
+import logging
+import shutil
+from pathlib import Path
+
+from core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
+from core.template_loader import get_templates
+from util import configure_logging
+
+logger = logging.getLogger(__name__)
+
+
+def prepare_distribution():
+    # Paths
+    final_dir = Path("Gerador_Termos_Final")
+    dist_exe_path = BASE_DIR / "dist" / "Gerador_de_Termos.exe"
+
+    logger.info(f"Limpando o diretório final: {final_dir}")
+    if final_dir.exists():
+        shutil.rmtree(final_dir)
+
+    final_template_dir = final_dir / "docx-template"
+    final_config_dir = final_dir / "config"
+    final_template_dir.mkdir(parents=True, exist_ok=True)
+    final_config_dir.mkdir(exist_ok=True)
+
+    (final_dir / "output").mkdir(exist_ok=True)
+    (final_dir / "logs").mkdir(exist_ok=True)
+
+    # Copy files
+    logger.info("Copiando arquivos...")
+    shutil.copy(dist_exe_path, final_dir)
+    shutil.copy(BASE_DIR / "README.md", final_dir)
+    shutil.copy(
+        CONFIG_DIR / "config.yml",
+        final_config_dir,
+    )
+    shutil.copy(
+        CONFIG_DIR / ".env",
+        final_config_dir,
+    )
+
+    logger.info("Copiando templates de documento...")
+    templates_config = get_templates()
+    for _, template_info in templates_config.items():
+        file_name = template_info.get("file_name")
+        if file_name:
+            source_path = TEMPLATE_DIR / file_name
+            logger.info(f"Template '{file_name}' copiado.")
+        else:
+            logger.warning(
+                f"Template '{file_name} definido no config.yml mas não encontrado em {source_path}"
+            )
+
+    logger.info(f"Distruibuição prepared in {final_dir}")
+
+
+if __name__ == "__main__":
+    configure_logging()
+    prepare_distribution()
