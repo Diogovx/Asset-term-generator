@@ -22,6 +22,7 @@ def main() -> None:
                 raise Exception("Matrícula não pode ser vazia")
 
             asset_list = snipeit_client.hardware_api_call(assigned_to)
+
             if not asset_list or not isinstance(asset_list, dict):
                 raise Exception("Resposta inválida da API")
             assets = asset_list.get("assets", "")
