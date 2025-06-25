@@ -1,0 +1,8 @@
+python-docx
+requests
+InquirerPy
+requests-cache
+customtkinter
+pillow
+pyyaml
+pydantic

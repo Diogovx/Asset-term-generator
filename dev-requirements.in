@@ -1,0 +1,17 @@
+-r requirements.in
+
+pre-commit
+
+ruff
+mypy
+black
+
+pip-tools
+
+pytest
+pytest-cov
+pytest-mock
+
+types-PyYAML
+types-requests
+types-ujson
