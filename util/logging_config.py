@@ -3,7 +3,6 @@ import sys
 from pathlib import Path
 
 
-# Logging configuration
 def configure_logging() -> None:
 
     if getattr(sys, "frozen", False):
@@ -11,7 +10,6 @@ def configure_logging() -> None:
     else:
         base_dir = Path(__file__).parent.parent
 
-    # Create log dir if not exists
     log_dir = base_dir / "logs"
     log_dir.mkdir(exist_ok=True, parents=True)
 
