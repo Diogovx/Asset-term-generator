@@ -4,7 +4,6 @@ from pathlib import Path
 
 
 def configure_logging() -> None:
-
     if getattr(sys, "frozen", False):
         base_dir = Path(sys.executable).parent
     else:

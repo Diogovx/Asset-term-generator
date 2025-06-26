@@ -79,7 +79,6 @@ def hardware_api_call(assigned_to: dict[str, Any]) -> dict[str, Any]:
 
 
 def accessories_api_call(id: int, user_has_accessories: bool = True) -> Any:
-
     if not user_has_accessories:
         client = api.AccessoriesClient(
             base_url=str(get_api_url().get("accessories", ""))
