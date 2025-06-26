@@ -4,7 +4,7 @@ import platform
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 from docx import Document
 from docx.text.paragraph import Paragraph
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class DocumentProcessor:
     def __init__(self) -> None:
-        self.document: Optional[Document] = None
+        self.document: Document | None = None
         self.template_placeholders: list
 
     def load_template(self, selected_template: str) -> None:
@@ -221,7 +221,6 @@ class DocumentProcessor:
             selectedAsset (Asset): Asset selected for highlighting
         """
         try:
-
             if not self.document:
                 raise ValueError(
                     "Documento não carregado. Chame load_template() primeiro."

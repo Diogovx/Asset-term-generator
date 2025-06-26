@@ -15,13 +15,6 @@ lint.select = [
 # Corrige automaticamente onde possível com `--fix`
 fix = true
 
-[tool.black]
-line-length = 88
-target-version = ['py311'] 
-include = '\.pyi?$'
-exclude = ["__pycache__", "tests", "dist"]
-
-
 [tool.mypy]
 python_version = 3.11
 exclude = ["tests", "venv", "build", "dist"]

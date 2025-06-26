@@ -4,7 +4,9 @@ pre-commit
 
 ruff
 mypy
-black
+
+bandit
+pip-audit
 
 pip-tools
 
