@@ -11,7 +11,3 @@ repos:
       additional_dependencies:
         - types-requests
         - types-PyYAML
-  - repo: https://github.com/psf/black
-    rev: 24.4.2 
-    hooks:
-      - id: black

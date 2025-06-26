@@ -27,13 +27,9 @@ class Menu:
             message="Foi encontrados mais de um ativo do usuário!\nEscolha um deles: ",
             choices=[
                 {
-                    "name": f"{
-                    asset.get('asset_tag')
-                } - {
-                    asset.get('model')
-                } ({
-                    asset.get('category')
-                })",
+                    "name": f"{asset.get('asset_tag')} - {asset.get('model')} ({
+                        asset.get('category')
+                    })",
                     "value": asset,
                 }
                 for asset in asset_list
