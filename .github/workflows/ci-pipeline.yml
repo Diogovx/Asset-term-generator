@@ -8,12 +8,12 @@ name: Verificação de Qualidade e Testes
       - main
 jobs:
   build-and-test:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
-      - name: Configurar Python
-        uses: actions/setup-python
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Instalar dependências
@@ -22,7 +22,7 @@ jobs:
           pip install -r dev-requirements.txt
       - name: Verificar formatação e linting com Ruff
         run: |
-          ruff format --check
+          ruff format --check .
           ruff check .
       - name: Rodar testes com Pytest
         run: pytest --cov=.
