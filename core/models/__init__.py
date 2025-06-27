@@ -3,8 +3,9 @@ System data models definitions
 
 """
 
-from .api_models import Asset, CustomFieldDetail, UserAssetsResponse
 from .config_models import AppConfig, Placeholder, TemplateConfig
+from .hardware_api_models import Accessory, Asset, Component, CustomFieldDetail, UserAssetsResponse
+from .user_api_model import User, UserSearchResponse
 
 __all__ = [
     "AppConfig",
@@ -12,5 +13,9 @@ __all__ = [
     "TemplateConfig",
     "CustomFieldDetail",
     "UserAssetsResponse",
-    "Asset"
+    "Asset",
+    "UserSearchResponse",
+    "User",
+    "Accessory",
+    "Component",
 ]
