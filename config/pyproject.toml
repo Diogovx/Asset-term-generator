@@ -1,7 +1,7 @@
 [tool.ruff]
 line-length = 100                # Máximo de 100 caracteres por linha
 target-version = "py311"         # Compatível com Python 3.9
-exclude = ["__pycache__", "tests", "dist"]  # Ignora essas pastas
+exclude = ["__pycache__", "tests", "dist", ".venv"]  # Ignora essas pastas
 
 # Regras ativadas 
 lint.select = [
@@ -12,8 +12,6 @@ lint.select = [
   "B",   # bugbear (boas práticas e problemas comuns)
 ]
 
-# Corrige automaticamente onde possível com `--fix`
-fix = true
 
 [tool.mypy]
 python_version = 3.11
