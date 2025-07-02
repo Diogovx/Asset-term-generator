@@ -142,7 +142,7 @@ document:
           identifier: false
           source:
             type: asset
-            path: "model.name"
+            format: "{model.name}"
         - name: "[CHARGERMODEL]"
           type: text
           category: "Charger"

@@ -19,18 +19,41 @@ class CustomFieldDetail(BaseModel):
     field_format: str | None = Field(None, alias="field_format")
 
 
+class AccessoryCheckoutTarget(BaseModel):
+    id: int
+    type: str  # 'user' ou 'asset'
+    name: str
+
+
+# Modelo para cada linha na resposta de /accessories/{id}/checkedout
+class AccessoryCheckout(BaseModel):
+    id: int  # ID do checkout, não do acessório
+    assigned_to: AccessoryCheckoutTarget
+
+
+# Modelo para cada linha na resposta de /components/{id}/assets
+class ComponentAssetAssignment(BaseModel):
+    id: int  # ID do ativo
+    name: str
+    type: str
+
+
 class Component(BaseModel):
     id: int
     name: str
     category: Category
     serial: str | None = None
+    assigned_to: int | None = None
+    assigned_type: str | None = None
 
 
 class Accessory(BaseModel):
     id: int
     name: str
     model_number: str | None = None
-    category = Category
+    category: Category
+    assigned_to: int | None = None
+    assigned_type: str | None = None
 
 
 class Asset(BaseModel):

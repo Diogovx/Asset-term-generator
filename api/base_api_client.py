@@ -2,12 +2,13 @@ import logging
 from typing import Any
 
 import requests
-import requests_cache
+
+# import requests_cache
 from dotenv import load_dotenv
 
 from core.config_manager import API_KEY
 
-session = requests_cache.install_cache("snipeit_cache", expire_after=100, backend="sqlite")
+# session = requests_cache.install_cache("snipeit_cache", expire_after=100, backend="sqlite")
 load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -26,9 +27,19 @@ class BaseAPIClient:
             "Accept": "application/json",
         }
         try:
-            response = session.get(endpoint, headers=headers, timeout=10)
+            response = requests.get(endpoint, headers=headers, timeout=10)
             response.raise_for_status()
-            return response.json()
+
+            if not response.text or not response.content:
+                logger.warning(f"Resposta da API para '{endpoint}' veio com corpo vazio.")
+                return {}
+
+            try:
+                return response.json()
+            except requests.exceptions.JSONDecodeError:
+                logger.error(f"Falha ao decodificar JSON da API para '{endpoint}'.")
+                return {}
+
         except requests.exceptions.RequestException as e:
             logger.error(f"API error: {e}")
             raise

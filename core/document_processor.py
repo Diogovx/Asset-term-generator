@@ -1,25 +1,30 @@
 import logging
 import os
 import platform
-import re
 import subprocess
 from pathlib import Path
-from typing import Any, cast
 
 from docx import Document
+from docx.document import Document as DocumentObject
 from docx.text.paragraph import Paragraph
 
-import api.snipeit_client as snipeit_client
-import core.template_loader as template_loader
-from core.config_manager import OUTPUT_DIR
+from core.config_manager import OUTPUT_DIR, TEMPLATE_DIR
+from core.models import AppConfig, Asset, TemplateConfig, User
 
 logger = logging.getLogger(__name__)
 
 
+def docx_replace(paragraph: Paragraph, old_text: str, new_text: str):
+    for run in paragraph.runs:
+        if old_text in run.text:
+            run.text = run.text.replace(old_text, new_text)
+
+
 class DocumentProcessor:
-    def __init__(self) -> None:
-        self.document: Document | None = None
-        self.template_placeholders: list
+    def __init__(self, config: AppConfig) -> None:
+        self.config: AppConfig = config
+        self.document: DocumentObject | None = None
+        self.active_template_config: TemplateConfig | None = None
 
     def load_template(self, selected_template: str) -> None:
         """Load document template dynamically based on user selection.
@@ -33,30 +38,76 @@ class DocumentProcessor:
         """
 
         try:
-            config = template_loader.load_config_file()
-            document_config = config.get("document", {})
-            templates = document_config.get("templates", {})
-
-            template_info = templates.get(selected_template)
-            if not template_info:
-                raise ValueError(f"Template {selected_template} not found in config")
-
-            template_path = Path(
-                document_config.get("template_path", "")
-            ) / template_info.get("file_name", "")
-            if not template_path.exists():
-                raise FileNotFoundError(f"Template not found at: {template_path}")
-
+            self.active_template_config = self.config.document.templates[selected_template]
+            template_path = TEMPLATE_DIR / self.active_template_config.file_name
             self.document = Document(str(template_path))
-            self.template_placeholders = template_info.get("placeholders")
+            logger.info(f"Template '{template_path.name}' carregado com sucesso.")
+        except KeyError as e:
+            raise ValueError(
+                f"Template '{selected_template}' não encontrado na configuração."
+            ) from e
+        except FileNotFoundError as e:
+            raise FileNotFoundError(
+                f"Arquivo de template não encontrado em: {template_path}"
+            ) from e
 
-            logger.info(
-                f"Template {template_info.get('file_name', '')} carregado em {template_path}"
-            )
+    def _prepare_context(self, user: User, selected_asset: Asset) -> dict:
+        context = {
+            "user": user,
+            "asset": selected_asset,
+            "accessories": selected_asset.accessories,
+            "components": selected_asset.components,
+        }
+        return context
 
-        except Exception as e:
-            logger.error(f"Error loading template '{selected_template}': {e}")
-            raise
+    def _resolve_placeholders(self, context: dict) -> dict:
+        """
+        Usa o contexto para resolver o valor final de cada placeholder da configuração.
+        Retorna um dicionário de {'[PLACEHOLDER]': 'valor_final'}.
+        """
+        if not self.active_template_config:
+            raise RuntimeError("Template não foi carregado. Chame load_template() primeiro.")
+
+        # Combina os placeholders do template com os placeholders padrão
+        all_placeholders = (
+            self.active_template_config.placeholders + self.config.document.default_placeholders
+        )
+
+        replacements = {}
+        user = context["user"]
+        asset = context["asset"]
+
+        for ph in all_placeholders:
+            source = ph.source
+            value = ""  # Valor padrão é uma string vazia
+
+            if source.type == "text":
+                # Ex: [NAME] -> user.name | [EMPLOYEE_NUMBER] -> user.employee_number
+                value = getattr(user, source.path, "")
+
+            elif source.type == "asset":
+                # Ex: [LAPTOPMODEL] -> "{model.name} - {asset_tag}"
+                # O Pydantic nos garante que 'source.format' existe
+                value = source.format.format(
+                    model=asset.model.name, asset_tag=asset.asset_tag, serial=asset.serial or ""
+                )
+
+            elif source.type == "literal":
+                value = source.value
+
+            elif source.type in ["accessories", "components"]:
+                # Encontra o item correto (ex: mouse) na lista de acessórios/componentes do ativo
+                item_list = context.get(source.type, [])
+                found_item = next(
+                    (item for item in item_list if item.category.name == ph.category), None
+                )
+                if found_item:
+                    # Usa getattr para acessar o path dinamicamente (ex: found_item.name)
+                    value = getattr(found_item, source.path, "")
+
+            replacements[ph.name] = str(value)
+
+        return replacements
 
     def _replace_in_paragraph(self, paragraph: Paragraph, key: str, value: str) -> None:
         """Replace markers while maintaining formatting
@@ -72,226 +123,29 @@ class DocumentProcessor:
                 run.text = ""
             paragraph.runs[0].text = text
 
-    def _check_assets(
-        self, asset_list: dict, accessories_list: list, components_list: list
-    ) -> dict[str, bool]:
-        """_summary_
-
-        Args:
-            asset_list: assets dictionary
-            accessories_list: accessories dictionary
-
-        Returns:
-            dict[str, bool]: check presence of assets and accessories
-        """
-        assets_present = {}
-        for asset in asset_list.get("assets", []):
-            category = asset.get("category", "")
-            if isinstance(category, dict):
-                category = category.get("name", "")
-            key = f"has_{category.lower()}"
-            assets_present[key] = True
-
-        for accessory in accessories_list:
-            category = accessory.get("category", {})
-            if category:
-                key = f"has_{category.lower()}"
-                assets_present[key] = True
-
-        for component in components_list:
-            category = component.get("category", {})
-            if category:
-                key = f"has_{category.lower()}"
-                assets_present[key] = True
-
-        return assets_present
-
-    def _process_placeholder(
-        self,
-        paragraph: Paragraph,
-        selected_asset: dict[str, Any],
-        asset_list: dict[str, Any],
-        assets_present: dict[str, bool],
-    ) -> None:
-        """Processes asset information and makes substitutions in the document.
-
-        Args:
-
-            assets_present (Dict[str, bool])
-            asset_list (AssetList)
-            selected_asset (Asset)
-            accessories (List[Accessory])
-            selected_template (str)
-
-        """
-        accessories = selected_asset.get("accessories", "")
-        components = selected_asset.get("components", "")
-        for item in self.template_placeholders:
-            placeholder = item.get("name", "")
-            item_category = item.get("category", "")
-            if isinstance(item_category, dict):
-                item_category = item_category.get("name", "")
-            item_type = item.get("type", "")
-            data_source = item.get("source", {})
-            data_path = data_source.get("path", data_source.get("value", ""))
-
-            if not placeholder or not data_path:
-                logger.warning(f"Placeholder inválido ou incompleto: {item}")
-                continue
-
-            if item_type == "bool":
-                key = f"has_{item_category.lower()}"
-                value = data_path if assets_present.get(key, False) else ""
-
-            elif data_source.get("type", "") == "accessories":
-                category_to_find = item.get("category", "")
-                accessory = next(
-                    (
-                        acc
-                        for acc in accessories
-                        if acc.get("category", "").lower() == category_to_find.lower()
-                    ),
-                    None,
-                )
-                if accessory:
-                    value = accessory.get(data_path, "")
-                else:
-                    value = ""
-
-            elif data_source.get("type", "") == "components":
-                category_to_find = item.get("category", "")
-                accessory = next(
-                    (
-                        comp
-                        for comp in components
-                        if comp.get("category", "").lower() == category_to_find.lower()
-                    ),
-                    None,
-                )
-                if accessory:
-                    value = accessory.get(data_path, "")
-                else:
-                    value = ""
-
-            else:
-                model = selected_asset.get(data_path, "")
-                tag = selected_asset.get("asset_tag", "")
-                serial = selected_asset.get("serial", "")
-                if model and tag:
-                    value = f"{model} - {tag} - {serial}"
-                elif model:
-                    value = model
-                elif tag:
-                    value = tag
-
-            self._replace_in_paragraph(paragraph, placeholder, value)
-
-    def _process_default_placeholders(
-        self, paragraph: Paragraph, asset_list: dict[str, Any]
-    ) -> None:
-        """Replaces the default placeholders as per the configuration file
-
-        Args:
-            paragraph (_type_): _description_
-            asset_list (_type_): _description_
-        """
-        config = template_loader.load_config_file()
-        default_placeholders = config.get("document", {}).get(
-            "default_placeholders", {}
-        )
-
-        for entry in default_placeholders:
-            placeholder = entry.get("name")
-            data_path = entry.get("source", {}).get("path")
-
-            if not placeholder or not data_path:
-                logger.warning(f"Placeholder inválido ou incompleto: {entry}")
-                continue
-
-            value = asset_list.get(data_path, "")
-            self._replace_in_paragraph(paragraph, placeholder, value)
-
-    def process_assets(
-        self, asset_list: dict[str, Any], selected_asset: dict[str, Any]
-    ) -> None:
+    def process_document(self, user: User, selected_asset: Asset) -> None:
         """Process asset list and update document
 
         Args:
             asset_list (Dict[str, Any]): User asset list
             selectedAsset (Asset): Asset selected for highlighting
         """
-        try:
-            if not self.document:
-                raise ValueError(
-                    "Documento não carregado. Chame load_template() primeiro."
-                )
 
-            components: list[dict[str, Any]] = snipeit_client.components_api_call()
-            asset_linked_components = []
-            if components:
-                for component in components:
-                    components_history = snipeit_client.specific_component_api_call(
-                        component.get("id", "")
-                    )
-                    for checkout in components_history:
-                        name = checkout.get("name", "")
-                        match = re.search(r"\(([^\)]+)\)", name)
+        if not self.document:
+            raise RuntimeError("Documento não carregado. Chame load_template() primeiro.")
 
-                        # extracted_tag = match.group(1).strip().upper()
-                        if match:
-                            extracted_tag = match.group(1).strip().upper()
-                            if extracted_tag == selected_asset.get("asset_tag"):
-                                asset_linked_components.append(
-                                    {
-                                        "component_id": component.get("id", ""),
-                                        "name": component.get("name"),
-                                        "category": component.get("category", {}).get(
-                                            "name", ""
-                                        ),
-                                    }
-                                )
-                components = asset_linked_components
-            selected_asset["components"] = components
+        # 1. Prepara todos os dados
+        context = self._prepare_context(user, selected_asset)
 
-            accessories = snipeit_client.accessories_api_call(
-                asset_list.get("user_id", "")
-            )
-            asset_linked_accessories = []
-            if not accessories:
-                accessories = snipeit_client.accessories_api_call(
-                    cast(int, selected_asset.get("asset_id")), False
-                )
+        # 2. Resolve o valor final para cada placeholder
+        replacements = self._resolve_placeholders(context)
 
-                for accessory in accessories:
-                    accessory_history = snipeit_client.specific_accessory_api_call(
-                        accessory.get("id", "")
-                    )
-                    for checkout in accessory_history:
-                        if checkout.get("assigned_to", {}).get(
-                            "id", ""
-                        ) == selected_asset.get("asset_id", ""):
-                            asset_linked_accessories.append(
-                                {
-                                    "accessory_id": accessory.get("id", ""),
-                                    "name": accessory.get("name"),
-                                    "category": accessory.get("category", {}).get(
-                                        "name", ""
-                                    ),
-                                }
-                            )
-                accessories = asset_linked_accessories
-            selected_asset["accessories"] = accessories
-            assets_present = self._check_assets(asset_list, accessories, components)
-            for paragraph in self.document.paragraphs:
-                self._process_default_placeholders(paragraph, asset_list)
-                self._process_placeholder(
-                    paragraph, selected_asset, asset_list, assets_present
-                )
-
-            logger.info("Ativo processado com sucesso")
-        except Exception as e:
-            logger.error(f"Erro ao processar o ativo: {e}")
-            raise
+        # 3. Aplica as substituições no documento
+        logger.info("Aplicando substituições no documento...")
+        for paragraph in self.document.paragraphs:
+            for placeholder, value in replacements.items():
+                # Usamos a função auxiliar para uma substituição mais segura
+                docx_replace(paragraph, placeholder, value)
 
     def save(self, username: str, asset_tag: str, type_of_term: str) -> Path:
         """Saves the processed document.
@@ -308,13 +162,11 @@ class DocumentProcessor:
             if not self.document:
                 raise ValueError("Documento não carregado.")
 
-            identifier = asset_tag.split("-")
-            if len(identifier) < 2:
-                raise ValueError(f"Formato de tag inválido: {asset_tag}")
-            filename = f"{identifier[1]} - Termo {type_of_term} - {username}.docx"
+            safe_username = "".join(c for c in username if c.isalnum() or c in " ._-")
+            filename = f"{asset_tag} - Termo {type_of_term} - {safe_username}.docx"
 
             output_path = Path(OUTPUT_DIR) / filename
-            self.document.save(output_path)
+            self.document.save(str(output_path))
             logger.info(f"Termo de responsabilidade do usuário {username} criado!")
             return output_path
         except Exception as e:
