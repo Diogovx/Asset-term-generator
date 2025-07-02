@@ -41,7 +41,7 @@ class ComponentAssetAssignment(BaseModel):
 class Component(BaseModel):
     id: int
     name: str
-    category: Category
+    category: Category | str
     serial: str | None = None
     assigned_to: int | None = None
     assigned_type: str | None = None
@@ -51,7 +51,7 @@ class Accessory(BaseModel):
     id: int
     name: str
     model_number: str | None = None
-    category: Category
+    category: Category | str
     assigned_to: int | None = None
     assigned_type: str | None = None
 
