@@ -2,14 +2,15 @@ import logging
 import shutil
 from pathlib import Path
 
+from core.config_handler import load_config
 from core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
-from core.template_loader import get_templates
 from util import configure_logging
 
 logger = logging.getLogger(__name__)
 
 
 def prepare_distribution():
+    app_config = load_config()
     # Paths
     final_dir = Path("Gerador_Termos_Final")
     dist_exe_path = BASE_DIR / "dist" / "Gerador_de_Termos.exe"
@@ -40,7 +41,7 @@ def prepare_distribution():
     )
 
     logger.info("Copiando templates de documento...")
-    templates_config = get_templates()
+    templates_config = app_config.document.templates
     for _, template_info in templates_config.items():
         file_name = template_info.get("file_name")
         if file_name:

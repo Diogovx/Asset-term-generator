@@ -1,7 +1,6 @@
 import logging
-from functools import lru_cache
 
-from core.models import Accessory, Asset, Component, User
+from core.models import Asset, User
 from util import AssetNotFoundError, UserNotFoundError
 
 from .accessories_client import AccessoriesClient
@@ -15,15 +14,6 @@ logger = logging.getLogger(__name__)
 users_client = UserClient()
 accessories_client = AccessoriesClient()
 components_client = ComponentsClient()
-
-
-@lru_cache(maxsize=1)
-def get_all_accessories() -> list[Accessory]:
-    return accessories_client.get_all_accessory()
-
-
-def get_all_components() -> list[Component]:
-    return components_client.get_all_components()
 
 
 def get_user_and_assets(employee_number: str) -> tuple[User, list[Asset]]:
@@ -41,19 +31,40 @@ def get_user_and_assets(employee_number: str) -> tuple[User, list[Asset]]:
     if not assets:
         raise AssetNotFoundError(f"Nenhum ativo encontrado para o usuário {user.name}.")
 
-    all_accessories = get_all_accessories()
-    all_components = get_all_components()
+    user_asset_ids = {asset.id for asset in assets}
 
-    asset_map = {asset.id: asset for asset in assets}
+    user_accessories = users_client.get_accessories(user.id)
 
-    for component in all_components:
-        asset_id = getattr(component, "assigned_to", None)
-        if asset_id in asset_map:
-            asset_map[asset_id].components.append(component)
-
+    all_accessories = accessories_client.get_all()
     for accessory in all_accessories:
-        asset_id = getattr(accessory, "assigned_to", None)
-        if asset_id in asset_map:
-            asset_map[asset_id].accessories.append(accessory)
+        # Para cada acessório do sistema, vemos seu histórico de checkout
+        checkouts = accessories_client.get_checkouts(accessory.id)
+        for checkout in checkouts:
+            # Se o checkout foi para um ativo, e esse ativo é um dos nossos...
+            if checkout.assigned_to.type == "asset" and checkout.assigned_to.id in user_asset_ids:
+                # Adicionamos o acessório ao ativo correspondente
+                for asset in assets:
+                    if asset.id == checkout.assigned_to.id:
+                        asset.accessories.append(accessory)
+                        break
 
-    return user, list(asset_map.values())
+    all_components = components_client.get_all()
+    for component in all_components:
+        # Para cada componente do sistema, vemos a quais ativos ele pertence
+        assignments = components_client.get_assigned_assets(component.id)
+        for assignment in assignments:
+            # Se o ativo ao qual ele pertence é um dos nossos, adicionamos
+            if assignment.id in user_asset_ids:
+                # Encontra o objeto Asset correspondente e adiciona o componente
+                for asset in assets:
+                    if asset.id == assignment.id:
+                        asset.components.append(component)
+                        break
+
+    for asset in assets:
+        asset.accessories.extend(user_accessories)
+        # Remove duplicatas se um acessório foi contado duas vezes
+        unique_accessories = {acc.id: acc for acc in asset.accessories}.values()
+        asset.accessories = list(unique_accessories)
+
+    return user, assets
