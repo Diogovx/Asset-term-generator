@@ -1,6 +1,4 @@
-from typing import Literal
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class UIConfig(BaseModel):
@@ -8,24 +6,11 @@ class UIConfig(BaseModel):
     logo_path: str
 
 
-class AssetSource(BaseModel):
-    type: Literal["asset"]
-    format: str
-
-
-class AccessorySource(BaseModel):
-    type: Literal["accessories", "components"]
-    path: str
-
-
-class LiteralSource(BaseModel):
-    type: Literal["literal"]
-    value: str
-
-
-class TextSource(BaseModel):
-    type: Literal["text"]
-    path: str
+class PlaceholderSource(BaseModel):
+    type: str
+    path: str | None = None
+    value: str | None = None
+    format: str | None = None
 
 
 class Placeholder(BaseModel):
@@ -36,7 +21,9 @@ class Placeholder(BaseModel):
     default: bool
     required: bool
     identifier: bool
-    source: AssetSource | AccessorySource | LiteralSource | TextSource = Field(discriminator="type")
+    source: PlaceholderSource
+    generates_presence_marker: bool = False
+    presence_marker_value: str | None = None
 
 
 class TemplateConfig(BaseModel):

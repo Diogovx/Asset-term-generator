@@ -66,7 +66,6 @@ class DocumentProcessor:
         if not self.active_template_config:
             raise RuntimeError("Template não foi carregado. Chame load_template() primeiro.")
 
-        # Combina os placeholders do template com os placeholders padrão
         all_placeholders = (
             self.active_template_config.placeholders + self.config.document.default_placeholders
         )
@@ -77,34 +76,48 @@ class DocumentProcessor:
 
         for ph in all_placeholders:
             source = ph.source
-            value = ""  # Valor padrão é uma string vazia
-
-            if source.type == "text":
-                # Ex: [NAME] -> user.name | [EMPLOYEE_NUMBER] -> user.employee_number
+            value = ""
+            if source.type == "text" and source.path:
                 value = getattr(user, source.path, "")
-
-            elif source.type == "asset":
-                # Ex: [LAPTOPMODEL] -> "{model.name} - {asset_tag}"
-                # O Pydantic nos garante que 'source.format' existe
+            elif source.type == "asset" and source.format:
                 value = source.format.format(
                     model=asset.model.name, asset_tag=asset.asset_tag, serial=asset.serial or ""
                 )
-
-            elif source.type == "literal":
-                value = source.value
-
             elif source.type in ["accessories", "components"]:
-                # Encontra o item correto (ex: mouse) na lista de acessórios/componentes do ativo
                 item_list = context.get(source.type, [])
+
+                def get_category_name(item):
+                    if not item.category:
+                        return ""
+                    if isinstance(item.category, str):
+                        return item.category
+                    return item.category.name
+
                 found_item = next(
-                    (item for item in item_list if item.category.name == ph.category), None
+                    (item for item in item_list if get_category_name(item) == ph.category), None
                 )
+                print(item_list)
+
                 if found_item:
-                    # Usa getattr para acessar o path dinamicamente (ex: found_item.name)
-                    value = getattr(found_item, source.path, "")
+                    if source.format:
+                        format_context = {
+                            "name": found_item.name or "",
+                            "numero_do_celular": asset.get_custom_field("NUMERO") or "",
+                        }
+                        value = source.format.format(**format_context)
+                    elif source.path:
+                        value = getattr(found_item, source.path, "") or ""
 
             replacements[ph.name] = str(value)
 
+            if ph.generates_presence_marker:
+                base_name = ph.name.strip("[]").replace("MODEL", "")
+                presence_marker_name = f"[HAS{base_name}]"
+
+                if value:
+                    replacements[presence_marker_name] = ph.presence_marker_value or "X"
+                else:
+                    replacements[presence_marker_name] = ""
         return replacements
 
     def _replace_in_paragraph(self, paragraph: Paragraph, key: str, value: str) -> None:
@@ -132,17 +145,13 @@ class DocumentProcessor:
         if not self.document:
             raise RuntimeError("Documento não carregado. Chame load_template() primeiro.")
 
-        # 1. Prepara todos os dados
         context = self._prepare_context(user, selected_asset)
 
-        # 2. Resolve o valor final para cada placeholder
         replacements = self._resolve_placeholders(context)
 
-        # 3. Aplica as substituições no documento
         logger.info("Aplicando substituições no documento...")
         for paragraph in self.document.paragraphs:
             for placeholder, value in replacements.items():
-                # Usamos a função auxiliar para uma substituição mais segura
                 docx_replace(paragraph, placeholder, value)
 
     def save(self, username: str, asset_tag: str, type_of_term: str) -> Path:

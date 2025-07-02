@@ -17,7 +17,9 @@ document:
           identifier: false
           source:
             type: asset
-            format: "{model} - {asset_tag} - {serial}" 
+            format: "{model} - {asset_tag} - {serial}"
+          generates_presence_marker: true
+          presence_marker_value: "X" 
         - name: "[MOUSEMODEL]"
           type: text
           category: "Mouses"
@@ -28,6 +30,8 @@ document:
           source:
             type: accessories
             path: name
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[KEYBOARDMODEL]"
           type: text
           category: "Keyboards"
@@ -38,6 +42,8 @@ document:
           source:
             type: accessories
             path: name
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[MONITORMODEL]"
           type: text
           category: "Monitors"
@@ -48,6 +54,8 @@ document:
           source:
             type: accessories
             path: name
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[CHARGERMODEL]"
           type: text
           category: "Charger"
@@ -58,6 +66,8 @@ document:
           source:
             type: accessories
             path: name
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[HEADSETMODEL]"
           type: text
           category: "Headsets"
@@ -68,66 +78,9 @@ document:
           source:
             type: accessories
             path: name
-        - name: "[HASLAPTOP]"
-          type: bool
-          category: "Laptops"
-          description: "Possui laptop?"
-          default: false
-          required: true
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASMOUSE]"
-          type: bool
-          category: "Mouses"
-          description: "Possui mouse?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASCHARGER]"
-          type: bool
-          category: "Charger"
-          description: "Possui charger?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASKEYBOARD]"
-          type: bool
-          category: "Keyboards"
-          description: "Possui teclado?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASHEADSET]"
-          type: bool
-          category: "Headsets"
-          description: "Possui headset?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASMONITOR]"
-          type: bool
-          category: "Monitors"
-          description: "Possui monitor?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
+          generates_presence_marker: true
+          presence_marker_value: "X"
+        
 
     smartphones:
       file_name: TERMO DE RESPONSABILIDADES CELULARES.docx
@@ -143,6 +96,8 @@ document:
           source:
             type: asset
             format: "{model}"
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[CHARGERMODEL]"
           type: text
           category: "Charger"
@@ -153,6 +108,8 @@ document:
           source:
             type: accessories
             path: name
+          generates_presence_marker: true
+          presence_marker_value: "X"
         - name: "[SIMCARDMODEL]"
           type: text
           category: "SIM Card"
@@ -162,37 +119,9 @@ document:
           identifier: false
           source:
             type: components
-            path: name
-        - name: "[HASSMARTPHONE]"
-          type: bool
-          category: "Smartphones"
-          description: "Possui smartphone?"
-          default: false
-          required: true
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASCHARGER]"
-          type: bool
-          category: "Charger"
-          description: "Possui carregador?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
-        - name: "[HASSIMCARD]"
-          type: bool
-          category: "SIM Card"
-          description: "Possui chip?"
-          default: false
-          required: false
-          identifier: false
-          source:
-            type: literal
-            value: "X"
+            format: "{name} - {numero_do_celular}" 
+          generates_presence_marker: true
+          presence_marker_value: "X"
 
   default_placeholders:
     - name: "[NAME]"
@@ -204,7 +133,7 @@ document:
       identifier: false
       source:
         type: text
-        path: user_name
+        path: name
     - name: "[EMPLOYEE_NUMBER]"
       type: text
       category: "User Information"
@@ -214,4 +143,4 @@ document:
       identifier: true
       source:
         type: text
-        path: employee_number
+        path: employee_num
