@@ -5,12 +5,12 @@ from pydantic import BaseModel, Field
 
 class AssetModel(BaseModel):
     id: int
-    name: str
+    name: str | None = None
 
 
 class Category(BaseModel):
     id: int
-    name: str
+    name: str | None = None
 
 
 class CustomFieldDetail(BaseModel):
@@ -21,13 +21,12 @@ class CustomFieldDetail(BaseModel):
 
 class AccessoryCheckoutTarget(BaseModel):
     id: int
-    type: str  # 'user' ou 'asset'
+    type: str
     name: str
 
 
-# Modelo para cada linha na resposta de /accessories/{id}/checkedout
 class AccessoryCheckout(BaseModel):
-    id: int  # ID do checkout, não do acessório
+    id: int
     assigned_to: AccessoryCheckoutTarget
 
 
@@ -40,7 +39,7 @@ class ComponentAssetAssignment(BaseModel):
 
 class Component(BaseModel):
     id: int
-    name: str
+    name: str | None = None
     category: Category | str
     serial: str | None = None
     assigned_to: int | None = None
@@ -49,7 +48,7 @@ class Component(BaseModel):
 
 class Accessory(BaseModel):
     id: int
-    name: str
+    name: str | None = None
     model_number: str | None = None
     category: Category | str
     assigned_to: int | None = None
