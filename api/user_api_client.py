@@ -12,7 +12,6 @@ class UserClient(BaseAPIClient):
     def find_by_employee_number(self, employee_number: str) -> User | None:
         endpoint = f"{self.base_url}?employee_num={employee_number}"
         response_data = self._get(endpoint)
-
         parsed_response = UserSearchResponse(**response_data)
 
         return parsed_response.rows[0] if parsed_response.rows else None
