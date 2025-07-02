@@ -19,3 +19,4 @@ docx-template
 .venv
 .mypy_cache
 dist
+.coverage

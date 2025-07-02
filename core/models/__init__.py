@@ -8,6 +8,8 @@ from .hardware_api_models import (
     Accessory,
     AccessoryCheckout,
     Asset,
+    AssetModel,
+    Category,
     Component,
     ComponentAssetAssignment,
     CustomFieldDetail,
@@ -28,4 +30,6 @@ __all__ = [
     "Component",
     "ComponentAssetAssignment",
     "AccessoryCheckout",
+    "Category",
+    "AssetModel",
 ]

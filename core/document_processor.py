@@ -43,9 +43,7 @@ class DocumentProcessor:
             self.document = Document(str(template_path))
             logger.info(f"Template '{template_path.name}' carregado com sucesso.")
         except KeyError as e:
-            raise ValueError(
-                f"Template '{selected_template}' não encontrado na configuração."
-            ) from e
+            raise KeyError(f"Template '{selected_template}' não encontrado na configuração.") from e
         except FileNotFoundError as e:
             raise FileNotFoundError(
                 f"Arquivo de template não encontrado em: {template_path}"

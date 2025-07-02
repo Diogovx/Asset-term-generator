@@ -4,7 +4,6 @@ from core.models import Accessory, Asset, Component, User, UserAssetsResponse, U
 from .base_api_client import BaseAPIClient
 
 
-# TODO User client API
 class UserClient(BaseAPIClient):
     def __init__(self):
         super().__init__(base_url=API_USERS_URL)
