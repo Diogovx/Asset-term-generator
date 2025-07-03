@@ -20,3 +20,5 @@ docx-template
 .mypy_cache
 dist
 .coverage
+*.egg-info
+.vscode/

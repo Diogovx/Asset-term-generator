@@ -6,7 +6,7 @@ import requests
 # import requests_cache
 from dotenv import load_dotenv
 
-from core.config_manager import API_KEY
+from assets_term_generator.core.config_manager import API_KEY
 
 # session = requests_cache.install_cache("snipeit_cache", expire_after=100, backend="sqlite")
 load_dotenv()

@@ -2,7 +2,7 @@ from typing import Any
 
 from InquirerPy import inquirer
 
-from core.models import AppConfig, Asset
+from ..models import AppConfig, Asset
 
 
 class Menu:

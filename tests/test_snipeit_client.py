@@ -1,10 +1,11 @@
+from typing import Any
 import pytest
-from core.models import User, Asset, Category, AssetModel  # Importe todos os modelos necessários
-from util.exceptions import UserNotFoundError
-from api import snipeit_client
+from assets_term_generator.models import User, Asset, Category, AssetModel  # Importe todos os modelos necessários
+from assets_term_generator.util.exceptions import UserNotFoundError
+from assets_term_generator.api import snipeit_client
 
 
-def test_get_user_and_assets_success(mocker):
+def test_get_user_and_assets_success(mocker: Any) -> None:
     """
     Testa o fluxo de sucesso de get_user_and_assets.
     Verifica se, ao receber dados simulados da API, a função retorna os objetos corretos.
@@ -36,7 +37,7 @@ def test_get_user_and_assets_success(mocker):
     assert assets[0].asset_tag == "TEST-001"
 
 
-def test_get_user_and_assets_user_not_found(mocker):
+def test_get_user_and_assets_user_not_found(mocker: Any) -> None:
     """
     Testa se UserNotFoundError é lançado quando a API não retorna um usuário.
     """
