@@ -1,6 +1,6 @@
 from typing import Any
 import pytest
-from assets_term_generator.models import User, Asset, Category, AssetModel  # Importe todos os modelos necessários
+from assets_term_generator.models import User, Asset, Category, AssetModel
 from assets_term_generator.util.exceptions import UserNotFoundError
 from assets_term_generator.api import snipeit_client
 

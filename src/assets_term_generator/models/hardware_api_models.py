@@ -30,9 +30,8 @@ class AccessoryCheckout(BaseModel):
     assigned_to: AccessoryCheckoutTarget
 
 
-# Modelo para cada linha na resposta de /components/{id}/assets
 class ComponentAssetAssignment(BaseModel):
-    id: int  # ID do ativo
+    id: int
     name: str
     type: str
 
