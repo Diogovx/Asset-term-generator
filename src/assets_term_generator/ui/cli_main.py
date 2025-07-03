@@ -18,13 +18,6 @@ class Menu:
 
         choose = inquirer.select(
             message="Você deseja gerar qual termo?\nEscolha um deles: ",
-            # choices=[
-            #    {
-            #        "name": template,
-            #        "value": template,
-            #    }
-            #    for template in template_names
-            # ],
             choices=template_names,
             default=None,
         ).execute()
