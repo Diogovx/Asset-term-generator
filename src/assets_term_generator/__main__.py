@@ -2,11 +2,12 @@ import logging
 
 from requests.exceptions import RequestException
 
-import api.snipeit_client as snipeit_client
-from core.config_handler import load_config
-from core.document_processor import DocumentProcessor
-from ui.cli_main import Menu
-from util import AssetNotFoundError, UserNotFoundError, configure_logging
+import assets_term_generator.api.snipeit_client as snipeit_client
+
+from .core.config_handler import load_config
+from .core.document_processor import DocumentProcessor
+from .ui.cli_main import Menu
+from .util import AssetNotFoundError, UserNotFoundError, configure_logging
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -28,7 +29,9 @@ def main() -> None:
             document_processor.load_template(selected_term)
 
             filtered_assets = [
-                asset for asset in assets if asset.category.name.lower() == selected_term.lower()
+                asset
+                for asset in assets
+                if asset.category.name and asset.category.name.lower() == selected_term.lower()
             ]
 
             if not filtered_assets:

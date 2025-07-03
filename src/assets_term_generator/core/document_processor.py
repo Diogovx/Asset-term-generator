@@ -8,13 +8,13 @@ from docx import Document
 from docx.document import Document as DocumentObject
 from docx.text.paragraph import Paragraph
 
-from core.config_manager import OUTPUT_DIR, TEMPLATE_DIR
-from core.models import AppConfig, Asset, TemplateConfig, User
+from ..models import Accessory, AppConfig, Asset, TemplateConfig, User
+from .config_manager import OUTPUT_DIR, TEMPLATE_DIR
 
 logger = logging.getLogger(__name__)
 
 
-def docx_replace(paragraph: Paragraph, old_text: str, new_text: str):
+def docx_replace(paragraph: Paragraph, old_text: str, new_text: str) -> None:
     for run in paragraph.runs:
         if old_text in run.text:
             run.text = run.text.replace(old_text, new_text)
@@ -86,7 +86,7 @@ class DocumentProcessor:
             elif source.type in ["accessories", "components"]:
                 item_list = context.get(source.type, [])
 
-                def get_category_name(item):
+                def get_category_name(item: Accessory) -> str:
                     if not item.category:
                         return ""
                     if isinstance(item.category, str):
@@ -96,7 +96,6 @@ class DocumentProcessor:
                 found_item = next(
                     (item for item in item_list if get_category_name(item) == ph.category), None
                 )
-                print(item_list)
 
                 if found_item:
                     if source.format:

@@ -1,8 +1,7 @@
 import logging
 
-from core.models import Asset, User
-from util import AssetNotFoundError, UserNotFoundError
-
+from ..models import Asset, User
+from ..util import AssetNotFoundError, UserNotFoundError
 from .accessories_client import AccessoriesClient
 from .components_client import ComponentsClient
 from .user_api_client import UserClient

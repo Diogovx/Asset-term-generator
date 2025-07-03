@@ -3,9 +3,9 @@ repos:
     rev: v0.5.5 
     hooks:
       - id: ruff
-        args: [--fix, --exit-non-zero-on-fix, --config=config/pyproject.toml]
+        args: [--fix, --exit-non-zero-on-fix, --config=pyproject.toml]
       - id: ruff-format
-        args: [--config=config/pyproject.toml]
+        args: [--config=pyproject.toml]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.0  # ou sua versão
     hooks:

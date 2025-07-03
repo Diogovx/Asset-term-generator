@@ -1,11 +1,18 @@
-from core.config_manager import API_USERS_URL
-from core.models import Accessory, Asset, Component, User, UserAssetsResponse, UserSearchResponse
+from assets_term_generator.core.config_manager import API_USERS_URL
+from assets_term_generator.models import (
+    Accessory,
+    Asset,
+    Component,
+    User,
+    UserAssetsResponse,
+    UserSearchResponse,
+)
 
 from .base_api_client import BaseAPIClient
 
 
 class UserClient(BaseAPIClient):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(base_url=API_USERS_URL)
 
     def find_by_employee_number(self, employee_number: str) -> User | None:
