@@ -1,13 +1,13 @@
 from functools import lru_cache
 
-from core.config_manager import API_COMPONENTS_URL
-from core.models import Component, ComponentAssetAssignment
+from assets_term_generator.core.config_manager import API_COMPONENTS_URL
+from assets_term_generator.models import Component, ComponentAssetAssignment
 
 from .base_api_client import BaseAPIClient
 
 
 class ComponentsClient(BaseAPIClient):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(base_url=API_COMPONENTS_URL)
 
     @lru_cache(maxsize=1)  # noqa: B019
