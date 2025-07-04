@@ -9,7 +9,7 @@ description = "Um gerador de termos de responsabilidade a partir do Snipe-IT."
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-exclude = ["__pycache__", "tests", "dist", ".venv", "*.egg-info"]  
+exclude = ["__pycache__", "tests", "dist", "venv", ".venv" , "*.egg-info"]  
 src = ["src"]
 
 [tool.ruff.lint]
