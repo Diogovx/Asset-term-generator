@@ -1,7 +1,8 @@
 import logging
 
-from ..models import Asset, User
-from ..util import AssetNotFoundError, UserNotFoundError
+from assets_term_generator.models import Asset, User
+from assets_term_generator.util import AssetNotFoundError, UserNotFoundError
+
 from .accessories_client import AccessoriesClient
 from .components_client import ComponentsClient
 from .user_api_client import UserClient

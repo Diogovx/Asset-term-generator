@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-from ..core.config_manager import LOGS_DIR
+from assets_term_generator.core.config_manager import LOGS_DIR
 
 
 def configure_logging() -> None:
