@@ -2,17 +2,25 @@ import logging
 import shutil
 from pathlib import Path
 
-from core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
-from core.template_loader import get_templates
-from util import configure_logging
+from assets_term_generator.core.config_handler import load_config
+from assets_term_generator.core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
+from assets_term_generator.util import configure_logging
 
 logger = logging.getLogger(__name__)
 
 
-def prepare_distribution():
+def prepare_distribution() -> None:
+    app_config = load_config()
     # Paths
     final_dir = Path("Gerador_Termos_Final")
-    dist_exe_path = BASE_DIR / "dist" / "Gerador_de_Termos.exe"
+    dist_exe_path = BASE_DIR / "dist" / "Assets_term_generator.exe"
+
+    logger.info("Verificando se os arquivos necessários existem...")
+    if not dist_exe_path.exists():
+        logger.critical(
+            f"ERRO: Executável não encontrado em '{dist_exe_path}'.Rode o PyInstaller primeiro."
+        )
+        return
 
     logger.info(f"Limpando o diretório final: {final_dir}")
     if final_dir.exists():
@@ -30,19 +38,20 @@ def prepare_distribution():
     logger.info("Copiando arquivos...")
     shutil.copy(dist_exe_path, final_dir)
     shutil.copy(BASE_DIR / "README.md", final_dir)
+    shutil.copy(BASE_DIR / "USER_MANUAL.md", final_dir)
     shutil.copy(
         CONFIG_DIR / "config.yml",
         final_config_dir,
     )
     shutil.copy(
-        CONFIG_DIR / ".env",
+        CONFIG_DIR / ".env.example",
         final_config_dir,
     )
 
     logger.info("Copiando templates de documento...")
-    templates_config = get_templates()
+    templates_config = app_config.document.templates
     for _, template_info in templates_config.items():
-        file_name = template_info.get("file_name")
+        file_name = template_info.file_name
         if file_name:
             source_path = TEMPLATE_DIR / file_name
             logger.info(f"Template '{file_name}' copiado.")

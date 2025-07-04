@@ -19,3 +19,7 @@ docx-template
 .venv
 .mypy_cache
 dist
+.coverage
+*.egg-info
+.vscode/
+venv
