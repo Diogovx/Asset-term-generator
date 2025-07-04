@@ -22,3 +22,4 @@ dist
 .coverage
 *.egg-info
 .vscode/
+venv

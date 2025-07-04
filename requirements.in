@@ -6,3 +6,4 @@ customtkinter
 pillow
 pyyaml
 pydantic
+dotenv
