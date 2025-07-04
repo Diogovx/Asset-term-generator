@@ -25,4 +25,10 @@ jobs:
           ruff format --check .
           ruff check .
       - name: Rodar testes com Pytest
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          API_USERS_URL: ${{ secrets.API_USERS_URL }}
+          API_HARDWARE_URL: ${{ secrets.API_HARDWARE_URL }}
+          API_ACESSORIES_URL: ${{ secrets.API_ACESSORIES_URL }}
+          API_COMPONENTS_URL: ${{ secrets.API_COMPONENTS_URL }}
         run: pytest --cov=.
