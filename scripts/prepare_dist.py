@@ -38,6 +38,7 @@ def prepare_distribution() -> None:
     logger.info("Copiando arquivos...")
     shutil.copy(dist_exe_path, final_dir)
     shutil.copy(BASE_DIR / "README.md", final_dir)
+    shutil.copy(BASE_DIR / "README.pt-br.md", final_dir)
     shutil.copy(BASE_DIR / "USER_MANUAL.md", final_dir)
     shutil.copy(
         CONFIG_DIR / "config.yml",
