@@ -2,12 +2,12 @@ import logging
 
 from requests.exceptions import RequestException
 
-import assets_term_generator.api.snipeit_client as snipeit_client
-
-from .core.config_handler import load_config
-from .core.document_processor import DocumentProcessor
-from .ui.cli_main import Menu
-from .util import AssetNotFoundError, UserNotFoundError, configure_logging
+from assets_term_generator.api import snipeit_client
+from assets_term_generator.core.config_handler import load_config
+from assets_term_generator.core.document_processor import DocumentProcessor
+from assets_term_generator.ui.cli_main import Menu
+from assets_term_generator.util.exceptions import AssetNotFoundError, UserNotFoundError
+from assets_term_generator.util.logging_config import configure_logging
 
 configure_logging()
 logger = logging.getLogger(__name__)
