@@ -8,7 +8,8 @@ from docx import Document
 from docx.document import Document as DocumentObject
 from docx.text.paragraph import Paragraph
 
-from ..models import Accessory, AppConfig, Asset, TemplateConfig, User
+from assets_term_generator.models import Accessory, AppConfig, Asset, TemplateConfig, User
+
 from .config_manager import OUTPUT_DIR, TEMPLATE_DIR
 
 logger = logging.getLogger(__name__)
