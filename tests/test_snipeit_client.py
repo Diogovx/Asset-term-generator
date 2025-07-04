@@ -27,6 +27,8 @@ def test_get_user_and_assets_success(mocker: Any) -> None:
     mocker.patch('assets_term_generator.api.snipeit_client.users_client.find_by_employee_number', return_value=fake_user)
     mocker.patch('assets_term_generator.api.snipeit_client.users_client.get_assets', return_value=[fake_asset])
     
+    mocker.patch('assets_term_generator.api.snipeit_client.components_client.get_all', return_value=[])
+    mocker.patch('assets_term_generator.api.snipeit_client.accessories_client.get_all', return_value=[])
 
 
     user, assets = snipeit_client.get_user_and_assets("12345")
