@@ -35,6 +35,7 @@ That's it! The setup is complete.
    - Type the employee's **ID number** and press Enter.
    - Use the arrow keys to **select the term type** (Notebook, Smartphone, etc.) and press Enter.
    - If necessary, select the specific piece of equipment.
+
 4. At the end of the process, a Word document will be created and opened for you automatically.
 5. The generated `.docx` file is saved in the `output` folder.
 
