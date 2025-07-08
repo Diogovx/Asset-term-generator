@@ -60,7 +60,7 @@ class DocumentProcessor:
     def _resolve_placeholders(self, context: dict) -> dict:
         """Uses the context to resolve the final value of each placeholder in the configuration.
         Returns a dictionary of {'[PLACEHOLDER]': 'final_value'}.
-        
+
         Args:
             context (dict): User's context.
         """

@@ -7,6 +7,7 @@ from assets_term_generator.core.config_handler import load_config
 from assets_term_generator.core.document_processor import DocumentProcessor
 from assets_term_generator.ui.cli_main import Menu
 from assets_term_generator.util.exceptions import AssetNotFoundError, UserNotFoundError
+from assets_term_generator.util.history_logging import log_generation_history
 from assets_term_generator.util.logging_config import configure_logging
 
 configure_logging()
@@ -47,6 +48,9 @@ def main() -> None:
             document_processor.process_document(user, selected_asset)
 
             file_path = document_processor.save(user.name, selected_asset.asset_tag, selected_term)
+
+            log_generation_history(user, selected_asset, selected_term, file_path)
+
             document_processor.open_file(file_path)
             logger.info("Termo gerado com sucesso!")
         except (UserNotFoundError, AssetNotFoundError, ValueError) as e:
