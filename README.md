@@ -122,10 +122,8 @@ The project uses the `src` layout for a clear separation between the source code
 
 ## 📈 Roadmap
 
-- [ ] Implement security analysis tools (`bandit`, `pip-audit`) in the CI pipeline.
 - [ ] Migrate document generation to `docxtpl` to allow conditional logic and loops (`if`/`for`) directly in the `.docx` templates.
 - [ ] Develop a web interface with FastAPI.
-- [ ] Add a history of generated terms.
 
 ## 🤝 Contributing
 

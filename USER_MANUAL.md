@@ -1,104 +1,102 @@
-# Manual do Usuário - Gerador de Termos de Responsabilidade
+# User Manual - Liability Term Generator
 
-Bem-vindo! Este programa ajuda você a criar termos de responsabilidade para equipamentos de TI de forma rápida e automática.
+Welcome! This program helps you create liability terms for IT equipment quickly and automatically.
 
-## Requisitos
+## Requirements
 
-- Computador com sistema operacional Windows.
+- A computer with a Windows operating system.
 
-## ⚙️ Configuração Inicial (Feita apenas uma vez)
+## ⚙️ Initial Setup (One-Time Only)
 
-Antes de usar o programa pela primeira vez, você precisa configurar suas informações de acesso à API.
+Before using the program for the first time, you need to configure your API access information.
 
-1. **Abra a pasta `config`** que está junto com este manual.
-2. Dentro dela, você encontrará um arquivo chamado `.env`. **Abra este arquivo com o Bloco de Notas**.
-3. Você verá um texto parecido com este:
+1. **Open the `config` folder**, which is located alongside this manual.
+2. Inside it, you will find a file named `.env`. **Open this file with Notepad**.
+3. You will see text similar to this:
 
     ```env
-    API_KEY="SUA_CHAVE_DE_API_GERADA_NO_SNIPE_IT"
-    API_USERS_URL="http://seu-snipe-it/api/v1/users"
-    API_HARDWARE_URL="http://seu-snipe-it/api/v1/hardware"
-    API_ACCESSORIES_URL="http://seu-snipe-it/api/v1/accessories"
-    API_COMPONENTS_URL="http://seu-snipe-it/api/v1/components"
+    API_KEY="YOUR_SNIPE_IT_API_KEY"
+    API_USERS_URL="http://your-snipe-it/api/v1/users"
+    API_HARDWARE_URL="http://your-snipe-it/api/v1/hardware"
+    API_ACCESSORIES_URL="http://your-snipe-it/api/v1/accessories"
+    API_COMPONENTS_URL="http://your-snipe-it/api/v1/components"
     ```
 
-4. **Substitua os textos de exemplo** pelos valores corretos da sua empresa. Por exemplo, troque `"SUA_CHAVE_DE_API_GERADA_NO_SNIPE_IT"` pela sua chave real.
-5. **Salve e feche** o arquivo.
+4. **Replace the example texts** with the correct values for your company. For instance, replace `"YOUR_SNIPE_IT_API_KEY"` with your actual key.
+5. **Save and close** the file.
 
-Pronto! A configuração está concluída.
+That's it! The setup is complete.
 
-## ▶️ Como Usar o Programa
+## ▶️ How to Use the Program
 
-1. Dê um **clique duplo** no arquivo `Assets_term_generator.exe`.
-2. Uma tela de terminal preta irá se abrir.
-3. Siga as instruções que aparecerem na tela:
-    - Digite a **matrícula** do colaborador e pressione Enter.
-    - Use as setas do teclado para **selecionar o tipo de termo** (Notebook, Celular, etc.) e pressione Enter.
-    - Se necessário, selecione o equipamento específico.
-4. Ao final do processo, um documento Word será criado e aberto automaticamente para você.
-5. O arquivo `.docx` gerado fica salvo na pasta `output`.
+1. **Double-click** on the `Assets_term_generator.exe` file.
+2. A black terminal window will open.
+3. Follow the instructions on the screen:
+   - Type the employee's **ID number** and press Enter.
+   - Use the arrow keys to **select the term type** (Notebook, Smartphone, etc.) and press Enter.
+   - If necessary, select the specific piece of equipment.
+4. At the end of the process, a Word document will be created and opened for you automatically.
+5. The generated `.docx` file is saved in the `output` folder.
 
-## ❓ Solução de Problemas Comuns
+## ❓ Common Troubleshooting
 
-- **"O programa pisca na tela e fecha"**:
-  - Verifique se você preencheu corretamente o arquivo `.env` na pasta `config`. Qualquer erro de digitação nas URLs ou na chave da API pode causar isso.
-  - Certifique-se de que seu computador tem acesso à internet e consegue se comunicar com o sistema Snipe-IT.
+- **"The program flashes on the screen and closes"**:
+  - Check that you have correctly filled out the `.env` file in the `config` folder. Any typo in the URLs or the API key can cause this.
+  - Ensure your computer has internet access and can communicate with the Snipe-IT system.
 
-- **"Usuário não encontrado" ou "Ativo não encontrado"**:
-  - Verifique se a matrícula digitada está correta e se o usuário realmente possui aquele tipo de equipamento associado a ele no sistema Snipe-IT.
+- **"User not found" or "Asset not found"**:
+  - Verify that the entered ID number is correct and that the user actually has that type of equipment assigned to them in the Snipe-IT system.
 
-Para qualquer outro problema, por favor, entre em contato com o suporte de TI.
+For any other issues, please contact IT support.
 
-## 🔧 Personalizando os Termos (`config.yml`)
+## 🔧 Customizing Terms (`config.yml`)
 
-O arquivo `config.yml`, localizado na pasta `config`, é o cérebro da geração de documentos. Ele permite que você adicione novos tipos de termos ou personalize os placeholders existentes.
+The `config.yml` file, located in the `config` folder, is the brain of the document generation. It allows you to add new term types or customize existing placeholders.
 
-### Estrutura Geral
+### General Structure
 
-O arquivo é dividido em duas seções principais: `ui` e `document`.
+The file is divided into two main sections: `ui` and `document`.
 
-#### Seção `ui`
+#### `ui` Section
 
-Controla a aparência da interface do programa.
+Controls the appearance of the program's interface.
 
-- **`theme`**: Define o tema de cores. Pode ser `dark` (escuro) ou `light` (claro).
-- **`logo_path`**: O caminho para a imagem do logo que aparece na interface.
-
----
-
-#### Seção `document`
-
-Controla tudo sobre a geração dos documentos Word.
-
-- **`template_path`**: A pasta onde seus arquivos de modelo `.docx` estão guardados.
-- **`templates`**: Uma lista de todos os tipos de termos que podem ser gerados (ex: `laptops`, `smartphones`).
-
-  - **`file_name`**: O nome exato do arquivo `.docx` correspondente a este termo.
-  - **`placeholders`**: A lista de todas as "etiquetas" que serão substituídas dentro daquele documento.
-
-- **`default_placeholders`**: Uma lista de placeholders que são comuns a **todos** os termos, como o nome e a matrícula do colaborador.
+- **`theme`**: Defines the color theme. Can be `dark` or `light`.
+- **`logo_path`**: The path to the logo image that appears in the interface.
 
 ---
 
-### Entendendo um `placeholder`
+#### `document` Section
 
-Cada item na lista de `placeholders` é uma "etiqueta" que o programa irá substituir. Ele possui várias chaves que definem seu comportamento:
+Controls everything related to the Word document generation.
 
-- **`name`**: O texto exato do placeholder no documento Word. Ex: `[LAPTOPMODEL]`.
-- **`type`**: O tipo de dado. Geralmente `text`.
-- **`category`**: A categoria do ativo no Snipe-IT à qual este placeholder se refere. Ex: `"Laptops"`, `"Mouses"`, `"SIM Card"`. **É crucial que este nome seja idêntico ao nome da categoria no Snipe-IT.**
-- **`description`**: Uma breve descrição do que este placeholder representa.
-- **`required`**: Se for `true`, o programa irá gerar um erro caso não encontre um valor para este placeholder. Se for `false`, ele simplesmente deixará o espaço em branco.
-- **`identifier`**: Se for `true`, indica que este campo é o principal identificador do usuário (no caso, a matrícula).
-- **`generates_presence_marker`**: Se for `true`, o programa também procurará por um placeholder de presença (ex: `[HASLAPTOP]`) e o preencherá com o `presence_marker_value`.
-- **`presence_marker_value`**: O texto a ser usado no marcador de presença (geralmente `"X"`).
-- **`source`**: **A parte mais importante.** Diz ao programa de onde buscar a informação.
-  - **`type`**: Define a origem do dado. Pode ser:
-    - `text`: Busca um atributo do objeto **usuário**.
-    - `asset`: Busca um atributo do **ativo principal**.
-    - `accessories`: Busca na lista de **acessórios** do ativo.
-    - `components`: Busca na lista de **componentes** do ativo.
-  - **`path`**: Usado com `type: text`, `accessories` ou `components`. É o nome exato do campo a ser extraído do objeto correspondente (ex: `name`, `serial`, `employee_num`).
-  - **`format`**: Usado com `type: asset` ou para valores compostos. Permite criar um texto combinando múltiplos dados.
-    - Ex: `format: "{model} - {asset_tag}"` irá juntar o nome do modelo com a asset tag.
-    - Ex: `format: "{item.name} - {asset.get_custom_field('NUMERO')}"` pega o nome de um componente (`item.name`) e o combina com um campo customizado do ativo pai.
+- **`template_path`**: The folder where your `.docx` template files are stored.
+- **`templates`**: A list of all term types that can be generated (e.g., `laptops`, `smartphones`).
+  - **`file_name`**: The exact name of the `.docx` file corresponding to this term.
+  - **`placeholders`**: The list of all "tags" that will be replaced within that document.
+- **`default_placeholders`**: A list of placeholders that are common to **all** terms, such as the employee's name and ID number.
+
+---
+
+### Understanding a `placeholder`
+
+Each item in the `placeholders` list is a "tag" that the program will replace. It has several keys that define its behavior:
+
+- **`name`**: The exact text of the placeholder in the Word document. Ex: `[LAPTOPMODEL]`.
+- **`type`**: The data type. Usually `text`.
+- **`category`**: The Snipe-IT asset category to which this placeholder refers. Ex: `"Laptops"`, `"Mouses"`, `"SIM Card"`. **It is crucial that this name is identical to the category name in Snipe-IT.**
+- **`description`**: A brief description of what this placeholder represents.
+- **`required`**: If `true`, the program will raise an error if it cannot find a value for this placeholder. If `false`, it will simply leave the space blank.
+- **`identifier`**: If `true`, indicates that this field is the main user identifier (in this case, the employee ID).
+- **`generates_presence_marker`**: If `true`, the program will also look for a presence placeholder (e.g., `[HASLAPTOP]`) and fill it with the `presence_marker_value`.
+- **`presence_marker_value`**: The text to be used in the presence marker (usually `"X"`).
+- **`source`**: **The most important part.** Tells the program where to fetch the information from.
+  - **`type`**: Defines the origin of the data. Can be:
+        -   `text`: Fetches an attribute from the **user** object.
+        -   `asset`: Fetches an attribute from the **main asset**.
+        -   `accessories`: Searches in the asset's **accessories** list.
+        -   `components`: Searches in the asset's **components** list.
+  - **`path`**: Used with `type: text`, `accessories`, or `components`. It is the exact name of the field to be extracted from the corresponding object (e.g., `name`, `serial`, `employee_num`).
+  - **`format`**: Used with `type: asset` or for composite values. It allows you to create a text by combining multiple data points.
+        -   Ex: `format: "{model} - {asset_tag}"` will join the model name with the asset tag.
+        -   Ex: `format: "{item.name} - {asset.get_custom_field('NUMERO')}"` gets the name of a component (`item.name`) and combines it with a custom field from the parent asset.

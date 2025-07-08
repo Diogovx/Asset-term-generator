@@ -134,10 +134,8 @@ Este projeto segue o layout `src` para uma clara separação entre o código-fon
 
 ## 📈 Roadmap de Melhorias
 
-- [ ] Implementar ferramentas de análise de segurança (`bandit`, `pip-audit`) na pipeline de CI.
 - [ ] Migrar a geração de documentos para `docxtpl` para permitir lógica condicional e loops (`if`/`for`) diretamente nos templates `.docx`.
 - [ ] Desenvolver uma interface web com FastAPI.
-- [ ] Adicionar um histórico de termos gerados.
 
 ## 🤝 Contribuindo
 
