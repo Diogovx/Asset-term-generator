@@ -10,7 +10,7 @@ class AssetModel(BaseModel):
 
 class Category(BaseModel):
     id: int
-    name: str | None = None
+    name: str
 
 
 class CustomFieldDetail(BaseModel):

@@ -13,3 +13,11 @@ repos:
       additional_dependencies:
         - types-requests
         - types-PyYAML
+  - repo: https://github.com/pypa/pip-audit
+    rev: v2.9.0
+    hooks:
+      - id: pip-audit
+        args: ["-r", "requirements.txt"]
+
+ci:
+  skip: [pip-audit]
