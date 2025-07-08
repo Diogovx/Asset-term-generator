@@ -12,17 +12,17 @@ logger = logging.getLogger(__name__)
 def prepare_distribution() -> None:
     app_config = load_config()
     # Paths
-    final_dir = Path("Gerador_Termos_Final")
+    final_dir = Path("Assets_term_generator")
     dist_exe_path = BASE_DIR / "dist" / "Assets_term_generator.exe"
 
-    logger.info("Verificando se os arquivos necessários existem...")
+    logger.info("Checking if required files exist...")
     if not dist_exe_path.exists():
         logger.critical(
-            f"ERRO: Executável não encontrado em '{dist_exe_path}'.Rode o PyInstaller primeiro."
+            f"ERROR: Executable not found at '{dist_exe_path}'. Please run PyInstaller first."
         )
         return
 
-    logger.info(f"Limpando o diretório final: {final_dir}")
+    logger.info(f"Cleaning up the final directory: {final_dir}")
     if final_dir.exists():
         shutil.rmtree(final_dir)
 
@@ -40,6 +40,7 @@ def prepare_distribution() -> None:
     shutil.copy(BASE_DIR / "README.md", final_dir)
     shutil.copy(BASE_DIR / "README.pt-br.md", final_dir)
     shutil.copy(BASE_DIR / "USER_MANUAL.md", final_dir)
+    shutil.copy(BASE_DIR / "USER_MANUAL.pt-br.md", final_dir)
     shutil.copy(
         CONFIG_DIR / "config.yml",
         final_config_dir,
@@ -49,7 +50,7 @@ def prepare_distribution() -> None:
         final_config_dir,
     )
 
-    logger.info("Copiando templates de documento...")
+    logger.info("Copying document templates...")
     templates_config = app_config.document.templates
     for _, template_info in templates_config.items():
         file_name = template_info.file_name
@@ -58,10 +59,10 @@ def prepare_distribution() -> None:
             logger.info(f"Template '{file_name}' copiado.")
         else:
             logger.warning(
-                f"Template '{file_name} definido no config.yml mas não encontrado em {source_path}"
+                f"Template '{file_name} defined in config.yml but not found in {source_path}"
             )
 
-    logger.info(f"Distruibuição prepared in {final_dir}")
+    logger.info(f"Distruibution prepared in {final_dir}")
 
 
 if __name__ == "__main__":
