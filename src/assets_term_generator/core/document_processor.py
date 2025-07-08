@@ -1,7 +1,5 @@
 import logging
-import os
-import platform
-import subprocess
+import webbrowser
 from pathlib import Path
 
 from docx import Document
@@ -60,9 +58,11 @@ class DocumentProcessor:
         return context
 
     def _resolve_placeholders(self, context: dict) -> dict:
-        """
-        Usa o contexto para resolver o valor final de cada placeholder da configuração.
-        Retorna um dicionário de {'[PLACEHOLDER]': 'valor_final'}.
+        """Uses the context to resolve the final value of each placeholder in the configuration.
+        Returns a dictionary of {'[PLACEHOLDER]': 'final_value'}.
+        
+        Args:
+            context (dict): User's context.
         """
         if not self.active_template_config:
             raise RuntimeError("Template não foi carregado. Chame load_template() primeiro.")
@@ -182,11 +182,6 @@ class DocumentProcessor:
 
     def open_file(self, file_path: Path) -> None:
         try:
-            if platform.system() == "Windows":
-                os.startfile(file_path)
-            elif platform.system() == "Darwin":
-                subprocess.call(["open", file_path])
-            else:
-                subprocess.call(["xdg-open", file_path])
+            webbrowser.open(file_path.as_uri())
         except Exception as e:
             logger.error(f"Erro ao abrir o arquivo {e}")
