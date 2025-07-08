@@ -10,21 +10,28 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do código
+      - name: Code checkout
         uses: actions/checkout@v4
-      - name: Configurar Python 3.11
+      - name: Configure Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Instalar dependências
+          python-version: '3.12'
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r dev-requirements.txt
-      - name: Verificar formatação e linting com Ruff
+          pip install -e .
+      - name: Analyze code security with Bandit
+        run: bandit -r src/ -c pyproject.toml
+      - name: Audit dependencies with Pip-audit
+        run: pip-audit -r dev-requirements.txt
+      - name: Check formatting and linting with Ruff
         run: |
           ruff format --check .
           ruff check .
-      - name: Rodar testes com Pytest
+      - name: Check types with mypy
+        run: mypy src/
+      - name: Running tests with Pytest
         env:
           API_KEY: ${{ secrets.API_KEY }}
           API_USERS_URL: ${{ secrets.API_USERS_URL }}
