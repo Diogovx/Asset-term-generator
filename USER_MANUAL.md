@@ -49,6 +49,23 @@ That's it! The setup is complete.
 
 For any other issues, please contact IT support.
 
+## 📋 Generation History
+
+For auditing and control purposes, every time a term is successfully generated, the program records an event in a history file.
+
+This history is a file named `generation_history.csv` and is located inside the `logs` folder. You can open this file directly with Microsoft Excel to view, filter, and create reports on the generated terms.
+
+Each row in the history contains the following information:
+
+- **timestamp**: The exact date and time the term was generated.
+- **usuario_gerador**: The username of the computer account that generated the term.
+- **matricula_colaborador**: The employee ID number for whom the term was created.
+- **nome_colaborador**: The employee's full name.
+- **asset_tag**: The asset tag of the main piece of equipment in the term.
+- **modelo_ativo**: The model of the main equipment.
+- **template_usado**: The type of term that was generated (e.g., `laptops`, `smartphones`).
+- **caminho_arquivo_gerado**: The exact path on the computer where the final `.docx` file was saved.
+
 ## 🔧 Customizing Terms (`config.yml`)
 
 The `config.yml` file, located in the `config` folder, is the brain of the document generation. It allows you to add new term types or customize existing placeholders.
