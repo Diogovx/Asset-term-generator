@@ -53,7 +53,7 @@ Para qualquer outro problema, por favor, entre em contato com o suporte de TI.
 
 Para fins de auditoria e controle, toda vez que um termo é gerado com sucesso, o programa registra um evento em um arquivo de histórico.
 
-Este histórico é um arquivo chamado `historico_geracao.csv` e está localizado dentro da pasta `logs`. Você pode abrir este arquivo diretamente com o Microsoft Excel para visualizar, filtrar e criar relatórios sobre os termos gerados.
+Este histórico é um arquivo chamado `generation_history.csv` e está localizado dentro da pasta `logs`. Você pode abrir este arquivo diretamente com o Microsoft Excel para visualizar, filtrar e criar relatórios sobre os termos gerados.
 
 Cada linha no histórico contém as seguintes informações:
 
