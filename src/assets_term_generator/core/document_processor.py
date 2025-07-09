@@ -1,13 +1,10 @@
 import logging
 import webbrowser
 from pathlib import Path
+
 from docxtpl import DocxTemplate
 
-from docx import Document
-from docx.document import Document as DocumentObject
-from docx.text.paragraph import Paragraph
-
-from assets_term_generator.models import Accessory, AppConfig, Asset, TemplateConfig, User
+from assets_term_generator.models import AppConfig, Asset, TemplateConfig, User
 
 from .config_manager import OUTPUT_DIR, TEMPLATE_DIR
 
@@ -18,7 +15,7 @@ class DocumentProcessor:
     def __init__(self, config: AppConfig) -> None:
         self.config: AppConfig = config
         self.document: DocxTemplate | None = None
-        self.active_template_config: TemplateConfig | None = None
+        self.active_template_config: TemplateConfig
 
     def load_template(self, selected_template: str) -> None:
         """Load document template dynamically based on user selection.
@@ -49,8 +46,9 @@ class DocumentProcessor:
             "asset": selected_asset,
             "accessories": selected_asset.accessories,
             "components": selected_asset.components,
+            "display": self.active_template_config.display_names
         }
-        
+
         return context
 
     def process_document(self, user: User, selected_asset: Asset) -> None:
@@ -91,9 +89,9 @@ class DocumentProcessor:
             output_path = Path(OUTPUT_DIR) / filename
             OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
             self.document.save(str(output_path))
-            
+
             logger.info(f"Termo de responsabilidade do usuário {username} criado!")
-            
+
             return output_path
         except Exception as e:
             logger.error(f"Erro salvando o documento: {e}")
