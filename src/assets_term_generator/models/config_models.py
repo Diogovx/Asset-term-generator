@@ -6,37 +6,34 @@ class UIConfig(BaseModel):
     logo_path: str
 
 
-class PlaceholderSource(BaseModel):
-    type: str
-    path: str | None = None
-    value: str | None = None
-    format: str | None = None
+class CategoryDisplayNames(BaseModel):
+    Charger: str | None = "Charger"
+    Monitors: str | None = "Monitors"
+    Mouses: str | None = "Mouses"
+    Keyboards: str | None = "Keyboards"
+    Headsets: str | None = "Headsets"
+    ...
+
+    class Config:
+        extra = "allow"
 
 
-class Placeholder(BaseModel):
-    name: str
-    type: str
-    category: str
-    description: str
-    default: bool
-    required: bool
-    identifier: bool
-    source: PlaceholderSource
-    generates_presence_marker: bool = False
-    presence_marker_value: str | None = None
+class DisplayNames(BaseModel):
+    categories: CategoryDisplayNames
 
 
 class TemplateConfig(BaseModel):
     file_name: str
-    placeholders: list[Placeholder]
+    display_names: DisplayNames
 
 
 class DocumentConfig(BaseModel):
     template_path: str
     templates: dict[str, TemplateConfig]
-    default_placeholders: list[Placeholder]
+
 
 
 class AppConfig(BaseModel):
     ui: UIConfig
     document: DocumentConfig
+    
