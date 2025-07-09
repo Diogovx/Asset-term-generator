@@ -10,16 +10,18 @@ attrs==25.3.0
     # via
     #   cattrs
     #   requests-cache
+babel==2.17.0
+    # via docxcompose
 cattrs==25.1.1
     # via requests-cache
 certifi==2025.6.15
     # via requests
 charset-normalizer==3.4.2
     # via requests
-customtkinter==5.2.2
+docxcompose==1.4.0
+    # via docxtpl
+docxtpl==0.20.0
     # via -r requirements.in
-darkdetect==0.8.0
-    # via customtkinter
 dotenv==0.9.9
     # via -r requirements.in
 idna==3.10
@@ -28,14 +30,17 @@ idna==3.10
     #   url-normalize
 inquirerpy==0.3.4
     # via -r requirements.in
+jinja2==3.1.6
+    # via docxtpl
 lxml==6.0.0
-    # via python-docx
-packaging==25.0
-    # via customtkinter
+    # via
+    #   docxcompose
+    #   docxtpl
+    #   python-docx
+markupsafe==3.0.2
+    # via jinja2
 pfzy==0.3.4
     # via inquirerpy
-pillow==11.3.0
-    # via -r requirements.in
 platformdirs==4.3.8
     # via requests-cache
 prompt-toolkit==3.0.51
@@ -45,7 +50,9 @@ pydantic==2.11.7
 pydantic-core==2.33.2
     # via pydantic
 python-docx==1.2.0
-    # via -r requirements.in
+    # via
+    #   docxcompose
+    #   docxtpl
 python-dotenv==1.1.1
     # via dotenv
 pyyaml==6.0.2
@@ -56,6 +63,8 @@ requests==2.32.4
     #   requests-cache
 requests-cache==1.2.1
     # via -r requirements.in
+six==1.17.0
+    # via docxcompose
 typing-extensions==4.14.0
     # via
     #   cattrs
@@ -73,3 +82,6 @@ urllib3==2.5.0
     #   requests-cache
 wcwidth==0.2.13
     # via prompt-toolkit
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
