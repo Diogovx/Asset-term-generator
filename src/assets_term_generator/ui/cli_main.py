@@ -1,9 +1,11 @@
+import logging
 from typing import Any
 
 from InquirerPy import inquirer
 
 from assets_term_generator.models import AppConfig, Asset
 
+logger = logging.getLogger(__name__)
 
 class Menu:
     def __init__(self, config: AppConfig):
@@ -13,12 +15,51 @@ class Menu:
         employee_number = inquirer.text(message="Digite a matricula:").execute()  # type: ignore[attr-defined]
         return employee_number
 
-    def select_term(self) -> str:
-        template_names = list(self.templates.keys())
+    def select_document_type(self) -> str:
+        choices = [
+            {"name": info.description, "value": name}
+            for name, info in self.templates.items()
+        ]
+        select_type = inquirer.select( # type: ignore[attr-defined]
+            message="Qual tipo de documento você deseja gerar?",
+            choices=choices,
+        ).execute()
+        return select_type
+    
+
+    def select_asset_category(self, available_categories: list[str]) -> str:
+        """Exibe um menu para o usuário escolher uma categoria de ativo.
+
+        Args:
+            available_categories (list[str]): A lista de categorias que o usuário possui.
+
+        Returns:
+            str: A categoria selecionada pelo usuário.
+        """
+        if not available_categories:
+            raise ValueError("O usuário não possui ativos com categorias definidas.")
+
+        # Se o usuário só tem uma categoria de ativo, não há necessidade de perguntar.
+        # Retornamos a única opção automaticamente.
+        if len(available_categories) == 1:
+            selected_category = available_categories[0]
+            logger.info(f"Categoria '{selected_category}'"
+                        "selecionada automaticamente (única opção).")
+            return selected_category
+
+        selected_category = inquirer.select(  # type: ignore[attr-defined]
+            message="O usuário possui ativos em várias categorias."
+            "Para qual delas deseja gerar o termo?",
+            choices=available_categories,
+        ).execute()
+
+        return selected_category
+    
+    def select_category(self, avalible_categories: list[str]) -> str:
 
         choose = inquirer.select(  # type: ignore[attr-defined]
             message="Você deseja gerar qual termo?\nEscolha um deles: ",
-            choices=template_names,
+            choices=avalible_categories,
             default=None,
         ).execute()
         return choose

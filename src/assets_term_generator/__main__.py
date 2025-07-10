@@ -21,44 +21,54 @@ def main() -> None:
 
     while True:
         try:
+            document_key = menu.select_document_type()
+
             employee_number = menu.input_employee_number()
             if not employee_number:
                 raise ValueError("Matrícula não pode ser vazia")
+            
             user, assets = snipeit_client.get_user_and_assets(employee_number)
+            if not assets:
+                raise AssetNotFoundError(f"Nenhum ativo encontrado para o usuário '{user.name}'.")
 
-            selected_term = menu.select_term()
-            document_processor.load_template(selected_term)
+            user_categories = sorted(list({
+                asset.category.name for asset in assets if asset.category and asset.category.name
+            }))
 
-            filtered_assets = [
-                asset
-                for asset in assets
-                if asset.category.name and asset.category.name.lower() == selected_term.lower()
+            selected_category = menu.select_asset_category(user_categories)
+            logger.info(f"Categoria selecionada para o termo: '{selected_category}'")
+
+            assets_in_category = [
+                asset for asset in assets
+                if asset.category and asset.category.name == selected_category
             ]
 
-            if not filtered_assets:
-                raise ValueError(f"Usuário não possui ativo do tipo '{selected_term}'.")
-
-            if len(filtered_assets) > 1:
-                selected_asset = menu.select_asset(filtered_assets)
+            if len(assets_in_category) > 1:
+                selected_asset = menu.select_asset(assets_in_category)
             else:
-                selected_asset = filtered_assets[0]
+                selected_asset = assets_in_category[0]
+            
+            logger.info(f"Ativo principal selecionado para o termo: {selected_asset.asset_tag}")
 
-            logger.info(f"Ativo selecionado: {selected_asset.model.name}")
-
+            document_processor.load_template(document_key)
             document_processor.process_document(user, selected_asset)
-
-            file_path = document_processor.save(user.name, selected_asset.asset_tag, selected_term)
-
-            log_generation_history(user, selected_asset, selected_term, file_path)
-
+            file_path = document_processor.save(
+                user.name,
+                selected_asset.asset_tag,
+                document_key
+            )
+            
+            log_generation_history(user, selected_asset, document_key, file_path)
             document_processor.open_file(file_path)
+            
             logger.info("Termo gerado com sucesso!")
+
         except (UserNotFoundError, AssetNotFoundError, ValueError) as e:
             logger.warning(e)
         except RequestException as e:
             logger.error(f"Erro de comunicação com a API do Snipe-IT: {e}")
         except Exception as e:
-            logger.critical(f"Ocorreu um erro inesperado: {e}")
+            logger.critical(f"Ocorreu um erro inesperado: {e}", exc_info=True)
 
         input("\nPressione Enter para continuar...")
 
