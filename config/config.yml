@@ -5,8 +5,9 @@ ui:
 document:
   template_path: docx-template/
   templates:
-    laptops:
+    termo_de_responsabilidade:
       file_name: TERMO DE RESPONSABILIDADES NOTEBOOKS.docx
+      description: Template master de responsabilidades e devolucao
       display_names:
         categories:
           Charger: Carregador
@@ -14,10 +15,4 @@ document:
           Mouses: Mouse
           Keyboards: Teclado
           Headsets: Headset
-
-    smartphones:
-      file_name: TERMO DE RESPONSABILIDADES CELULARES.docx
-      display_names:
-        categories:
-          Charger: Carregador
           SIM Card: SIM Card

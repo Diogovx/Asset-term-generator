@@ -25,6 +25,7 @@ class DisplayNames(BaseModel):
 class TemplateConfig(BaseModel):
     file_name: str
     display_names: DisplayNames
+    description: str | None = None
 
 
 class DocumentConfig(BaseModel):
