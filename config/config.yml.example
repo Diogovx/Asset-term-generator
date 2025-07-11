@@ -1,0 +1,19 @@
+ui:
+  theme: dark
+  logo_path: assets/logo.png
+
+document:
+  template_path: docx-template/
+  templates:
+    file_name:
+      file_name: FILE.docx
+      description: file description
+      target_categories:
+        - Smartphones
+        - Laptops
+      display_names:
+        categories:
+          name1: example
+          name2: example
+          name3: example
+
