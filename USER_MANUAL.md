@@ -35,6 +35,7 @@ Done! The configuration is complete.
    - Use the arrow keys to **select the term type** (Laptop, Cell Phone, etc.) and press Enter.
    - If necessary, select the specific device.
 4. At the end of the process, a Word document will be created and opened automatically for you.
+
 5. The generated `.docx` file is saved in the `output` folder.
 
 ## ❓ Common Troubleshooting
