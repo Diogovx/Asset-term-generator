@@ -1,9 +1,7 @@
-python-docx
+docxtpl
 requests
 InquirerPy
 requests-cache
-customtkinter
-pillow
 pyyaml
 pydantic
 dotenv
