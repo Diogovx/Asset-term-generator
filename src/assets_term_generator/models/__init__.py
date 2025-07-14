@@ -3,7 +3,7 @@ System data models definitions
 
 """
 
-from .config_models import AppConfig, Placeholder, TemplateConfig
+from .config_models import AppConfig, TemplateConfig
 from .hardware_api_models import (
     Accessory,
     AccessoryCheckout,
@@ -19,7 +19,6 @@ from .user_api_model import User, UserSearchResponse
 
 __all__ = [
     "AppConfig",
-    "Placeholder",
     "TemplateConfig",
     "CustomFieldDetail",
     "UserAssetsResponse",

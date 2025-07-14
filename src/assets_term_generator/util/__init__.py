@@ -4,6 +4,7 @@ System utilities
 Exports functions to:
 - Logging configuration
 - Custom exceptions
+- Custom error messages
 """
 
 from .exceptions import AssetNotFoundError, UserNotFoundError
