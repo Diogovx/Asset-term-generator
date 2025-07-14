@@ -23,23 +23,42 @@ def main() -> None:
         try:
             document_key = menu.select_document_type()
 
+            selected_template_config = app_config.document.templates[document_key]
+
             employee_number = menu.input_employee_number()
             if not employee_number:
                 raise ValueError("Matrícula não pode ser vazia")
-            
+
             user, assets = snipeit_client.get_user_and_assets(employee_number)
             if not assets:
                 raise AssetNotFoundError(f"Nenhum ativo encontrado para o usuário '{user.name}'.")
 
-            user_categories = sorted(list({
+            user_categories_set = {
                 asset.category.name for asset in assets if asset.category and asset.category.name
-            }))
+            }
 
-            selected_category = menu.select_asset_category(user_categories)
+            allowed_categories = selected_template_config.target_categories
+
+            final_categories = set()
+            if allowed_categories:
+                allowed_categories_set = set(allowed_categories)
+                final_categories = user_categories_set & allowed_categories_set
+            else:
+                final_categories = user_categories_set
+
+            categories_to_show = sorted(list(final_categories))
+
+            if not categories_to_show:
+                raise ValueError(
+                    f"O usuário não possui ativos compatíveis com o template '{document_key}'."
+                )
+
+            selected_category = menu.select_asset_category(categories_to_show)
             logger.info(f"Categoria selecionada para o termo: '{selected_category}'")
 
             assets_in_category = [
-                asset for asset in assets
+                asset
+                for asset in assets
                 if asset.category and asset.category.name == selected_category
             ]
 
@@ -47,20 +66,18 @@ def main() -> None:
                 selected_asset = menu.select_asset(assets_in_category)
             else:
                 selected_asset = assets_in_category[0]
-            
+
             logger.info(f"Ativo principal selecionado para o termo: {selected_asset.asset_tag}")
 
             document_processor.load_template(document_key)
+
             document_processor.process_document(user, selected_asset)
-            file_path = document_processor.save(
-                user.name,
-                selected_asset.asset_tag,
-                document_key
-            )
-            
+
+            file_path = document_processor.save(user.name, selected_asset.asset_tag, document_key)
+
             log_generation_history(user, selected_asset, document_key, file_path)
             document_processor.open_file(file_path)
-            
+
             logger.info("Termo gerado com sucesso!")
 
         except (UserNotFoundError, AssetNotFoundError, ValueError) as e:

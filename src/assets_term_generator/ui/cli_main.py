@@ -7,6 +7,7 @@ from assets_term_generator.models import AppConfig, Asset
 
 logger = logging.getLogger(__name__)
 
+
 class Menu:
     def __init__(self, config: AppConfig):
         self.templates: dict[str, Any] = config.document.templates
@@ -17,15 +18,13 @@ class Menu:
 
     def select_document_type(self) -> str:
         choices = [
-            {"name": info.description, "value": name}
-            for name, info in self.templates.items()
+            {"name": info.description, "value": name} for name, info in self.templates.items()
         ]
-        select_type = inquirer.select( # type: ignore[attr-defined]
+        select_type = inquirer.select(  # type: ignore[attr-defined]
             message="Qual tipo de documento você deseja gerar?",
             choices=choices,
         ).execute()
         return select_type
-    
 
     def select_asset_category(self, available_categories: list[str]) -> str:
         """Exibe um menu para o usuário escolher uma categoria de ativo.
@@ -43,8 +42,9 @@ class Menu:
         # Retornamos a única opção automaticamente.
         if len(available_categories) == 1:
             selected_category = available_categories[0]
-            logger.info(f"Categoria '{selected_category}'"
-                        "selecionada automaticamente (única opção).")
+            logger.info(
+                f"Categoria '{selected_category}'selecionada automaticamente (única opção)."
+            )
             return selected_category
 
         selected_category = inquirer.select(  # type: ignore[attr-defined]
@@ -54,9 +54,8 @@ class Menu:
         ).execute()
 
         return selected_category
-    
-    def select_category(self, avalible_categories: list[str]) -> str:
 
+    def select_category(self, avalible_categories: list[str]) -> str:
         choose = inquirer.select(  # type: ignore[attr-defined]
             message="Você deseja gerar qual termo?\nEscolha um deles: ",
             choices=avalible_categories,
