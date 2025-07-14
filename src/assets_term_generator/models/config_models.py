@@ -26,6 +26,7 @@ class TemplateConfig(BaseModel):
     file_name: str
     display_names: DisplayNames
     description: str | None = None
+    target_categories: list[str] | None = None
 
 
 class DocumentConfig(BaseModel):
@@ -33,8 +34,6 @@ class DocumentConfig(BaseModel):
     templates: dict[str, TemplateConfig]
 
 
-
 class AppConfig(BaseModel):
     ui: UIConfig
     document: DocumentConfig
-    

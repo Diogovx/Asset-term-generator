@@ -46,7 +46,7 @@ class DocumentProcessor:
             "asset": selected_asset,
             "accessories": selected_asset.accessories,
             "components": selected_asset.components,
-            "display": self.active_template_config.display_names
+            "display": self.active_template_config.display_names,
         }
 
         return context
