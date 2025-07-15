@@ -5,10 +5,13 @@ from getpass import getuser
 from pathlib import Path
 from typing import Any
 
+from rich.console import Console
+
 from assets_term_generator.core.config_manager import LOGS_DIR
 from assets_term_generator.models import Asset, User
 
 logger = logging.getLogger(__name__)
+console = Console()
 
 HISTORY_FILE = LOGS_DIR / "generation_history.csv"
 FIELD_NAMES = [
@@ -48,4 +51,5 @@ def log_generation_history(user: User, asset: Asset, template_name: str, output_
 
             logger.info(f"Registro de histórico adicionado em '{HISTORY_FILE}'")
     except Exception as e:
-        logger.error(f"Falha ao escrever no arquivo de histórico: {e}")
+        console.print("[bold red]HISTORY ERROR: Falha ao escrever no arquivo de histórico")
+        logger.error(e)

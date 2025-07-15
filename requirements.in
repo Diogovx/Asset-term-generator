@@ -5,3 +5,4 @@ requests-cache
 pyyaml
 pydantic
 dotenv
+rich

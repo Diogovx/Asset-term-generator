@@ -3,12 +3,14 @@ import webbrowser
 from pathlib import Path
 
 from docxtpl import DocxTemplate
+from rich.console import Console
 
 from assets_term_generator.models import AppConfig, Asset, TemplateConfig, User
 
 from .config_manager import OUTPUT_DIR, TEMPLATE_DIR
 
 logger = logging.getLogger(__name__)
+console = Console()
 
 
 class DocumentProcessor:
@@ -93,12 +95,14 @@ class DocumentProcessor:
             logger.info(f"Termo de responsabilidade do usuário {username} criado!")
 
             return output_path
-        except Exception as e:
-            logger.error(f"Erro salvando o documento: {e}")
+        except ValueError as e:
+            console.print("[bold red]SAVE ERROR[/bold red]: Erro salvando o documento.")
+            logger.error(e)
             raise
 
     def open_file(self, file_path: Path) -> None:
         try:
             webbrowser.open(file_path.as_uri())
         except Exception as e:
-            logger.error(f"Erro ao abrir o arquivo {e}")
+            console.print("[bold red]OPENING ERROR[/bold red]: Erro ao abrir o arquivo ")
+            logger.error(e)

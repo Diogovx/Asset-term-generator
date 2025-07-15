@@ -37,8 +37,12 @@ lxml==6.0.0
     #   docxcompose
     #   docxtpl
     #   python-docx
+markdown-it-py==3.0.0
+    # via rich
 markupsafe==3.0.2
     # via jinja2
+mdurl==0.1.2
+    # via markdown-it-py
 pfzy==0.3.4
     # via inquirerpy
 platformdirs==4.3.8
@@ -49,6 +53,8 @@ pydantic==2.11.7
     # via -r requirements.in
 pydantic-core==2.33.2
     # via pydantic
+pygments==2.19.2
+    # via rich
 python-docx==1.2.0
     # via
     #   docxcompose
@@ -62,6 +68,8 @@ requests==2.32.4
     #   -r requirements.in
     #   requests-cache
 requests-cache==1.2.1
+    # via -r requirements.in
+rich==14.0.0
     # via -r requirements.in
 six==1.17.0
     # via docxcompose
