@@ -3,12 +3,14 @@ from typing import Any
 
 import requests
 from dotenv import load_dotenv
+from rich.console import Console
 
 from assets_term_generator.core.config_manager import API_KEY
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
+console = Console()
 
 
 class BaseAPIClient:
@@ -33,10 +35,15 @@ class BaseAPIClient:
 
             try:
                 return response.json()
-            except requests.exceptions.JSONDecodeError:
-                logger.error(f"Falha ao decodificar JSON da API para '{endpoint}'.")
+            except requests.exceptions.JSONDecodeError as e:
+                console.print(
+                    "[bold red]API ERROR[/bold red]:"
+                    f"Falha ao decodificar JSON da API para '{endpoint}'."
+                )
+                logger.error(e)
                 return {}
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"API error: {e}")
+            console.print("[bold red]API ERROR[/bold red]: Erro na requisição")
+            logger.error(e)
             raise

@@ -4,25 +4,32 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+from rich.console import Console
 
 logger = logging.getLogger(__name__)
+console = Console()
 
 
 def get_base_path() -> Path:
-    """Encontra a raiz do projeto procurando recursivamente pelo pyproject.toml."""
+    """Finds the project root by recursively searching for pyproject.toml."""
     if getattr(sys, "frozen", False):
         return Path(sys.executable).parent
+    try:
+        current_path = Path(__file__).resolve().parent
 
-    current_path = Path(__file__).resolve().parent
+        while not (current_path / "pyproject.toml").exists():
+            if current_path == current_path.parent:
+                raise FileNotFoundError("")
+            current_path = current_path.parent
+        return current_path
 
-    while not (current_path / "pyproject.toml").exists():
-        if current_path == current_path.parent:
-            raise FileNotFoundError(
-                "Não foi possível encontrar a raiz do projeto (marcador 'pyproject.toml')."
-            )
-        current_path = current_path.parent
-
-    return current_path
+    except FileNotFoundError as e:
+        console.print(
+            "[bold red]FILE ERROR:"
+            "Não foi possível encontrar a raiz do projeto (marcador 'pyproject.toml')."
+        )
+        logger.error(e)
+        raise
 
 
 # Path configuration
@@ -57,13 +64,14 @@ ESSENTIAL_VARS = [
     API_COMPONENTS_URL,
     API_USERS_URL,
 ]
+try:
+    if not all(ESSENTIAL_VARS):
+        raise ValueError
 
-if not all(ESSENTIAL_VARS):
-    raise ValueError(
+except ValueError as e:
+    console.print(
+        "[bold red]ENV ERROR[/bold red]:"
         "Uma ou mais variáveis de ambiente essenciais (API_KEY, URLs da API)"
         " não foram definidas no arquivo .env"
     )
-
-
-if not API_KEY:
-    logger.error("API_KEY não foi definida no .env")
+    logger.error(e)
