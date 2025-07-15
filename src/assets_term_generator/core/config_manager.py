@@ -21,14 +21,15 @@ def get_base_path() -> Path:
             if current_path == current_path.parent:
                 raise FileNotFoundError("")
             current_path = current_path.parent
-        return current_path
+        return current_path  # noqa: TRY300
 
     except FileNotFoundError as e:
         console.print(
             "[bold red]FILE ERROR:"
             "Não foi possível encontrar a raiz do projeto (marcador 'pyproject.toml')."
         )
-        logger.error(e)
+        console.print(f"[bold yellow]WARNING[/bold yellow]: Detalhes técnicos: {e}")
+        logger.exception("Could not find project root")
         raise
 
 
@@ -66,7 +67,7 @@ ESSENTIAL_VARS = [
 ]
 try:
     if not all(ESSENTIAL_VARS):
-        raise ValueError
+        raise ValueError  # noqa: TRY301
 
 except ValueError as e:
     console.print(
@@ -74,4 +75,8 @@ except ValueError as e:
         "Uma ou mais variáveis de ambiente essenciais (API_KEY, URLs da API)"
         " não foram definidas no arquivo .env"
     )
-    logger.error(e)
+    console.print(f"[bold yellow]WARNING[/bold yellow]: Detalhes técnicos: {e}")
+    logger.exception(
+        "One or more essential environment variables (API_KEY, API URLs)"
+        " were not defined in the .env file"
+    )

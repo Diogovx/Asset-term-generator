@@ -35,12 +35,8 @@ class DocumentProcessor:
             template_path = TEMPLATE_DIR / self.active_template_config.file_name
             self.document = DocxTemplate(template_path)
             logger.info(f"Template '{template_path.name}' carregado com sucesso.")
-        except KeyError as e:
-            raise KeyError(f"Template '{selected_template}' não encontrado na configuração.") from e
         except FileNotFoundError as e:
-            raise FileNotFoundError(
-                f"Arquivo de template não encontrado em: {template_path}"
-            ) from e
+            raise FileNotFoundError(template_path) from e
 
     def _prepare_context(self, user: User, selected_asset: Asset) -> dict:
         context = {
@@ -62,7 +58,7 @@ class DocumentProcessor:
         """
 
         if not self.document:
-            raise RuntimeError("Documento não carregado. Chame load_template() primeiro.")
+            raise RuntimeError
 
         context = self._prepare_context(user, selected_asset)
 
@@ -83,7 +79,7 @@ class DocumentProcessor:
         """
         try:
             if not self.document:
-                raise ValueError("Documento não carregado.")
+                raise ValueError()  # noqa: TRY301
 
             safe_username = "".join(c for c in username if c.isalnum() or c in " ._-")
             filename = f"{asset_tag} - Termo {type_of_term} - {safe_username}.docx"
@@ -94,15 +90,15 @@ class DocumentProcessor:
 
             logger.info(f"Termo de responsabilidade do usuário {username} criado!")
 
-            return output_path
-        except ValueError as e:
+            return output_path  # noqa: TRY300
+        except ValueError:
             console.print("[bold red]SAVE ERROR[/bold red]: Erro salvando o documento.")
-            logger.error(e)
+            logger.exception("Error saving document")
             raise
 
     def open_file(self, file_path: Path) -> None:
         try:
             webbrowser.open(file_path.as_uri())
-        except Exception as e:
+        except Exception:
             console.print("[bold red]OPENING ERROR[/bold red]: Erro ao abrir o arquivo ")
-            logger.error(e)
+            logger.exception("Error opening file")

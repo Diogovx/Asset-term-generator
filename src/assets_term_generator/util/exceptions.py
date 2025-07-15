@@ -1,6 +1,22 @@
-class UserNotFoundError(Exception):
+class ApplicationError(Exception):
     pass
 
 
-class AssetNotFoundError(Exception):
+class UserNotFoundError(ApplicationError):
+    pass
+
+
+class AssetNotFoundError(ApplicationError):
+    pass
+
+
+class InvalidInputError(ValueError):
+    pass
+
+
+class NoCompatibleAssetsError(ApplicationError):
+    pass
+
+
+class TemplateConfigError(ApplicationError):
     pass
