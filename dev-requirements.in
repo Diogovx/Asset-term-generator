@@ -10,6 +10,9 @@ mypy
 bandit
 pip-audit
 
+tryceratops
+interrogate
+
 pip-tools
 
 pytest
