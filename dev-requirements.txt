@@ -11,7 +11,10 @@ annotated-types==0.7.0
 attrs==25.3.0
     # via
     #   cattrs
+    #   interrogate
     #   requests-cache
+babel==2.17.0
+    # via docxcompose
 bandit==1.8.5
     # via -r dev-requirements.in
 boolean-py==5.0
@@ -31,27 +34,31 @@ cfgv==3.4.0
 charset-normalizer==3.4.2
     # via requests
 click==8.2.1
-    # via pip-tools
+    # via
+    #   interrogate
+    #   pip-tools
+    #   tryceratops
 colorama==0.4.6
     # via
     #   bandit
     #   build
     #   click
+    #   interrogate
     #   pytest
 coverage[toml]==7.9.2
     # via pytest-cov
-customtkinter==5.2.2
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
 cyclonedx-python-lib==9.1.0
     # via pip-audit
-darkdetect==0.8.0
-    # via customtkinter
 defusedxml==0.7.1
     # via py-serializable
 distlib==0.3.9
     # via virtualenv
+docxcompose==1.4.0
+    # via docxtpl
+docxtpl==0.20.0
+    # via -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
 dotenv==0.9.9
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    # via -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
 filelock==3.18.0
     # via
     #   cachecontrol
@@ -65,13 +72,22 @@ idna==3.10
 iniconfig==2.1.0
     # via pytest
 inquirerpy==0.3.4
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    # via -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
+interrogate==1.7.0
+    # via -r dev-requirements.in
+jinja2==3.1.6
+    # via docxtpl
 license-expression==30.4.3
     # via cyclonedx-python-lib
 lxml==6.0.0
-    # via python-docx
+    # via
+    #   docxcompose
+    #   docxtpl
+    #   python-docx
 markdown-it-py==3.0.0
     # via rich
+markupsafe==3.0.2
+    # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
 msgpack==1.1.1
@@ -87,7 +103,6 @@ packageurl-python==0.17.1
 packaging==25.0
     # via
     #   build
-    #   customtkinter
     #   pip-audit
     #   pip-requirements-parser
     #   pyinstaller
@@ -101,8 +116,6 @@ pefile==2023.2.7
     # via pyinstaller
 pfzy==0.3.4
     # via inquirerpy
-pillow==11.3.0
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
 pip-api==0.0.34
     # via pip-audit
 pip-audit==2.9.0
@@ -124,10 +137,12 @@ pre-commit==4.2.0
     # via -r dev-requirements.in
 prompt-toolkit==3.0.51
     # via inquirerpy
+py==1.11.0
+    # via interrogate
 py-serializable==2.0.0
     # via cyclonedx-python-lib
 pydantic==2.11.7
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    # via -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
 pydantic-core==2.33.2
     # via pydantic
 pygments==2.19.2
@@ -154,36 +169,46 @@ pytest-cov==6.2.1
 pytest-mock==3.14.1
     # via -r dev-requirements.in
 python-docx==1.2.0
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    # via
+    #   docxcompose
+    #   docxtpl
 python-dotenv==1.1.1
     # via dotenv
 pywin32-ctypes==0.2.3
     # via pyinstaller
 pyyaml==6.0.2
     # via
-    #   -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    #   -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
     #   bandit
     #   pre-commit
 requests==2.32.4
     # via
-    #   -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    #   -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
     #   cachecontrol
     #   pip-audit
     #   requests-cache
 requests-cache==1.2.1
-    # via -r C:\Users\diogo.xavier\Documents\python\Gerador_de_Termos\requirements.in
+    # via -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
 rich==14.0.0
     # via
+    #   -r C:\Users\diogo.xavier\Documents\python\Asset-term-generator\requirements.in
     #   bandit
     #   pip-audit
+    #   tryceratops
 ruff==0.12.2
     # via -r dev-requirements.in
+six==1.17.0
+    # via docxcompose
 sortedcontainers==2.4.0
     # via cyclonedx-python-lib
 stevedore==5.4.1
     # via bandit
+tabulate==0.9.0
+    # via interrogate
 toml==0.10.2
     # via pip-audit
+tryceratops==2.4.1
+    # via -r dev-requirements.in
 types-pyyaml==6.0.12.20250516
     # via -r dev-requirements.in
 types-requests==2.32.4.20250611
