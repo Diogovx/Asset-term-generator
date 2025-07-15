@@ -4,6 +4,7 @@ from typing import Any
 from InquirerPy import inquirer
 
 from assets_term_generator.models import AppConfig, Asset
+from assets_term_generator.util import NoCompatibleAssetsError
 
 logger = logging.getLogger(__name__)
 
@@ -36,10 +37,8 @@ class Menu:
             str: A categoria selecionada pelo usuário.
         """
         if not available_categories:
-            raise ValueError("O usuário não possui ativos com categorias definidas.")
+            raise NoCompatibleAssetsError(available_categories)
 
-        # Se o usuário só tem uma categoria de ativo, não há necessidade de perguntar.
-        # Retornamos a única opção automaticamente.
         if len(available_categories) == 1:
             selected_category = available_categories[0]
             logger.info(

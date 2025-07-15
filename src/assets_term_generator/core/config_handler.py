@@ -17,7 +17,7 @@ def load_config() -> AppConfig:
         with open(CONFIG_FILE_PATH, encoding="utf-8") as f:
             data = safe_load(f)
 
-        return AppConfig(**data)
+        return AppConfig(**data)  # noqa: TRY300
     except FileNotFoundError:
         logger.critical(
             f"ERRO FATAL: Arquivo de configuração não encontrado em '{CONFIG_FILE_PATH}'."

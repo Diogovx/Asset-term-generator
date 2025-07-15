@@ -17,8 +17,6 @@ class BaseAPIClient:
     def __init__(self, base_url: str):
         self.base_url: str = base_url
         self.api_key: str | None = API_KEY
-        if not self.api_key:
-            raise ValueError("API_KEY not set in .env")
 
     def _get(self, endpoint: str) -> dict[str, Any]:
         headers: dict[str, Any] = {
@@ -35,15 +33,15 @@ class BaseAPIClient:
 
             try:
                 return response.json()
-            except requests.exceptions.JSONDecodeError as e:
+            except requests.exceptions.JSONDecodeError:
                 console.print(
                     "[bold red]API ERROR[/bold red]:"
                     f"Falha ao decodificar JSON da API para '{endpoint}'."
                 )
-                logger.error(e)
+                logger.exception(f"Failed to decode API JSON for '{endpoint}'")
                 return {}
 
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             console.print("[bold red]API ERROR[/bold red]: Erro na requisição")
-            logger.error(e)
+            logger.exception("An error occurred in the request")
             raise
