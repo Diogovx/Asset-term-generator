@@ -87,3 +87,9 @@ class Menu:
             default=None,
         ).execute()
         return choose
+
+    def confirm_action(self) -> str:
+        choose = inquirer.confirm(  # type: ignore[attr-defined]
+            message="Tudo certo para gerar o documento?", default=True
+        ).execute()
+        return choose
