@@ -12,7 +12,12 @@ from assets_term_generator.api import snipeit_client
 from assets_term_generator.core.config_handler import load_config
 from assets_term_generator.core.document_processor import DocumentProcessor
 from assets_term_generator.ui.cli_main import Menu
-from assets_term_generator.util.exceptions import AssetNotFoundError, UserNotFoundError
+from assets_term_generator.util.exceptions import (
+    AssetNotFoundError,
+    InvalidInputError,
+    NoCompatibleAssetsError,
+    UserNotFoundError,
+)
 from assets_term_generator.util.history_logging import log_generation_history
 from assets_term_generator.util.logging_config import configure_logging
 
@@ -24,7 +29,7 @@ console = Console()
 def main() -> None:
     welcome_panel = Panel.fit(
         Text("Bom-vindo ao Gerador de Termos", justify="center"),
-        title="[bold cyan]Assets Term Generator v2.1.0[/bold cyan]",
+        title="[bold cyan]Assets Term Generator v2.0.0[/bold cyan]",
         padding=(1, 2),
     )
     console.print(Align.center(welcome_panel))
@@ -41,13 +46,13 @@ def main() -> None:
 
             employee_number = menu.input_employee_number()
             if not employee_number:
-                raise ValueError("Matrícula não pode ser vazia")
+                raise InvalidInputError  # noqa: TRY301
             with console.status(
                 "[bold green]Buscando dados na API do Snipe-IT...[/bold green]", spinner="dots"
             ):
                 user, assets = snipeit_client.get_user_and_assets(employee_number)
             if not assets:
-                raise AssetNotFoundError(f"Nenhum ativo encontrado para o usuário '{user.name}'.")
+                raise AssetNotFoundError(user.name)  # noqa: TRY301
 
             user_categories_set = {
                 asset.category.name for asset in assets if asset.category and asset.category.name
@@ -65,9 +70,7 @@ def main() -> None:
             categories_to_show = sorted(list(final_categories))
 
             if not categories_to_show:
-                raise ValueError(
-                    f"O usuário não possui ativos compatíveis com o template '{document_key}'."
-                )
+                raise NoCompatibleAssetsError(user.name, document_key)  # noqa: TRY301
 
             selected_category = menu.select_asset_category(categories_to_show)
             logger.info(f"Categoria selecionada para o termo: '{selected_category}'")
@@ -122,20 +125,42 @@ def main() -> None:
             document_processor.open_file(file_path)
 
             console.print("[bold green]Termo gerado com sucesso![/bold green]")
-
-        except (UserNotFoundError, AssetNotFoundError, ValueError) as e:
-            console.print(f"[bold red]ERRO:[/bold red] {e}")
-            logger.error(e)
-        except RequestException as e:
+        except RuntimeError:
+            message = "Documento não carregado. Chame load_template() primeiro."
+            console.print(f"[bold red]ERROR[/bold red]: {message}")
+        except FileNotFoundError as e:
+            message = f"Arquivo de template não encontrado em: {e.args[0]}"
+            console.print(f"[bold red]FILE NOT FOUND ERROR[/bold red]: {message}")
+            logger.warning("FILE NOT FOUND ERROR")
+        except InvalidInputError:
+            console.print("[bold red]INPUT ERROR[/bold red]: Matrícula não pode ser vazia")
+            logger.warning("Registration cannot be empty")
+        except NoCompatibleAssetsError as e:
+            user_name, template_key = e.args
+            mensagem = f"O usuário '{user_name}'"
+            f" não possui ativos compatíveis com o template '{template_key}'."
+            console.print(f"[bold yellow]WARNING[/bold yellow]: {mensagem}")
+            logger.warning(mensagem)
+        except UserNotFoundError as e:
+            employee_number_not_found = e.args[0]
+            nf_message = f"Usuário com matrícula '{employee_number_not_found}' não foi encontrada."
+            console.print(f"[bold red]ERROR[/bold red]: {nf_message}")
+            logger.warning(nf_message)
+        except AssetNotFoundError as e:
+            user_name = e.args[0]
             console.print(
-                "[bold red]NETWORK ERROR: Erro de comunicação com a API do Snipe-IT[/bold red]."
+                f"[bold red]ERROR[/bold red]: Nenhum ativo encontrado para o usuário: {user_name}"
             )
-            logger.error(e)
+        except RequestException:
+            console.print(
+                "[bold red]NETWORK ERROR[/bold red]: Erro de comunicação com a API do Snipe-IT."
+            )
+            logger.exception("Communication error with Snipe-IT API")
         except TemplateSyntaxError as e:
             console.print("[bold red]SYNTAX ERROR[/bold red]: Template preenchido incorretamente.")
             console.print("Por favor verifique as etiquetas '{{ ... }}', '{% ... %}'.")
             console.print(f"[bold yellow]WARNING: Detalhe técninco: {e.message}")
-            logger.error(e)
+            logger.exception("Template filled out incorrectly.")
         except UndefinedError as e:
             console.print(
                 "[bold red]UNDEFINED ERROR[/bold red]:"

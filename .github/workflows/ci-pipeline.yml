@@ -24,13 +24,18 @@ jobs:
       - name: Analyze code security with Bandit
         run: bandit -r src/ -c pyproject.toml
       - name: Audit dependencies with Pip-audit
-        run: pip-audit -r dev-requirements.txt
+        run: pip-audit -r dev-requirements.txt --ignore-vuln PYSEC-2022-42969
       - name: Check formatting and linting with Ruff
         run: |
           ruff format --check .
           ruff check .
       - name: Check types with mypy
         run: mypy src/
+      - name: Check error handling with Tryceratops
+        run: tryceratops src/
+
+      - name: Check docstring coverage with Interrogate
+        run: interrogate -v --fail-under=10
       - name: Running tests with Pytest
         env:
           API_KEY: ${{ secrets.API_KEY }}

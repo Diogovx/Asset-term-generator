@@ -50,6 +50,8 @@ def log_generation_history(user: User, asset: Asset, template_name: str, output_
             writer.writerow(history_entry)
 
             logger.info(f"Registro de histórico adicionado em '{HISTORY_FILE}'")
-    except Exception as e:
-        console.print("[bold red]HISTORY ERROR: Falha ao escrever no arquivo de histórico")
-        logger.error(e)
+    except Exception:
+        console.print(
+            "[bold red]HISTORY ERROR[/bold red]:Falha ao escrever no arquivo de histórico."
+        )
+        logger.exception("Failed to write to history file.")

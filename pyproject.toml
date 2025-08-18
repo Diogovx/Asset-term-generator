@@ -48,3 +48,9 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.interrogate]
+ignore_init_method = true
+ignore_private = true
+fail_under = 10
+exclude = ["src/assets_term_generator/util", "tests", ".venv"]

@@ -30,12 +30,12 @@ def get_user_and_assets(employee_number: str) -> tuple[User, list[Asset]]:
     logger.info(f"Buscando usuário com matrícula {employee_number}...")
     user = users_client.find_by_employee_number(employee_number)
     if not user:
-        raise UserNotFoundError(f"Usuário com matrícula {employee_number} não encontrado.")
+        raise UserNotFoundError(employee_number)
 
     logger.info(f"Buscando ativos para o usuário '{user.name}'...")
     assets = users_client.get_assets(user.id)
     if not assets:
-        raise AssetNotFoundError(f"Nenhum ativo encontrado para o usuário {user.name}.")
+        raise AssetNotFoundError(assets)
 
     user_asset_ids = {asset.id for asset in assets}
 

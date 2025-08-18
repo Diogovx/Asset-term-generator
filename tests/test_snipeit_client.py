@@ -45,8 +45,10 @@ def test_get_user_and_assets_user_not_found(mocker: Any) -> None:
     Testa se UserNotFoundError é lançado quando a API não retorna um usuário.
     """
     mocker.patch('assets_term_generator.api.snipeit_client.users_client.find_by_employee_number', return_value=None)
+    
+    employee_id_invalido = "id_invalido"
 
     with pytest.raises(UserNotFoundError) as excinfo:
-        snipeit_client.get_user_and_assets("id_invalido")
+        snipeit_client.get_user_and_assets(employee_id_invalido)
 
-    assert "não encontrado" in str(excinfo.value)
+    assert excinfo.value.args[0] == employee_id_invalido
