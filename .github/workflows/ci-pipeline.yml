@@ -35,7 +35,7 @@ jobs:
         run: tryceratops src/
 
       - name: Check docstring coverage with Interrogate
-        run: interrogate -v --fail-under=10
+        run: interrogate -v --fail-under=10 --ignore-vuln PYSEC-2022-42969
       - name: Running tests with Pytest
         env:
           API_KEY: ${{ secrets.API_KEY }}
