@@ -1,7 +1,7 @@
 import logging
 
-from assets_term_generator.models import Asset, User
-from assets_term_generator.util import AssetNotFoundError, UserNotFoundError
+from ..models import Asset, User
+from ..util import AssetNotFoundError, UserNotFoundError
 
 from .accessories_client import AccessoriesClient
 from .components_client import ComponentsClient
@@ -40,7 +40,6 @@ def get_user_and_assets(employee_number: str) -> tuple[User, list[Asset]]:
     user_asset_ids = {asset.id for asset in assets}
 
     user_accessories = users_client.get_accessories(user.id)
-
     all_accessories = accessories_client.get_all()
     for accessory in all_accessories:
         checkouts = accessories_client.get_checkouts(accessory.id)
@@ -55,9 +54,9 @@ def get_user_and_assets(employee_number: str) -> tuple[User, list[Asset]]:
     for component in all_components:
         assignments = components_client.get_assigned_assets(component.id)
         for assignment in assignments:
-            if assignment.id in user_asset_ids:
+            if assignment.assigned_pivot_id in user_asset_ids:
                 for asset in assets:
-                    if asset.id == assignment.id:
+                    if asset.id == assignment.assigned_pivot_id:
                         asset.components.append(component)
                         break
 
