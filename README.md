@@ -17,6 +17,7 @@ A Python command-line application (CLI) that automates the creation of liability
   - [🚀 Installation \& Setup](#-installation--setup)
   - [🛠️ Usage](#️-usage)
   - [✅ Testing](#-testing)
+  - [📦 Build and Distribution (Executable)](#-build-and-distribution-executable)
   - [🔧 Template Customization (Jinja2)](#-template-customization-jinja2)
     - [The 3 Golden Rules of Jinja2 Tags](#the-3-golden-rules-of-jinja2-tags)
     - [Available Data in Templates (Context)](#available-data-in-templates-context)
@@ -111,6 +112,30 @@ To generate a test coverage report:
 ```bash
 pytest --cov=src
 ```
+
+---
+
+## 📦 Build and Distribution (Executable)
+
+If you want to generate an executable file (`.exe`) to run the application on Windows computers, the project includes an automated script that prepares the complete distribution.
+
+**Make sure your virtual environment (`.venv`) is activated before proceeding.**
+
+1. **Generate the base executable:**
+    Use PyInstaller in single-file mode (`--onefile`). This command will package the Python code and its dependencies.
+
+    ```bash
+    pyinstaller --name "Assets_term_generator" --onefile src/assets_term_generator/__main__.py
+    ```
+
+2. **Organize the final distribution folder:**
+    After PyInstaller finishes, run the preparation script. Make sure to use the `-m` flag so that Python recognizes the internal project paths correctly:
+
+    ```bash
+    python -m scripts.prepare_dist
+    ```
+
+**Result:** A new folder called Assets_term_generator will be created in the project root. It will contain the ready-to-use .exe file, as well as the `config/`, `docx-template/` folders and the user manuals. You can compress this folder (in .zip) and send it to the end user.
 
 ---
 

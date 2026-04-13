@@ -17,6 +17,7 @@ Uma aplicação de linha de comando (CLI) Python que automatiza a criação de d
   - [🚀 Instalação e Configuração](#-instalação-e-configuração)
   - [🛠️ Uso](#️-uso)
   - [✅ Testes](#-testes)
+  - [📦 Build e Distribuição (Executável)](#-build-e-distribuição-executável)
   - [🔧 Personalização de Templates (Jinja2)](#-personalização-de-templates-jinja2)
     - [As 3 Regras de Ouro das Tags Jinja2](#as-3-regras-de-ouro-das-tags-jinja2)
     - [Dados Disponíveis em Modelos (Contexto)](#dados-disponíveis-em-modelos-contexto)
@@ -112,6 +113,30 @@ Para gerar um relatório de cobertura de teste:
 ```bash
 pytest --cov=src
 ```
+
+---
+
+## 📦 Build e Distribuição (Executável)
+
+Se você deseja gerar um arquivo executável (`.exe`) para rodar a aplicação em computadores com Windows, o projeto conta com um script automatizado que prepara a distribuição completa.
+
+**Certifique-se de que o seu ambiente virtual (`.venv`) está ativado antes de prosseguir.**
+
+1. **Gere o executável base:**
+   Utilize o PyInstaller no modo de arquivo único (`--onefile`). Este comando vai empacotar o código Python e suas dependências.
+
+   ```bash
+   pyinstaller --name "Assets_term_generator" --onefile src/assets_term_generator/__main__.py
+
+2. **Organize a pasta de distribuição final:**
+
+  Após a conclusão do PyInstaller, execute o script de preparação. Certifique-se de usar a flag -m para que o Python reconheça os caminhos internos do projeto corretamente:
+
+  ```bash
+    python -m scripts.prepare_dist
+  ```
+
+  **Resultado:** Uma nova pasta chamada Assets_term_generator será criada na raiz do projeto. Ela conterá o arquivo .exe pronto para uso, além das pastas de `config/`, `docx-template/` e os manuais de usuário. Você pode compactar essa pasta (em .zip) e enviá-la para o usuário final.
 
 ---
 
