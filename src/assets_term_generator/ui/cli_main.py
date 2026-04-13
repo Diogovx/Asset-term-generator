@@ -3,8 +3,8 @@ from typing import Any
 
 from InquirerPy import inquirer
 
-from assets_term_generator.models import AppConfig, Asset
-from assets_term_generator.util import NoCompatibleAssetsError
+from ..models import AppConfig, Asset
+from ..util import NoCompatibleAssetsError
 
 logger = logging.getLogger(__name__)
 

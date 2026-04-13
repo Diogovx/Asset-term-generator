@@ -2,9 +2,9 @@ import logging
 import shutil
 from pathlib import Path
 
-from assets_term_generator.core.config_handler import load_config
-from assets_term_generator.core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
-from assets_term_generator.util import configure_logging
+from src.assets_term_generator.core.config_handler import load_config
+from src.assets_term_generator.core.config_manager import BASE_DIR, CONFIG_DIR, TEMPLATE_DIR
+from src.assets_term_generator.util import configure_logging
 
 logger = logging.getLogger(__name__)
 

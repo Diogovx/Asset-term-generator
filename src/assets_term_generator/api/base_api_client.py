@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv
 from rich.console import Console
 
-from assets_term_generator.core.config_manager import API_KEY
+from ..core.config_manager import API_KEY
 
 load_dotenv()
 

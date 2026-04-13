@@ -5,7 +5,7 @@ from pathlib import Path
 from docxtpl import DocxTemplate
 from rich.console import Console
 
-from assets_term_generator.models import AppConfig, Asset, TemplateConfig, User
+from ..models import AppConfig, Asset, TemplateConfig, User
 
 from .config_manager import OUTPUT_DIR, TEMPLATE_DIR
 

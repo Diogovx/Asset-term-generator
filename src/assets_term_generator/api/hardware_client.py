@@ -1,4 +1,4 @@
-from assets_term_generator.core.config_manager import API_HARDWARE_URL
+from ..core.config_manager import API_HARDWARE_URL
 
 from .base_api_client import BaseAPIClient
 

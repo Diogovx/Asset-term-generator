@@ -31,9 +31,9 @@ class AccessoryCheckout(BaseModel):
 
 
 class ComponentAssetAssignment(BaseModel):
-    id: int
-    name: str
-    type: str
+    assigned_pivot_id: int
+    name: str | dict
+    type: str = "Component"
 
 
 class Component(BaseModel):

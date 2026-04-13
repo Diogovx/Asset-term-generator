@@ -1,7 +1,7 @@
 from functools import lru_cache
 
-from assets_term_generator.core.config_manager import API_ACESSORIES_URL
-from assets_term_generator.models import Accessory, AccessoryCheckout
+from ..core.config_manager import API_ACESSORIES_URL
+from ..models import Accessory, AccessoryCheckout
 
 from .base_api_client import BaseAPIClient
 

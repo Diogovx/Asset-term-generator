@@ -17,6 +17,7 @@ A Python command-line application (CLI) that automates the creation of liability
   - [🚀 Installation \& Setup](#-installation--setup)
   - [🛠️ Usage](#️-usage)
   - [✅ Testing](#-testing)
+  - [📦 Build and Distribution (Executable)](#-build-and-distribution-executable)
   - [🔧 Template Customization (Jinja2)](#-template-customization-jinja2)
     - [The 3 Golden Rules of Jinja2 Tags](#the-3-golden-rules-of-jinja2-tags)
     - [Available Data in Templates (Context)](#available-data-in-templates-context)
@@ -80,9 +81,9 @@ Follow these steps to set up the development environment on your machine.
     ```
 
 5. **Set up environment variables:**
-    -   Go to the `config/` folder.
-    -   Create a copy of the `.env.example` file and rename it to `.env`.
-    -   Open the `.env` file and fill it with the correct values from your Snipe-IT instance.
+    - Go to the `config/` folder.
+    - Create a copy of the `.env.example` file and rename it to `.env`.
+    - Open the `.env` file and fill it with the correct values from your Snipe-IT instance.
 
 ---
 
@@ -91,7 +92,7 @@ Follow these steps to set up the development environment on your machine.
 With the virtual environment activated, run the application from the project root with the following command:
 
 ```bash
-python -m assets_term_generator
+python -m src.assets_term_generator
 ```
 
 The program will guide you with interactive prompts to enter the employee number and select the document type and asset category.
@@ -114,6 +115,30 @@ pytest --cov=src
 
 ---
 
+## 📦 Build and Distribution (Executable)
+
+If you want to generate an executable file (`.exe`) to run the application on Windows computers, the project includes an automated script that prepares the complete distribution.
+
+**Make sure your virtual environment (`.venv`) is activated before proceeding.**
+
+1. **Generate the base executable:**
+    Use PyInstaller in single-file mode (`--onefile`). This command will package the Python code and its dependencies.
+
+    ```bash
+    pyinstaller --name "Assets_term_generator" --onefile src/assets_term_generator/__main__.py
+    ```
+
+2. **Organize the final distribution folder:**
+    After PyInstaller finishes, run the preparation script. Make sure to use the `-m` flag so that Python recognizes the internal project paths correctly:
+
+    ```bash
+    python -m scripts.prepare_dist
+    ```
+
+**Result:** A new folder called Assets_term_generator will be created in the project root. It will contain the ready-to-use .exe file, as well as the `config/`, `docx-template/` folders and the user manuals. You can compress this folder (in .zip) and send it to the end user.
+
+---
+
 ## 🔧 Template Customization (Jinja2)
 
 This application uses **`docxtpl`** to allow the powerful **Jinja2** templating language directly inside your `.docx` templates. This means you can add logic like conditionals and loops to your documents without changing any Python code.
@@ -121,13 +146,13 @@ This application uses **`docxtpl`** to allow the powerful **Jinja2** templating 
 ### The 3 Golden Rules of Jinja2 Tags
 
 1. **`{{ ... }}` (Double Curly Braces):** To **SHOW** or **print** a piece of data.
-    -   *Example:* `Employee Name: {{ user.name }}`
+    - *Example:* `Employee Name: {{ user.name }}`
 
 2. **`{% ... %}` (Curly Brace & Percent):** For **LOGIC** and **control flow**.
-    -   *Example:* `{% if asset.notes %}` or `{% for item in asset.accessories %}`
+    - *Example:* `{% if asset.notes %}` or `{% for item in asset.accessories %}`
 
 3. **`{# ... #}` (Curly Brace & Hash):** For **COMMENTS** that are invisible in the final document.
-    -   *Example:* `{# TODO: Get this clause approved by Legal #}`
+    - *Example:* `{# TODO: Get this clause approved by Legal #}`
 
 ### Available Data in Templates (Context)
 
