@@ -92,7 +92,7 @@ Siga estes passos para configurar o ambiente de desenvolvimento em sua máquina.
 Com o ambiente virtual ativado, execute a aplicação a partir da raiz do projeto com o seguinte comando:
 
 ```bash
-python -m assets_term_generator
+python -m src.assets_term_generator
 ```
 
 O programa o guiará com prompts interativos para inserir o número do funcionário e selecionar o tipo de documento e a categoria do ativo.

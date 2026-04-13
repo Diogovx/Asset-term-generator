@@ -3,8 +3,8 @@ import logging
 from pydantic import ValidationError
 from yaml import safe_dump, safe_load
 
-from assets_term_generator.models.config_models import AppConfig
-from assets_term_generator.util import configure_logging
+from ..models.config_models import AppConfig
+from ..util import configure_logging
 
 from .config_manager import CONFIG_FILE_PATH
 

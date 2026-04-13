@@ -1,5 +1,5 @@
-from assets_term_generator.core.config_manager import API_USERS_URL
-from assets_term_generator.models import (
+from ..core.config_manager import API_USERS_URL
+from ..models import (
     Accessory,
     Asset,
     Component,

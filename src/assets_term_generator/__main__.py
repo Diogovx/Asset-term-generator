@@ -8,18 +8,18 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from assets_term_generator.api import snipeit_client
-from assets_term_generator.core.config_handler import load_config
-from assets_term_generator.core.document_processor import DocumentProcessor
-from assets_term_generator.ui.cli_main import Menu
-from assets_term_generator.util.exceptions import (
+from .api import snipeit_client
+from .core.config_handler import load_config
+from .core.document_processor import DocumentProcessor
+from .ui.cli_main import Menu
+from .util.exceptions import (
     AssetNotFoundError,
     InvalidInputError,
     NoCompatibleAssetsError,
     UserNotFoundError,
 )
-from assets_term_generator.util.history_logging import log_generation_history
-from assets_term_generator.util.logging_config import configure_logging
+from .util.history_logging import log_generation_history
+from .util.logging_config import configure_logging
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ console = Console()
 
 def main() -> None:
     welcome_panel = Panel.fit(
-        Text("Bom-vindo ao Gerador de Termos", justify="center"),
+        Text("Bem-vindo ao Gerador de Termos", justify="center"),
         title="[bold cyan]Assets Term Generator v2.0.0[/bold cyan]",
         padding=(1, 2),
     )
@@ -90,7 +90,6 @@ def main() -> None:
                 for asset in assets_in_category:
                     asset_table.add_row(asset.asset_tag, asset.model.name, asset.serial or "N/A")
 
-                console.print(asset_table)
 
                 selected_asset = menu.select_asset(assets_in_category)
             else:
@@ -114,9 +113,9 @@ def main() -> None:
             if not confirm:
                 console.print("[bold red]Operação cancelada pelo usuário[/bold red]")
                 continue
-
+            
             document_processor.load_template(document_key)
-
+            
             document_processor.process_document(user, selected_asset)
 
             file_path = document_processor.save(user.name, selected_asset.asset_tag, document_key)

@@ -7,8 +7,8 @@ from typing import Any
 
 from rich.console import Console
 
-from assets_term_generator.core.config_manager import LOGS_DIR
-from assets_term_generator.models import Asset, User
+from ..core.config_manager import LOGS_DIR
+from ..models import Asset, User
 
 logger = logging.getLogger(__name__)
 console = Console()

@@ -80,9 +80,9 @@ Follow these steps to set up the development environment on your machine.
     ```
 
 5. **Set up environment variables:**
-    -   Go to the `config/` folder.
-    -   Create a copy of the `.env.example` file and rename it to `.env`.
-    -   Open the `.env` file and fill it with the correct values from your Snipe-IT instance.
+    - Go to the `config/` folder.
+    - Create a copy of the `.env.example` file and rename it to `.env`.
+    - Open the `.env` file and fill it with the correct values from your Snipe-IT instance.
 
 ---
 
@@ -91,7 +91,7 @@ Follow these steps to set up the development environment on your machine.
 With the virtual environment activated, run the application from the project root with the following command:
 
 ```bash
-python -m assets_term_generator
+python -m src.assets_term_generator
 ```
 
 The program will guide you with interactive prompts to enter the employee number and select the document type and asset category.
@@ -121,13 +121,13 @@ This application uses **`docxtpl`** to allow the powerful **Jinja2** templating 
 ### The 3 Golden Rules of Jinja2 Tags
 
 1. **`{{ ... }}` (Double Curly Braces):** To **SHOW** or **print** a piece of data.
-    -   *Example:* `Employee Name: {{ user.name }}`
+    - *Example:* `Employee Name: {{ user.name }}`
 
 2. **`{% ... %}` (Curly Brace & Percent):** For **LOGIC** and **control flow**.
-    -   *Example:* `{% if asset.notes %}` or `{% for item in asset.accessories %}`
+    - *Example:* `{% if asset.notes %}` or `{% for item in asset.accessories %}`
 
 3. **`{# ... #}` (Curly Brace & Hash):** For **COMMENTS** that are invisible in the final document.
-    -   *Example:* `{# TODO: Get this clause approved by Legal #}`
+    - *Example:* `{# TODO: Get this clause approved by Legal #}`
 
 ### Available Data in Templates (Context)
 
